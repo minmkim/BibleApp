@@ -57,7 +57,9 @@ class HeaderView: UITableViewHeaderFooterView {
         progressBarTrailingAnchor?.isActive = false
         progressBarTrailingAnchor = progressBar.trailingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(constant))
         progressBarTrailingAnchor?.isActive = true
-        layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.layoutIfNeeded()
+        }, completion: nil)
     }
     
     

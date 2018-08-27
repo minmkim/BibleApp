@@ -84,8 +84,6 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = layoutHeader(chapter: section)
-//        return header
         let header = HeaderView(frame: .zero)
         header.chapter = section
         return header
@@ -133,17 +131,13 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        indexList.indexState = .scrollingTable
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if indexList.indexState == .scrollingTable {
             guard let firstCell = bookTableView.visibleCells.first else {return}
             guard let index = bookTableView.indexPath(for: firstCell) else {return}
             indexList.updatePositionOfBookMarker(index: index.section)
             guard let numberOfVersesInSection = bookDict[index.section + 1]?.count else {return}
-            let multiplier = Double(index.row)/Double(numberOfVersesInSection)
+            let multiplier = Double(index.row + 1)/Double(numberOfVersesInSection)
             guard let header = bookTableView.headerView(forSection: index.section) as? HeaderView else {return}
             header.updateProgressBar(multipler: multiplier)
         }
@@ -156,12 +150,13 @@ extension BookTableController: IndexListDelegate {
         if index < 0 || index > (bookDict.count - 1) {
             return
         }
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.prepare()
+        let generator = UISelectionFeedbackGenerator()
+        
         let indexPath = IndexPath(row: 0, section: index)
         UIView.animate(withDuration: 0.01) {
             self.bookTableView.scrollToRow(at: indexPath, at: .top, animated: false)
-            generator.impactOccurred()
+            generator.prepare()
+            generator.selectionChanged()
         }
     }
 }

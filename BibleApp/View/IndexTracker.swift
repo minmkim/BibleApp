@@ -140,9 +140,17 @@ class IndexTracker: UIView {
     }
     
     func updatePositionOfBookMarker(index: Int) {
+        if currentIndex == index {
+            print("return")
+            return
+        } else {
+            print("continue")
+            currentIndex = index
+        }
         if !didCalculateHeightOfMarker {
             calculateHeightOfMarker()
         }
+        let generator = UISelectionFeedbackGenerator()
         bookMarkerBottomAnchor?.isActive = false
         bookMarkerTopAnchor?.isActive = false
         switch index {
@@ -158,7 +166,6 @@ class IndexTracker: UIView {
                 bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: CGFloat(height))
                 bookMarkerTopAnchor?.isActive = true
             } else {
-                print(index%skipCounter)
                 if index%skipCounter == 0 {
                     let calculatedIndex = Double(index)/Double(skipCounter)
                     let heightOfJustIndexes = ((Double(calculatedIndex) * 2 * Double(heightOfMarker)) + Double(heightOfMarker)/2)
@@ -176,7 +183,13 @@ class IndexTracker: UIView {
                 }
             }
         }
-        layoutIfNeeded()
+        generator.prepare()
+        generator.selectionChanged()
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.layoutIfNeeded()
+            
+        }, completion: nil)
+        
     }
     var heightOfMarker:CGFloat = 0 {
         didSet {

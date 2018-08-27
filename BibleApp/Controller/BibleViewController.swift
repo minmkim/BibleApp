@@ -168,13 +168,13 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         if index < 0 || index > (oldIndexArray.count - 1) {
             return
         }
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.prepare()
+        let generator = UISelectionFeedbackGenerator()
         let indexPath = IndexPath(row: 0, section: index)
         UIView.animate(withDuration: 0.1) {
             self.bibleTableView.scrollToRow(at: indexPath, at: .top, animated: false)
             if index < 51 {
-                generator.impactOccurred()
+                generator.prepare()
+                generator.selectionChanged()
             }
         }       
     }

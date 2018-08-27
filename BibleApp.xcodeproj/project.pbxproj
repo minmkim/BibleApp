@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8C46EF3B212F245300390BB0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */; };
+		8C5D869821323B42000F994E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869721323B42000F994E /* Colors.swift */; };
+		8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */; };
+		8C5D869C213363E5000F994E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869B213363E5000F994E /* HeaderView.swift */; };
 		8C66D90B212F442B00EE6503 /* MtZion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8C66D908212F442B00EE6503 /* MtZion.xcdatamodeld */; };
 		8C66D910212F489100EE6503 /* CoreDataEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C66D90F212F489100EE6503 /* CoreDataEnum.swift */; };
 		8C66D92121305ECA00EE6503 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
@@ -116,6 +119,9 @@
 
 /* Begin PBXFileReference section */
 		8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		8C5D869721323B42000F994E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsColorTableViewCell.swift; sourceTree = "<group>"; };
+		8C5D869B213363E5000F994E /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		8C66D909212F442B00EE6503 /* MtZionDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MtZionDataModel.xcdatamodel; sourceTree = "<group>"; };
 		8C66D90A212F442B00EE6503 /* MtZion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MtZion.xcdatamodel; sourceTree = "<group>"; };
 		8C66D90F212F489100EE6503 /* CoreDataEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataEnum.swift; sourceTree = "<group>"; };
@@ -258,6 +264,7 @@
 			children = (
 				8C66D90F212F489100EE6503 /* CoreDataEnum.swift */,
 				8C80FEDE2131B51B006BF071 /* Array.swift */,
+				8C5D869721323B42000F994E /* Colors.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -292,6 +299,8 @@
 				A43E1D0E21190ABA008235D6 /* BookTableViewCell.swift */,
 				8C79AC34212E083E00FCD313 /* VerseCollectionViewCell.swift */,
 				8C80FEE22131E60B006BF071 /* IndexTracker.swift */,
+				8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */,
+				8C5D869B213363E5000F994E /* HeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -687,11 +696,13 @@
 				8C79AC33212DA6B500FCD313 /* VerseViewController.swift in Sources */,
 				8C79AC31212DA5E300FCD313 /* BibleVerse.swift in Sources */,
 				A43E1D1121195A3C008235D6 /* MainViewController.swift in Sources */,
+				8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */,
 				A4FD294F2118B1AF008E0A69 /* joshua.swift in Sources */,
 				A4FD2929211898A0008E0A69 /* esther.swift in Sources */,
 				8C80FEDF2131B51B006BF071 /* Array.swift in Sources */,
 				A4FD29612118B23D008E0A69 /* zephaniah.swift in Sources */,
 				A4FD29272118988A008E0A69 /* nehemiah.swift in Sources */,
+				8C5D869821323B42000F994E /* Colors.swift in Sources */,
 				A4FD29332118B03E008E0A69 /* songOfSongs.swift in Sources */,
 				A400F04F2118ED1700F9F9C5 /* firstCorinthians.swift in Sources */,
 				A400F0652118EDD400F9F9C5 /* philemon.swift in Sources */,
@@ -741,6 +752,7 @@
 				A4FD29652118B25B008E0A69 /* zecahariah.swift in Sources */,
 				A4FD29512118B1BF008E0A69 /* judges.swift in Sources */,
 				A4FD292521189876008E0A69 /* ezra.swift in Sources */,
+				8C5D869C213363E5000F994E /* HeaderView.swift in Sources */,
 				A400F0772118EE6400F9F9C5 /* jude.swift in Sources */,
 				A400F05B2118ED7D00F9F9C5 /* firstThessalonians.swift in Sources */,
 				A400F06F2118EE1900F9F9C5 /* firstJohn.swift in Sources */,

@@ -58,11 +58,11 @@ class BookTableViewCell: UITableViewCell {
     func layoutViews() {
         verseText.topAnchor.constraint(equalTo: topAnchor).isActive = true
         verseText.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        verseText.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 12).isActive = true
+        verseText.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 32).isActive = true
         verseText.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -12).isActive = true
         
         numberLabel.topAnchor.constraint(equalTo: verseText.topAnchor).isActive = true
-        numberLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 4).isActive = true
+        numberLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 24).isActive = true
         numberLabel.heightAnchor.constraint(equalToConstant: 8).isActive = true
 
     }

@@ -11,7 +11,7 @@ import UIKit
 class BibleViewController: UIViewController {
 
     var bible: Bible!
-    let oldIndexArray = ["Gn", "Ex", "Lv", "Nu", "Dt", "Jos", "Jdg", "Rut", "1Sa", "2Sa", "1Ki", "2Ki", "1Ch", "2Ch", "Ez", "Neh", "Es", "Job", "Ps", "Prv", "Ecc", "Sng", "Is", "Jer", "Lam", "Ez", "Dan", "Hos", "Jol", "Am", "Jon", "Mic", "Nah", "Hab", "Zep", "Hag", "Zec", "Mal", "Mt", "Mk", "Lk", "Jn", "Ac", "Ro", "1Co", "2Co", "Gal", "Eph", "Php", "Col", "1Th", "2Th", "1Ti", "2Ti", "Ti", "Ph", "Heb", "Jm", "1Pt", "2Pt", "1Jn", "2Jn", "3Jn", "Jud", "Rv"]
+    let oldIndexArray = ["Gn", "Ex", "Lv", "Nu", "Dt", "Jos", "Jdg", "Rut", "1Sa", "2Sa", "1Ki", "2Ki", "1Ch", "2Ch", "Ez", "Neh", "Es", "Job", "Ps", "Prv", "Ecc", "Sng", "Is", "Jer", "Lam", "Ez", "Dan", "Hos", "Jol", "Am", "Oba", "Jon", "Mic", "Nah", "Hab", "Zep", "Hag", "Zec", "Mal", "Mt", "Mk", "Lk", "Jn", "Ac", "Ro", "1Co", "2Co", "Gal", "Eph", "Php", "Col", "1Th", "2Th", "1Ti", "2Ti", "Ti", "Ph", "Heb", "Jm", "1Pt", "2Pt", "1Jn", "2Jn", "3Jn", "Jud", "Rv"]
     
     
     let containerView: UIView = {
@@ -41,14 +41,17 @@ class BibleViewController: UIViewController {
         bibleTableView.delegate = self
         bibleTableView.separatorStyle = .none
         bibleTableView.showsVerticalScrollIndicator = false
-//        bibleTableView.sectionIndexColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
         navigationItem.title = "Mt. Zion"
-        navigationController?.navigationBar.prefersLargeTitles = true
         view.addSubview(containerView)
         view.addSubview(bibleTableView)
         view.addSubview(indexList)
         indexList.delegate = self
         layoutViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     func layoutViews() {
@@ -144,6 +147,22 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         guard let dict = bible.bookVerseDictionary[book] else {return}
         presentBook(for: dict, book: book)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if indexList.indexState == .scrollingTable {
+            guard let firstCell = bibleTableView.visibleCells.first else {return}
+            guard let firstBook = firstCell.textLabel?.text else {return}
+            if let index = bible.booksOfOldTestamentStrings.index(of: firstBook) {
+                indexList.updatePositionOfBookMarker(index: index)
+            }
+            if let index = bible.booksOfNewTestamentStrings.index(of: firstBook) {
+                let newIndex = index + 39
+                indexList.updatePositionOfBookMarker(index: newIndex)
+            }
+        }
+        
+    }
+    
     
     func pressedIndex(at index: Int) {
         if index < 0 || index > (oldIndexArray.count - 1) {

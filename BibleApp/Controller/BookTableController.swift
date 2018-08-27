@@ -31,6 +31,7 @@ class BookTableController: UIViewController {
         view.addSubview(bookTableView)
         view.addSubview(indexList)
         view.backgroundColor = .white
+        navigationController?.navigationBar.prefersLargeTitles = false
         setupTableView()
         layoutViews()
         indexList.delegate = self
@@ -54,7 +55,7 @@ class BookTableController: UIViewController {
         indexList.widthAnchor.constraint(equalToConstant: 22).isActive = true
         
         bookTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        bookTableView.leadingAnchor.constraint(equalTo: indexList.trailingAnchor).isActive = true
+        bookTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         bookTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         bookTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         indexList.setFrame(frameHeight: view.frame.height - 200)
@@ -83,26 +84,11 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = layoutHeader(chapter: section)
+//        let header = layoutHeader(chapter: section)
+//        return header
+        let header = HeaderView(frame: .zero)
+        header.chapter = section
         return header
-    }
-    
-    func layoutHeader(chapter: Int) -> UIView {
-        let headerView = UIView()
-        headerView.isOpaque = false
-        headerView.backgroundColor = .white
-        headerView.alpha = 1
-        let chapterLabel = UILabel()
-        headerView.addSubview(chapterLabel)
-        chapterLabel.text = "CHAPTER \(chapter + 1)"
-        
-        chapterLabel.font = .boldSystemFont(ofSize: 16)
-        chapterLabel.textColor = .black
-        chapterLabel.translatesAutoresizingMaskIntoConstraints = false
-        chapterLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
-        chapterLabel.topAnchor.constraint(equalTo: headerView.topAnchor).isActive = true
-        chapterLabel.heightAnchor.constraint(equalTo: headerView.heightAnchor).isActive = true
-        return headerView
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -144,6 +130,22 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         UIPasteboard.general.string = word
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
             self.bookTableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        indexList.indexState = .scrollingTable
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if indexList.indexState == .scrollingTable {
+            guard let firstCell = bookTableView.visibleCells.first else {return}
+            guard let index = bookTableView.indexPath(for: firstCell) else {return}
+            indexList.updatePositionOfBookMarker(index: index.section)
+            guard let numberOfVersesInSection = bookDict[index.section + 1]?.count else {return}
+            let multiplier = Double(index.row)/Double(numberOfVersesInSection)
+            guard let header = bookTableView.headerView(forSection: index.section) as? HeaderView else {return}
+            header.updateProgressBar(multipler: multiplier)
         }
     }
     

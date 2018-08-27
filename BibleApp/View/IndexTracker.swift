@@ -15,6 +15,12 @@ protocol IndexListDelegate: class {
 
 class IndexTracker: UIView {
     
+    enum IndexState {
+        case scrollingTable
+        case scrollingIndex
+    }
+    
+    var indexState = IndexState.scrollingTable
     var indexList = [String]()
     weak var delegate: IndexListDelegate?
     var frameHeight: CGFloat?
@@ -31,19 +37,31 @@ class IndexTracker: UIView {
         return cv
     }()
     
+    let bookMarker: UIView = {
+        let bm = UIView()
+        bm.translatesAutoresizingMaskIntoConstraints = false
+        bm.backgroundColor = .black
+        bm.layer.cornerRadius = 1
+        bm.layer.masksToBounds = true
+        return bm
+    }()
+    
     init(frame: CGRect, indexList: [String], height: CGFloat) {
         super.init(frame: frame)
         self.frameHeight = height
         self.indexList = indexList
         countOfList = indexList.count
-        backgroundColor = .white
+        backgroundColor = .clear
         addSubview(containerStack)
+        addSubview(bookMarker)
         layoutViews()
+        setSkipCounter()
+        processList()
+    }
+    
+    func setSkipCounter() {
         if let frameHeight = self.frameHeight {
             let numberOfRows = Int((frameHeight-24)/14)
-            print(indexList.count)
-            print(numberOfRows)
-            print(frameHeight)
             var testing = false
             while !testing {
                 if skipCounter == 1 {
@@ -61,19 +79,18 @@ class IndexTracker: UIView {
                 }
             }
         }
-        processList()
     }
     
     func processList() {
-        var newList = indexList
-        newList = newList.enumerated().compactMap { index, element in index % skipCounter == 0 ? element : nil }
+        var tempList = indexList
+        tempList = tempList.enumerated().compactMap { index, element in index % skipCounter == 0 ? element : nil }
         if skipCounter > 1 {
             let sep = "\u{2022}"
-            newList = Array(newList.map { [$0] }.joined(separator: [sep]))
-            newList.removeLast()
-            newList.append(indexList.last!)
+            tempList = Array(tempList.map { [$0] }.joined(separator: [sep]))
+            tempList.removeLast()
+            tempList.append(indexList.last!)
         }
-        indexList = newList
+        indexList = tempList
         indexList.forEach { (index) in
             let label = UILabel()
             label.font = .systemFont(ofSize: 11, weight: .heavy)
@@ -95,14 +112,14 @@ class IndexTracker: UIView {
             stackCenterYAnchor?.isActive = true
             self.layoutIfNeeded()
         }
-        
     }
     
     var stackHeightAnchor: NSLayoutConstraint?
     var stackTopAnchor: NSLayoutConstraint?
     var stackBottomAnchor: NSLayoutConstraint?
     var stackCenterYAnchor: NSLayoutConstraint?
-    
+    var bookMarkerTopAnchor: NSLayoutConstraint?
+    var bookMarkerBottomAnchor: NSLayoutConstraint?
     
     func layoutViews() {
         stackTopAnchor = containerStack.topAnchor.constraint(equalTo: topAnchor)
@@ -111,8 +128,82 @@ class IndexTracker: UIView {
         containerStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         stackBottomAnchor = containerStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         stackBottomAnchor?.isActive = true
+        
+        bookMarker.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        bookMarker.widthAnchor.constraint(equalTo: containerStack.widthAnchor, multiplier: 1/4).isActive = true
+        bookMarker.leadingAnchor.constraint(equalTo: containerStack.leadingAnchor).isActive = true
+        bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: (34/3)/2)
+        bookMarkerTopAnchor?.isActive = true
     }
     
+    override func layoutSubviews() {
+    }
+    
+    func updatePositionOfBookMarker(index: Int) {
+        if !didCalculateHeightOfMarker {
+            calculateHeightOfMarker()
+        }
+        bookMarkerBottomAnchor?.isActive = false
+        bookMarkerTopAnchor?.isActive = false
+        switch index {
+        case 0:
+            bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: CGFloat(heightOfMarker/2))
+            bookMarkerTopAnchor?.isActive = true
+        case countOfList - 1:
+            bookMarkerBottomAnchor = bookMarker.bottomAnchor.constraint(equalTo: containerStack.bottomAnchor, constant: CGFloat(-heightOfMarker/2))
+            bookMarkerBottomAnchor?.isActive = true
+        default:
+            if skipCounter == 1 {
+                let height = (Double(index) * Double(heightOfMarker)) + Double(heightOfMarker/2) + (Double(index*2))
+                bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: CGFloat(height))
+                bookMarkerTopAnchor?.isActive = true
+            } else {
+                print(index%skipCounter)
+                if index%skipCounter == 0 {
+                    let calculatedIndex = Double(index)/Double(skipCounter)
+                    let heightOfJustIndexes = ((Double(calculatedIndex) * 2 * Double(heightOfMarker)) + Double(heightOfMarker)/2)
+                    let numberOfSpacers = Double((calculatedIndex) * 4)
+                    let heightWithSpacers: Double = heightOfJustIndexes + (numberOfSpacers * 2)
+                    bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: CGFloat(heightWithSpacers))
+                    bookMarkerTopAnchor?.isActive = true
+                } else {
+                    let calculatedIndex = Double(index)/Double(skipCounter)
+                    let heightOfJustIndexes = (calculatedIndex * 2 * Double(heightOfMarker)) + Double(heightOfMarker/2)
+                    let numberOfSpacers = Double((calculatedIndex) * 4)
+                    let heightWithSpacers: Double = heightOfJustIndexes + (numberOfSpacers * 2)
+                    bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: CGFloat(heightWithSpacers))
+                    bookMarkerTopAnchor?.isActive = true
+                }
+            }
+        }
+        layoutIfNeeded()
+    }
+    var heightOfMarker:CGFloat = 0 {
+        didSet {
+            if heightOfMarker != 0 {
+                didCalculateHeightOfMarker = true
+            }
+        }
+    }
+    var didCalculateHeightOfMarker = false
+    
+    func calculateHeightOfMarker() {
+        let height = self.containerStack.bounds.maxY - self.containerStack.bounds.minY
+        if height == 0 {
+            return
+        }
+        let numberOfRows = indexList.count
+        if skipCounter == 1 {
+            let heightOfGaps = Double(numberOfRows-1) * 2
+            let heightOfNamesAndDots = Double(height) - Double(heightOfGaps)
+            heightOfMarker = CGFloat(heightOfNamesAndDots / Double(numberOfRows))
+        } else {
+            let heightOfGaps = Double(numberOfRows-1) * 4
+            let heightOfNamesAndDots = Double(height) - Double(heightOfGaps)
+            heightOfMarker = CGFloat(heightOfNamesAndDots / Double(numberOfRows))
+        }
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -120,8 +211,11 @@ class IndexTracker: UIView {
     var currentIndex = 0
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        indexState = .scrollingIndex
+        layoutIfNeeded()
         if let touch = touches.first {
             let currentPoint = touch.location(in: containerStack)
+            moveMarkerWithIndexTouch(for: currentPoint)
             let index = calculateIndex(at: currentPoint)
             if currentIndex != index {
                 currentIndex = index
@@ -131,18 +225,21 @@ class IndexTracker: UIView {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        indexState = .scrollingIndex
+        layoutIfNeeded()
         if let touch = touches.first {
             let currentPoint = touch.location(in: containerStack)
+            moveMarkerWithIndexTouch(for: currentPoint)
             let index = calculateIndex(at: currentPoint)
             if currentIndex != index {
                 currentIndex = index
                 delegate?.pressedIndex(at: index)
             }
-            
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        indexState = .scrollingTable
         if let touch = touches.first {
             let currentPoint = touch.location(in: containerStack)
             let index = calculateIndex(at: currentPoint)
@@ -153,10 +250,20 @@ class IndexTracker: UIView {
         }
     }
     
+    func moveMarkerWithIndexTouch(for location: CGPoint) {
+        if location.y > self.containerStack.bounds.maxY - 6 || location.y < self.containerStack.bounds.minY {
+            return
+        }
+        bookMarkerBottomAnchor?.isActive = false
+        bookMarkerTopAnchor?.isActive = false
+        bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: location.y)
+        bookMarkerTopAnchor?.isActive = true
+        layoutIfNeeded()
+    }
+    
     func calculateIndex(at location: CGPoint) -> Int {
-        let yFrame = self.containerStack.frame.maxY - self.containerStack.frame.minY
+        let yFrame = self.containerStack.bounds.maxY - self.containerStack.bounds.minY
         let index = Int(Float(location.y/yFrame) * Float(countOfList))
-        print(index)
         return index
     }
     

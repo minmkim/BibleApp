@@ -93,6 +93,9 @@ class VerseViewController: UIViewController {
         navigationItem.title = "Saved Verses"
         navigationController?.navigationBar.prefersLargeTitles = true
         containerView.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         view.backgroundColor = .white
         view.addSubview(containerView)
         view.addSubview(verseCollectionView)

@@ -103,6 +103,19 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             bibleVerse.saveToCoreData()
         }
         
+        let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in
+            let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
+            guard var word = cell.verse else {return}
+            guard let book = self.navigationItem.title else {return}
+            let chapter = indexPath.section + 1
+            let verse = indexPath.row + 1
+            word += "\n\(book) \(chapter):\(verse)"
+            UIPasteboard.general.string = word
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+                self.bookTableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
+        
         let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
             guard var verse = cell.verse else {return}
@@ -111,8 +124,9 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             self.present(activityVC, animated: true, completion: nil)
         }
         share.backgroundColor = .lightGray
+        copy.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
         save.backgroundColor = UIColor(red: 0, green: 122/255, blue: 255/255, alpha: 1)
-        return [share, save]
+        return [share, copy, save]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

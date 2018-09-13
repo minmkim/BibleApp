@@ -29,7 +29,8 @@ class VerseCollectionViewCell: UICollectionViewCell {
     let bibleVerseLabel: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.adjustsFontForContentSizeCategory = true
         label.textColor = .white
         return label
     }()
@@ -39,7 +40,8 @@ class VerseCollectionViewCell: UICollectionViewCell {
         tv.isEditable = false
         tv.isUserInteractionEnabled = false
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.font = .systemFont(ofSize: 14)
+        tv.font = .preferredFont(forTextStyle: .subheadline)
+        tv.adjustsFontForContentSizeCategory = true
         tv.backgroundColor = .clear
         tv.textColor = .white
         tv.isScrollEnabled = false

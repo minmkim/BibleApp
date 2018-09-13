@@ -149,7 +149,8 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating, UISe
         let headerLabel = UILabel()
         headerView.addSubview(headerLabel)
         headerLabel.text = searchViewModel.returnHeaderLabel()
-        headerLabel.font = .boldSystemFont(ofSize: 18)
+        headerLabel.font = .preferredFont(forTextStyle: .headline)
+        headerLabel.adjustsFontForContentSizeCategory = true
         headerLabel.textColor = .black
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16).isActive = true

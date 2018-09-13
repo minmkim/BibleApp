@@ -196,7 +196,7 @@ extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSou
     private func estimatedFrameForText(text: String) -> CGRect {
         let size = CGSize(width: (view.frame.width - 56), height: 500)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        return NSString(string: text).boundingRect(with: size, options: options, attributes: [.font: UIFont.systemFont(ofSize: 14)], context: nil)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline)], context: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

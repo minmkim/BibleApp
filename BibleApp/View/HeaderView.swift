@@ -33,7 +33,8 @@ class HeaderView: UITableViewHeaderFooterView {
     
     let chapterLabel: UILabel = {
         let cl = UILabel()
-        cl.font = .boldSystemFont(ofSize: 16)
+        cl.font = .preferredFont(forTextStyle: .headline)
+        cl.adjustsFontForContentSizeCategory = true
         cl.textColor = .black
         cl.translatesAutoresizingMaskIntoConstraints = false
         return cl

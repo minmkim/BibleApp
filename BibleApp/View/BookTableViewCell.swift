@@ -19,7 +19,8 @@ class BookTableViewCell: UITableViewCell {
     
     let verseText: UITextView = {
         let tv = UITextView()
-        tv.font = UIFont.systemFont(ofSize: 16)
+        tv.font = .preferredFont(forTextStyle: .callout)
+        tv.adjustsFontForContentSizeCategory = true
         tv.textColor = .black
         tv.isScrollEnabled = false
         tv.isEditable = false

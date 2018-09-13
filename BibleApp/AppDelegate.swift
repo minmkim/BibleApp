@@ -13,6 +13,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var launchedShortcutItem: UIApplicationShortcutItem?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
@@ -84,6 +85,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(handleShortcutItem(withShortcutItem: shortcutItem))
+    }
+    
+    func handleShortcutItem(withShortcutItem item: UIApplicationShortcutItem) -> Bool {
+        print("here")
+        guard let shortcutType = item.type.components(separatedBy: ".").last else { return false }
+        print(shortcutType)
+        guard let mainView = self.window?.rootViewController as? MainViewController else {return false}
+        switch shortcutType {
+        case "Bible":
+            print("0")
+            mainView.selectedIndex = 0
+        case "Favorites":
+            print("1")
+            mainView.selectedIndex = 1
+        case "Search":
+            print("2")
+            mainView.selectedIndex = 2
+        default:
+            mainView.selectedIndex = 0
+        }
+        return false
     }
 
 

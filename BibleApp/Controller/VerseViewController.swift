@@ -14,7 +14,18 @@ class VerseViewController: UIViewController {
     var savedVerses = [BibleVerse]()
     let dataManager = VersesDataManager()
     var isEditingVerses = false
-    var indexPathToDelete = [IndexPath]()
+    var indexPathToDelete = [IndexPath]() {
+        didSet {
+            if indexPathToDelete.isEmpty {
+                deleteButton.setTitleColor(UIColor.lightGray, for: .normal)
+                deleteButton.isEnabled = false
+            } else {
+//                deleteButton.setTitleColor(UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0), for: .normal)
+                deleteButton.setTitleColor(.white, for: .normal)
+                deleteButton.isEnabled = true
+            }
+        }
+    }
     
     let verseCollectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -31,25 +42,26 @@ class VerseViewController: UIViewController {
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
-    
-    let editView: UIView = {
-        let ev = UIView()
-        ev.translatesAutoresizingMaskIntoConstraints = false
-        ev.backgroundColor = UIColor.groupTableViewBackground
-        return ev
-    }()
 
     let deleteButton: UIButton = {
        let db = UIButton()
         db.translatesAutoresizingMaskIntoConstraints = false
         db.addTarget(self, action: #selector(didPressDelete), for: .touchUpInside)
         db.setTitle("Delete", for: .normal)
-        db.setTitleColor(UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0), for: .normal)
+        db.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        db.setTitleColor(UIColor.lightGray, for: .normal)
+        db.isUserInteractionEnabled = true
+        db.isEnabled = true
+        db.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        db.backgroundColor = .red
         return db
     }()
     
     @objc func didPressDelete() {
+        
         indexPathToDelete.forEach { (indexPath) in
+            let cell = self.verseCollectionView.cellForItem(at: indexPath) as! VerseCollectionViewCell
+            cell.deleteImage.isHidden = true
             dataManager.deleteVerse(for: savedVerses[indexPath.row])
         }
         savedVerses.removeIndexPaths(at: indexPathToDelete)
@@ -58,6 +70,15 @@ class VerseViewController: UIViewController {
         }) { (true) in
             self.indexPathToDelete.removeAll()
         }
+        
+        isEditingVerses = !isEditingVerses
+        navigationItem.rightBarButtonItem?.title = "Edit"
+        self.deleteButtonTopAnchor?.isActive = false
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
+            self.deleteButtonTopAnchor = self.deleteButton.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: (self.tabBarController?.tabBar.frame.size.height ?? 50))
+            self.deleteButtonTopAnchor?.isActive = true
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,11 +92,11 @@ class VerseViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = "Saved Verses"
         navigationController?.navigationBar.prefersLargeTitles = true
+        containerView.backgroundColor = .white
         view.backgroundColor = .white
         view.addSubview(containerView)
         view.addSubview(verseCollectionView)
-        view.addSubview(editView)
-        editView.addSubview(deleteButton)
+        view.addSubview(deleteButton)
         verseCollectionView.delegate = self
         verseCollectionView.dataSource = self
         layoutViews()
@@ -84,26 +105,22 @@ class VerseViewController: UIViewController {
     }
     
     @objc func didPressEdit(sender: UIBarButtonItem) {
-        editViewTopAnchor?.isActive = false
+        deleteButtonTopAnchor?.isActive = false
         if isEditingVerses {
             isEditingVerses = !isEditingVerses
             sender.title = "Edit"
             removeDeleteImage()
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
-                
-                self.editViewTopAnchor = self.editView.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: +20)
-                self.editViewTopAnchor?.isActive = true
+                self.deleteButtonTopAnchor = self.deleteButton.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: (self.tabBarController?.tabBar.frame.size.height ?? 50))
+                self.deleteButtonTopAnchor?.isActive = true
                 self.view.layoutIfNeeded()
-            }, completion:{ (true) in
-                self.tabBarController?.tabBar.isHidden = false
-            })
+            }, completion: nil)
         } else {
             isEditingVerses = !isEditingVerses
-            sender.title = "Done"
+            sender.title = "Cancel"
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
-                self.tabBarController?.tabBar.isHidden = true
-                self.editViewTopAnchor = self.editView.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -(self.tabBarController?.tabBar.frame.size.height ?? 50))
-                self.editViewTopAnchor?.isActive = true
+                self.deleteButtonTopAnchor = self.deleteButton.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -40)
+                self.deleteButtonTopAnchor?.isActive = true
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
@@ -118,30 +135,23 @@ class VerseViewController: UIViewController {
         }
         indexPathToDelete.removeAll()
     }
-    
-    var editViewTopAnchor: NSLayoutConstraint?
+    var deleteButtonTopAnchor: NSLayoutConstraint?
     
     func layoutViews() {
-        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
-        verseCollectionView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        verseCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        verseCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        verseCollectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        
-        editViewTopAnchor = editView.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
-        editViewTopAnchor?.isActive = true
-        editView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        editView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        editView.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        
-        deleteButton.centerXAnchor.constraint(equalTo: editView.centerXAnchor).isActive = true
-        deleteButton.topAnchor.constraint(equalTo: editView.topAnchor, constant: 22).isActive = true
-        deleteButton.heightAnchor.constraint(equalToConstant: 8).isActive = true
+        containerView.fillContainer(for: self.view)
+        verseCollectionView.fillContainer(for: containerView)
+        deleteButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        deleteButtonTopAnchor = deleteButton.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 30)
+        deleteButtonTopAnchor?.isActive = true
+        let deleteButtonHeight: CGFloat = 30
+        deleteButton.heightAnchor.constraint(equalToConstant: deleteButtonHeight).isActive = true
         deleteButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        deleteButton.layer.cornerRadius = deleteButtonHeight / 2
+        deleteButton.layer.masksToBounds = false
+        deleteButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        deleteButton.layer.shadowColor = UIColor.black.cgColor
+        deleteButton.layer.shadowOpacity = 0.4
+        deleteButton.layer.shadowRadius = 2
     }
 
     override func didReceiveMemoryWarning() {

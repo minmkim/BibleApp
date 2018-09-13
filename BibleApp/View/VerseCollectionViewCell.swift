@@ -68,31 +68,19 @@ class VerseCollectionViewCell: UICollectionViewCell {
     }
     
     func layoutViews() {
-        containerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        containerView.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: -8))
         containerView.layer.cornerRadius = 8
         containerView.layer.masksToBounds = true
         
-        bibleVerseLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8).isActive = true
-        bibleVerseLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12).isActive = true
-        bibleVerseLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12).isActive = true
-        bibleVerseLabel.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        
+        bibleVerseLabel.addSpecificAnchors(topContainer: containerView, leadingContainer: containerView, trailingContainer: containerView, bottomContainer: nil, heightConstant: 16, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 12, bottom: 0, right: -12))
+        bibleVerseText.addSpecificAnchors(topContainer: nil, leadingContainer: bibleVerseLabel, trailingContainer: bibleVerseLabel, bottomContainer: containerView, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil)
         bibleVerseText.topAnchor.constraint(equalTo: bibleVerseLabel.bottomAnchor).isActive = true
-        bibleVerseText.leadingAnchor.constraint(equalTo: bibleVerseLabel.leadingAnchor).isActive = true
-        bibleVerseText.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        bibleVerseText.trailingAnchor.constraint(equalTo: bibleVerseLabel.trailingAnchor).isActive = true
         
-        deleteImage.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 4).isActive = true
-        deleteImage.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -4).isActive = true
-        deleteImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        deleteImage.addSpecificAnchors(topContainer: containerView, leadingContainer: nil, trailingContainer: containerView, bottomContainer: nil, heightConstant: 25, widthConstant: nil, heightContainer: nil, widthContainer: nil)
         deleteImage.widthAnchor.constraint(equalTo: deleteImage.heightAnchor).isActive = true
     }
     
     override func layoutSubviews() {
-        print("reset")
         super.layoutSubviews()
         gradientLayer.frame = self.bounds
         gradientLayer.colors = [UIColor.red.cgColor, UIColor.orange.cgColor]

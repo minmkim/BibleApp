@@ -54,6 +54,10 @@ class IndexTracker: UIView {
         backgroundColor = .clear
         addSubview(containerStack)
         addSubview(bookMarker)
+        setUpViews()
+    }
+    
+    func setUpViews() {
         layoutViews()
         setSkipCounter()
         processList()
@@ -141,10 +145,8 @@ class IndexTracker: UIView {
     
     func updatePositionOfBookMarker(index: Int) {
         if currentIndex == index {
-            print("return")
             return
         } else {
-            print("continue")
             currentIndex = index
         }
         if !didCalculateHeightOfMarker {

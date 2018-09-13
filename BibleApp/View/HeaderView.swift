@@ -51,15 +51,20 @@ class HeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var multipler: Double = 0.0
+    
     func updateProgressBar(multipler: Double) {
-        let frame = self.frame.width
-        let constant = Double(frame) * multipler
-        progressBarTrailingAnchor?.isActive = false
-        progressBarTrailingAnchor = progressBar.trailingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(constant))
-        progressBarTrailingAnchor?.isActive = true
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.layoutIfNeeded()
-        }, completion: nil)
+        if multipler != self.multipler {
+            self.multipler = multipler
+            let frame = self.frame.width
+            let constant = Double(frame) * multipler
+            progressBarTrailingAnchor?.isActive = false
+            progressBarTrailingAnchor = progressBar.trailingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(constant))
+            progressBarTrailingAnchor?.isActive = true
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.layoutIfNeeded()
+            }, completion: nil)
+        }
     }
     
     
@@ -67,18 +72,13 @@ class HeaderView: UITableViewHeaderFooterView {
     var progressBarTrailingAnchor: NSLayoutConstraint?
     
     func layoutHeader() {
-        containerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        containerView.fillContainer(for: self)
         
         progressBar.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
         progressBar.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
         progressBar.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         progressBarTrailingAnchor = progressBar.trailingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: -20)
         progressBarTrailingAnchor?.isActive = true
-        
-        
         
         chapterLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
         chapterLabel.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true

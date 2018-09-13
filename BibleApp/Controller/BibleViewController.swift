@@ -13,7 +13,6 @@ class BibleViewController: UIViewController {
     var bible: Bible!
     let oldIndexArray = ["Gn", "Ex", "Lv", "Nu", "Dt", "Jos", "Jdg", "Rut", "1Sa", "2Sa", "1Ki", "2Ki", "1Ch", "2Ch", "Ez", "Neh", "Es", "Job", "Ps", "Prv", "Ecc", "Sng", "Is", "Jer", "Lam", "Ez", "Dan", "Hos", "Jol", "Am", "Oba", "Jon", "Mic", "Nah", "Hab", "Zep", "Hag", "Zec", "Mal", "Mt", "Mk", "Lk", "Jn", "Ac", "Ro", "1Co", "2Co", "Gal", "Eph", "Php", "Col", "1Th", "2Th", "1Ti", "2Ti", "Ti", "Ph", "Heb", "Jm", "1Pt", "2Pt", "1Jn", "2Jn", "3Jn", "Jud", "Rv"]
     
-    
     let containerView: UIView = {
         let cv = UIView()
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -34,19 +33,33 @@ class BibleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        NotificationCenter.default.addObserver(self, selector: #selector(darkModeEnabled), name: .darkModeEnabled, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(darkModeDisabled), name: .darkModeDisabled, object: nil)
+        view.addSubview(containerView)
+        view.addSubview(bibleTableView)
+        view.addSubview(indexList)
+        layoutViews()
+        self.navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+        tabBarController?.tabBar.barTintColor = .white
+        tabBarController?.tabBar.isTranslucent = false
         self.navigationController?.navigationBar.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
-        view.backgroundColor = .white
         bibleTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         bibleTableView.dataSource = self
         bibleTableView.delegate = self
         bibleTableView.separatorStyle = .none
         bibleTableView.showsVerticalScrollIndicator = false
         navigationItem.title = "Mt. Zion"
-        view.addSubview(containerView)
-        view.addSubview(bibleTableView)
-        view.addSubview(indexList)
         indexList.delegate = self
-        layoutViews()
+    }
+    
+    var isDarkMode = false
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        print("rotated")
+//        indexList.layoutIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,20 +68,12 @@ class BibleViewController: UIViewController {
     }
     
     func layoutViews() {
-        indexList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
-        indexList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        indexList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
-        indexList.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        
-        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        indexList.addSpecificAnchors(topContainer: self.view, leadingContainer: self.view, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: 25, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0))
+
+        containerView.addSpecificAnchors(topContainer: self.view, leadingContainer: nil, trailingContainer: self.view, bottomContainer: self.view, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil)
         containerView.leadingAnchor.constraint(equalTo: indexList.trailingAnchor).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
-        bibleTableView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        bibleTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        bibleTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        bibleTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        bibleTableView.fillContainer(for: containerView)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -120,6 +125,11 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         cell.selectedBackgroundView = backgroundView
         cell.accessoryType = .detailButton
         cell.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
+        if isDarkMode {
+            let theme = Theme.dark
+            cell.backgroundColor = theme.backgroundColor
+            cell.textLabel?.textColor = theme.textColor
+        }
         return cell
     }
     
@@ -162,7 +172,6 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         }
         
     }
-    
     
     func pressedIndex(at index: Int) {
         if index < 0 || index > (oldIndexArray.count - 1) {

@@ -16,13 +16,11 @@ class BookTableController: UIViewController {
 
     let bookTableView: UITableView = {
        let bt = UITableView()
-        bt.translatesAutoresizingMaskIntoConstraints = false
         return bt
     }()
     
     lazy var indexList: IndexTracker = {
         let il = IndexTracker(frame: .zero, indexList: Array(1...bookDict.count).map({String($0)}), height: view.frame.height - 200)
-        il.translatesAutoresizingMaskIntoConstraints = false
         return il
     }()
     
@@ -31,10 +29,13 @@ class BookTableController: UIViewController {
         view.addSubview(bookTableView)
         view.addSubview(indexList)
         view.backgroundColor = .white
-        navigationController?.navigationBar.prefersLargeTitles = false
-        setupTableView()
         layoutViews()
         indexList.delegate = self
+        setupTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     func setupTableView() {
@@ -49,17 +50,14 @@ class BookTableController: UIViewController {
     }
     
     func layoutViews() {
-        indexList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12).isActive = true
-        indexList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12).isActive = true
-        indexList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        indexList.widthAnchor.constraint(equalToConstant: 22).isActive = true
-        
-        bookTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        bookTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        bookTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        bookTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        indexList.addSpecificAnchors(topContainer: self.view, leadingContainer: self.view, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: 22, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 12, left: 0, bottom: -12, right: 0))
+        bookTableView.fillContainer(for: self.view)
         indexList.setFrame(frameHeight: view.frame.height - 200)
     }
+    
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        indexList.resetViews(indexList: Array(1...bookDict.count).map({String($0)}), height: view.frame.height - 200)
+//    }
     
 }
 
@@ -107,7 +105,6 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         
         let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            print("share")
             guard var verse = cell.verse else {return}
             verse += "\n\(String(describing: self.navigationItem.title!)) \(indexPath.section + 1):\(indexPath.row + 1)"
             let activityVC = UIActivityViewController(activityItems: [verse], applicationActivities: nil)

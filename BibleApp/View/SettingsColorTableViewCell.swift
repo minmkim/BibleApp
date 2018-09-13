@@ -12,8 +12,6 @@ class SettingsColorTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // Initialization code
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -39,11 +37,7 @@ class SettingsColorTableViewCell: UITableViewCell {
     }
     
     func layoutViews() {
-        containerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        
+        containerView.fillContainer(for: self)
         colorStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         colorStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
         colorStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true

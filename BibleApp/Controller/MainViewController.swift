@@ -32,7 +32,7 @@ class MainViewController: UITabBarController {
         let navigationController4 = UINavigationController(rootViewController: settingsViewController)
         settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 3)
         
-        viewControllers = [navigationController1, navigationController2, navigationController3, navigationController4]
+        viewControllers = [navigationController1, navigationController2, navigationController3]
     }
 
     override func didReceiveMemoryWarning() {

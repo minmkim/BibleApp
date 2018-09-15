@@ -31,10 +31,16 @@ class BibleViewController: UIViewController {
         return il
     }()
     
+    var dominantHand: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        NotificationCenter.default.addObserver(self, selector: #selector(darkModeEnabled), name: .darkModeEnabled, object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(darkModeDisabled), name: .darkModeDisabled, object: nil)
+        dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
+        if dominantHand == "" {
+            UserDefaults.standard.set("Left", forKey: "DominantHand")
+        }
         view.addSubview(containerView)
         view.addSubview(bibleTableView)
         view.addSubview(indexList)
@@ -65,16 +71,82 @@ class BibleViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
+        let newDominant = UserDefaults.standard.string(forKey: "DominantHand")
+        if newDominant != dominantHand {
+            dominantHand = newDominant
+            
+            indexListLeadingAnchor?.isActive = false
+            indexListTrailingAnchor?.isActive = false
+            containerViewLeadingAnchor?.isActive = false
+            containerViewTrailingAnchor?.isActive = false
+            indexListWidthAnchor?.isActive = false
+            
+            UIView.animate(withDuration: 0.01, animations: {
+                if self.dominantHand == "Left" {
+                    self.indexListLeadingAnchor = self.indexList.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+                    self.indexListLeadingAnchor?.isActive = true
+                    self.indexListWidthAnchor?.isActive = true
+                    
+                    self.containerViewTrailingAnchor = self.containerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+                    self.containerViewTrailingAnchor?.isActive = true
+                    self.indexListWidthAnchor = self.indexList.widthAnchor.constraint(equalToConstant: 25)
+                    self.view.layoutIfNeeded()
+                } else {
+                    self.indexListTrailingAnchor = self.indexList.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+                    self.indexListTrailingAnchor?.isActive = true
+                    self.indexListWidthAnchor?.isActive = true
+                    
+                    self.containerViewLeadingAnchor = self.containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+                    self.containerViewLeadingAnchor?.isActive = true
+                    self.indexListWidthAnchor = self.indexList.widthAnchor.constraint(equalToConstant: 25)
+                    self.view.layoutIfNeeded()
+                }
+            }) { (true) in
+                if self.dominantHand == "Left" {
+                    self.containerViewLeadingAnchor = self.containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25)
+                    self.containerViewLeadingAnchor?.isActive = true
+                    self.view.layoutIfNeeded()
+                } else {
+                    self.containerViewTrailingAnchor = self.containerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -25)
+                    self.containerViewTrailingAnchor?.isActive = true
+                    self.view.layoutIfNeeded()
+                }
+            }
+        }
     }
     
+    var indexListLeadingAnchor: NSLayoutConstraint?
+    var indexListTrailingAnchor: NSLayoutConstraint?
+    var indexListWidthAnchor: NSLayoutConstraint?
+    var containerViewLeadingAnchor: NSLayoutConstraint?
+    var containerViewTrailingAnchor: NSLayoutConstraint?
+    
+    
     func layoutViews() {
-        indexList.addSpecificAnchors(topContainer: self.view, leadingContainer: self.view, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: 25, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0))
-
-        containerView.addSpecificAnchors(topContainer: self.view, leadingContainer: nil, trailingContainer: self.view, bottomContainer: self.view, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil)
-        containerView.leadingAnchor.constraint(equalTo: indexList.trailingAnchor).isActive = true
-        
-        bibleTableView.fillContainer(for: containerView)
+        indexListWidthAnchor = indexList.widthAnchor.constraint(equalToConstant: 25)
+        indexListWidthAnchor?.isActive = true
+        if dominantHand == "Left" {
+            indexList.addSpecificAnchors(topContainer: self.view, leadingContainer: nil, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0))
+            indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+            indexListLeadingAnchor?.isActive = true
+            containerView.addSpecificAnchors(topContainer: self.view, leadingContainer: nil, trailingContainer: self.view, bottomContainer: self.view, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil)
+            containerViewLeadingAnchor = containerView.leadingAnchor.constraint(equalTo: indexList.trailingAnchor)
+            containerViewLeadingAnchor?.isActive = true
+            
+            bibleTableView.fillContainer(for: containerView)
+        } else {
+            containerView.addSpecificAnchors(topContainer: self.view, leadingContainer: self.view, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil)
+            indexList.addSpecificAnchors(topContainer: self.view, leadingContainer: nil, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0))
+            indexListTrailingAnchor = indexList.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            indexListTrailingAnchor?.isActive = true
+            
+            containerViewTrailingAnchor = containerView.trailingAnchor.constraint(equalTo: indexList.leadingAnchor)
+            containerViewTrailingAnchor?.isActive = true
+            
+            bibleTableView.fillContainer(for: containerView)
+        }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

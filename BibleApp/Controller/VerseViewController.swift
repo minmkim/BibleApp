@@ -58,7 +58,6 @@ class VerseViewController: UIViewController {
     }()
     
     @objc func didPressDelete() {
-        
         indexPathToDelete.forEach { (indexPath) in
             let cell = self.verseCollectionView.cellForItem(at: indexPath) as! VerseCollectionViewCell
             cell.deleteImage.isHidden = true

@@ -9,15 +9,20 @@
 import UIKit
 
 class SettingsTableViewController: UITableViewController {
+    
+    var dominantHand: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
+        if dominantHand == "" {
+            UserDefaults.standard.set("Left", forKey: "DominantHand")
+        }
         tableView = UITableView(frame: .zero, style: .grouped)
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Settings"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(SettingsColorTableViewCell.self, forCellReuseIdentifier: "color")
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,7 +38,16 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Test"
+        switch section {
+        case 0:
+            return "Appearance"
+        case 1:
+            return "Dominant Hand"
+        case 2:
+            return "Test"
+        default:
+            return "Test"
+        }
     }
     
     var heightOfColorRow: CGFloat = 0
@@ -47,7 +61,12 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 && indexPath.row == 1 {
+        switch (indexPath.section, indexPath.row) {
+        case (0,0):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = "Set Main Accent Color"
+            return cell
+        case (0,1):
             let cell = tableView.dequeueReusableCell(withIdentifier: "color", for: indexPath) as! SettingsColorTableViewCell
             cell.selectionStyle = .none
             cell.containerView.isHidden = true
@@ -56,21 +75,33 @@ class SettingsTableViewController: UITableViewController {
                 self.receivedColor(color: color)
             }
             return cell
-            
-        } else if indexPath.section == 0 && indexPath.row == 0 {
+        case (1,0):
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.text = "Set Main Accent Color"
+            cell.textLabel?.text = "Left Hand"
+            if dominantHand == "Left" {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
             return cell
-        } else {
+        case (1,1):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = "Right Hand"
+            if dominantHand == "Right" {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+            return cell
+        default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             return cell
         }
-        
     }
     
     func receivedColor(color: UIColor) {
         let defaults = UserDefaults.standard
-        defaults.set(color, forKey: "MainColor")
+//        defaults.set(color, forKey: "MainColor")
         tabBarController?.tabBar.tintColor = color
 //        defaults.set(color, forKey: "MainColor")
 //
@@ -87,6 +118,28 @@ class SettingsTableViewController: UITableViewController {
             let index = IndexPath(row: 1, section: 0)
             let cell = tableView.cellForRow(at: index) as! SettingsColorTableViewCell
             cell.containerView.isHidden = false
+        case (1,0):
+            let cell = tableView.cellForRow(at: indexPath)
+            if dominantHand == "Right" {
+                cell?.accessoryType = .checkmark
+                let defaults = UserDefaults.standard
+                defaults.set("Left", forKey: "DominantHand")
+                dominantHand = "Left"
+                let otherIndex = IndexPath(row: 1, section: 1)
+                let otherCell = tableView.cellForRow(at: otherIndex)
+                otherCell?.accessoryType = .none
+            }
+        case (1,1):
+            let cell = tableView.cellForRow(at: indexPath)
+            if dominantHand == "Left" {
+                cell?.accessoryType = .checkmark
+                let defaults = UserDefaults.standard
+                defaults.set("Right", forKey: "DominantHand")
+                dominantHand = "Right"
+                let otherIndex = IndexPath(row: 0, section: 1)
+                let otherCell = tableView.cellForRow(at: otherIndex)
+                otherCell?.accessoryType = .none
+            }
         default:
             return
         }

@@ -39,6 +39,10 @@ class BookTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         addSubview(verseText)
         addSubview(numberLabel)
+        dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
+        if dominantHand == "" {
+            UserDefaults.standard.set("Left", forKey: "DominantHand")
+        }
         layoutViews()
     }
 
@@ -49,9 +53,16 @@ class BookTableViewCell: UITableViewCell {
         selectedBackgroundView = backgroundView
     }
     
+    var dominantHand: String?
+    
     func layoutViews() {
-        verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 32, bottom: 0, right: -12))
-        numberLabel.addSpecificAnchors(topContainer: verseText, leadingContainer: self, trailingContainer: nil, bottomContainer: nil, heightConstant: 8, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0))
+        if dominantHand == "Left" {
+            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 32, bottom: 0, right: -12))
+            numberLabel.addSpecificAnchors(topContainer: verseText, leadingContainer: self, trailingContainer: nil, bottomContainer: nil, heightConstant: 8, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0))
+        } else {
+            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: -18))
+            numberLabel.addSpecificAnchors(topContainer: verseText, leadingContainer: self, trailingContainer: nil, bottomContainer: nil, heightConstant: 8, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
+        }
     }
 
 }

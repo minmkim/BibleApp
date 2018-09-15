@@ -26,6 +26,10 @@ class BookTableController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
+        if dominantHand == "" {
+            UserDefaults.standard.set("Left", forKey: "DominantHand")
+        }
         view.addSubview(bookTableView)
         view.addSubview(indexList)
         view.backgroundColor = .white
@@ -49,8 +53,20 @@ class BookTableController: UIViewController {
         bookTableView.allowsMultipleSelectionDuringEditing = true
     }
     
+    var dominantHand: String?
+    var indexListLeadingAnchor: NSLayoutConstraint?
+    var indexListTrailingAnchor: NSLayoutConstraint?
+    
     func layoutViews() {
-        indexList.addSpecificAnchors(topContainer: self.view, leadingContainer: self.view, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: 22, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 12, left: 0, bottom: -12, right: 0))
+        indexList.addSpecificAnchors(topContainer: self.view, leadingContainer: nil, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: 22, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 12, left: 0, bottom: -12, right: 0))
+        if dominantHand == "Left" {
+            indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+            indexListLeadingAnchor?.isActive = true
+        } else {
+            indexListTrailingAnchor = indexList.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            indexListTrailingAnchor?.isActive = true
+        }
+        
         bookTableView.fillContainer(for: self.view)
         indexList.setFrame(frameHeight: view.frame.height - 200)
     }

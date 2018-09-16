@@ -11,6 +11,7 @@ import UIKit
 class BibleViewController: UIViewController {
 
     var bible: Bible!
+    weak var bibleCoordinatorDelegate: BibleCoordinatorDelegate?
     let oldIndexArray = ["Gn", "Ex", "Lv", "Nu", "Dt", "Jos", "Jdg", "Rut", "1Sa", "2Sa", "1Ki", "2Ki", "1Ch", "2Ch", "Ez", "Neh", "Es", "Job", "Ps", "Prv", "Ecc", "Sng", "Is", "Jer", "Lam", "Ez", "Dan", "Hos", "Jol", "Am", "Oba", "Jon", "Mic", "Nah", "Hab", "Zep", "Hag", "Zec", "Mal", "Mt", "Mk", "Lk", "Jn", "Ac", "Ro", "1Co", "2Co", "Gal", "Eph", "Php", "Col", "1Th", "2Th", "1Ti", "2Ti", "Ti", "Ph", "Heb", "Jm", "1Pt", "2Pt", "1Jn", "2Jn", "3Jn", "Jud", "Rv"]
     
     let containerView: UIView = {
@@ -35,8 +36,6 @@ class BibleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        NotificationCenter.default.addObserver(self, selector: #selector(darkModeEnabled), name: .darkModeEnabled, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(darkModeDisabled), name: .darkModeDisabled, object: nil)
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
         if dominantHand == "" {
             UserDefaults.standard.set("Left", forKey: "DominantHand")
@@ -152,27 +151,21 @@ class BibleViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func presentBook(for dict: [Int : [String]], book: String) {
-        let controller = BookTableController()
-        controller.bookDict = dict
-        controller.navigationItem.title = book
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
     
-    func presentBookAndScroll(for dict: [Int : [String]], book: String, chapter: Int, verse: Int) {
-        let controller = BookTableController()
-        controller.bookDict = dict
-        controller.navigationItem.title = book
-        self.navigationController?.pushViewController(controller, animated: true)
-        let indexPath = IndexPath(item: verse - 1, section: chapter - 1)
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-            controller.bookTableView.scrollToRow(at: indexPath, at: .middle, animated: true)
-            controller.bookTableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
-            let _ = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false) { timer in
-                controller.bookTableView.deselectRow(at: indexPath, animated: true)
-            }
-        }
-    }
+//    func presentBookAndScroll(for dict: [Int : [String]], book: String, chapter: Int, verse: Int) {
+//        let controller = BookTableController()
+//        controller.bookDict = dict
+//        controller.navigationItem.title = book
+//        self.navigationController?.pushViewController(controller, animated: true)
+//        let indexPath = IndexPath(item: verse - 1, section: chapter - 1)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+//            controller.bookTableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+//            controller.bookTableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+//            let _ = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false) { timer in
+//                controller.bookTableView.deselectRow(at: indexPath, animated: true)
+//            }
+//        }
+//    }
     
 }
 
@@ -206,28 +199,13 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     }
     
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let controller = BibleBookDetailViewController()
-        if indexPath.section < bible.booksOfOldTestament.count {
-            controller.book = bible.booksOfOldTestamentStrings[indexPath.section]
-        } else {
-            controller.book = bible.booksOfNewTestamentStrings[indexPath.section - bible.booksOfOldTestament.count]
-        }
-        DispatchQueue.main.async {
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
+        bibleCoordinatorDelegate?.openBibleWebsite(for: indexPath)
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var book = ""
-        if indexPath.section < bible.booksOfOldTestament.count {
-            book = bible.booksOfOldTestamentStrings[indexPath.section]
-        } else {
-            book = bible.booksOfNewTestamentStrings[indexPath.section - bible.booksOfOldTestament.count]
-        }
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let dict = bible.bookVerseDictionary[book] else {return}
-        presentBook(for: dict, book: book)
+        bibleCoordinatorDelegate?.openBibleBook(for: indexPath)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -259,5 +237,10 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
             }
         }       
     }
+}
+
+protocol BibleCoordinatorDelegate: class {
+    func openBibleBook(for indexPath: IndexPath)
+    func openBibleWebsite(for indexPath: IndexPath)
 }
 

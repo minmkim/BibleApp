@@ -13,12 +13,15 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var appCoordinator: AppCoordinator!
     var launchedShortcutItem: UIApplicationShortcutItem?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
-        window?.makeKeyAndVisible()
-        window?.rootViewController = MainViewController()
+        appCoordinator = AppCoordinator(window: window)
+        appCoordinator.start()
+//        window?.rootViewController = MainViewController()
+//        window?.makeKeyAndVisible()
         return true
     }
 

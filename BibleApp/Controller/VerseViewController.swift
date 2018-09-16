@@ -11,6 +11,7 @@ import CoreData
 
 class VerseViewController: UIViewController {
     
+    weak var savedVerseDelegate: SavedVerseDelegate?
     var savedVerses = [BibleVerse]()
     let dataManager = VersesDataManager()
     var isEditingVerses = false
@@ -159,19 +160,7 @@ class VerseViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    func transitionToBibleViewController(for verse: BibleVerse) {
-        let bibleNavController = self.tabBarController?.viewControllers![0] as! UINavigationController
-        bibleNavController.popToRootViewController(animated: false)
-        let bibleViewController = bibleNavController.viewControllers.first as! BibleViewController
-        tabBarController?.selectedViewController = bibleNavController
-        guard let dict = bibleViewController.bible.bookVerseDictionary[verse.book] else {return}
-        let book = verse.book
-        let chapter = verse.chapter
-        let verse = verse.verse
-        bibleViewController.presentBookAndScroll(for: dict, book: book, chapter: chapter, verse: verse)
-    }
-    
+
 }
 
 extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -202,7 +191,7 @@ extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let cell = verseCollectionView.cellForItem(at: indexPath) as! VerseCollectionViewCell
         if !isEditingVerses {
             guard let verse = cell.verse else {return}
-            transitionToBibleViewController(for: verse)
+            savedVerseDelegate?.requestToOpenVerse(for: verse)
         } else {
             if cell.deleteImage.isHidden {
                 cell.deleteImage.isHidden = false
@@ -210,9 +199,12 @@ extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSou
             } else {
                 cell.deleteImage.isHidden = true
                 indexPathToDelete = indexPathToDelete.filter( {$0 != indexPath})
-                print(indexPathToDelete)
             }
         }
     }
     
+}
+
+protocol SavedVerseDelegate: class {
+    func requestToOpenVerse(for verse: BibleVerse)
 }

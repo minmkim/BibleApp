@@ -25,6 +25,8 @@ class SearchViewModel {
     var filteredChapters = [Int]()
     var filteredVerses = [Int]()
     
+    weak var searchBibleDelegate: SearchBibleDelegate?
+    
     init(bible: Bible) {
         self.bible = bible
         bookStrings = bible.booksOfOldTestamentStrings + bible.booksOfNewTestamentStrings
@@ -176,7 +178,9 @@ class SearchViewModel {
             }
             return "\(filteredBooks[0]) \(filteredChapters[0]):"
         case .verse:
-            return "\(filteredBooks[0]) \(filteredChapters[0]):\(filteredVerses[index])"
+            guard let number = number else {return ""}
+            searchBibleDelegate?.requestToOpenBibleVerse(book: filteredBooks[0], chapter: filteredChapters[0], verse: filteredVerses[number])
+            return ""
         }
     }
     
@@ -186,15 +190,18 @@ class SearchViewModel {
             return []
         case .book:
             guard let book = filteredBooks.first else {return []}
+            searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: 1, verse: 1)
             return [book]
         case .chapter:
             guard let book = filteredBooks.first else {return []}
             guard let chapter = filteredChapters.first else { return [filteredBooks[0]]}
+            searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: chapter, verse: 1)
                 return [book, chapter]
         case .verse:
             guard let book = filteredBooks.first else {return []}
             guard let chapter = filteredChapters.first else { return [filteredBooks[0]]}
             guard let verse = filteredVerses.first else { return [filteredBooks[0], filteredChapters[0]] }
+            searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: chapter, verse: verse)
             return [book, chapter, verse]
         }
     }
@@ -213,3 +220,8 @@ class SearchViewModel {
     }
 
 }
+
+protocol SearchBibleDelegate: class {
+    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int)
+}
+

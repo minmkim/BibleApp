@@ -13,15 +13,6 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating, UISe
     let searchController = UISearchController(searchResultsController: nil)
     var searchViewModel: SearchViewModel!
     
-    init(style: UITableViewStyle, bible: Bible) {
-        super.init(style: style)
-        searchViewModel = SearchViewModel(bible: bible)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Search"
@@ -101,7 +92,6 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating, UISe
         return cell
     }
     
-    //need to clean this func
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let firstIndexPath = IndexPath(row: 0, section: 0)
@@ -110,19 +100,8 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating, UISe
         }
         
         if searchViewModel.searchParameter == .verse {
-            let text = searchViewModel.didSelectItem(at: indexPath.row, number: nil)
-            let splitText = text.components(separatedBy: " ")
-            var splitChapterVerse = [String]()
-            if splitText.count < 3 {
-                splitChapterVerse = splitText[1].components(separatedBy: ":")
-            } else if splitText.count == 3 { // any book with number
-                splitChapterVerse = splitText[2].components(separatedBy: ":")
-            } else if splitText.count == 4 { // song of songs
-                splitChapterVerse = splitText[3].components(separatedBy: ":")
-            }
-            guard let chapter = Int(splitChapterVerse[0]) else {return}
-            guard let verse = Int(splitChapterVerse[1]) else {return}
-            transitionToBibleViewController(chapter: chapter, verse: verse)
+            let _ = searchViewModel.didSelectItem(at: indexPath.row, number: indexPath.row)
+            searchController.searchBar.text? = ""
 
         } else {
             guard let cell = tableView.cellForRow(at: indexPath) else {return}
@@ -159,25 +138,6 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating, UISe
         return headerView
     }
     
-    func transitionToBibleViewController(chapter: Int?, verse: Int?) {
-        let bibleNavController = self.tabBarController?.viewControllers![0] as! UINavigationController
-        bibleNavController.popToRootViewController(animated: false)
-        let bibleViewController = bibleNavController.viewControllers.first as! BibleViewController
-        tabBarController?.selectedViewController = bibleNavController
-        guard let dict = bibleViewController.bible.bookVerseDictionary[searchViewModel.filteredBooks[0]] else {return}
-        guard var chapter = chapter else {return}
-        guard var verse = verse else {return}
-        if chapter > dict.count {
-            chapter = dict.count
-        }
-        guard let numberOfVerses = dict[chapter]?.count else {return}
-        if verse > numberOfVerses {
-            verse = numberOfVerses
-        }
-        bibleViewController.presentBookAndScroll(for: dict, book: self.searchViewModel.filteredBooks[0], chapter: chapter, verse: verse)
-        searchController.searchBar.text? = ""
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchController.searchBar.text else {return}
         let array = searchViewModel.searchPressed(for: text)
@@ -186,19 +146,6 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating, UISe
             return
         }
         searchController.searchBar.resignFirstResponder()
-        switch array.count {
-        case 1:
-            transitionToBibleViewController(chapter: 1, verse: 1)
-        case 2:
-            guard let chapter = array[1] as? Int else {return}
-            transitionToBibleViewController(chapter: chapter, verse: 1)
-        case 3:
-            guard let chapter = array[1] as? Int else {return}
-            guard let verse = array[2] as? Int else {return}
-            transitionToBibleViewController(chapter: chapter, verse: verse)
-        default:
-            print("error in searchbarclicked")
-        }
     }
    
 }

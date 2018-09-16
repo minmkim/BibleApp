@@ -12,7 +12,11 @@ import CloudKit
 
 class BookTableController: UIViewController {
     
-    var bookDict = [Int: [String]]()
+    var bookDict = [Int: [String]]() {
+        didSet {
+            bookTableView.reloadData()
+        }
+    }
 
     let bookTableView: UITableView = {
        let bt = UITableView()

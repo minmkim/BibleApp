@@ -100,9 +100,9 @@ class SettingsTableViewController: UITableViewController {
     }
     
     func receivedColor(color: UIColor) {
-        let defaults = UserDefaults.standard
-//        defaults.set(color, forKey: "MainColor")
-        tabBarController?.tabBar.tintColor = color
+//        let defaults = UserDefaults.standard
+////        defaults.set(color, forKey: "MainColor")
+//        tabBarController?.tabBar.tintColor = color
 //        defaults.set(color, forKey: "MainColor")
 //
 //        let newColor = defaults.object(forKey: "MainColor") as! UIColor

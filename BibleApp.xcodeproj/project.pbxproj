@@ -288,7 +288,6 @@
 				A4FD28E72118922B008E0A69 /* AppDelegate.swift */,
 				A4FD28EE2118922F008E0A69 /* Assets.xcassets */,
 				A4FD28F02118922F008E0A69 /* LaunchScreen.storyboard */,
-				A4FD28F32118922F008E0A69 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -453,6 +452,7 @@
 				8CF05637214E10F700CD7AE5 /* Helper */,
 				8C79DBF0212E4E9300A428C8 /* Network */,
 				8C66D908212F442B00EE6503 /* MtZion.xcdatamodeld */,
+				A4FD28F32118922F008E0A69 /* Info.plist */,
 				8C266068214E0FDB00EFAE42 /* Resources */,
 				A4FD29172118942D008E0A69 /* Bible */,
 				8C79DBEC212E4E7000A428C8 /* BibleApp.entitlements */,

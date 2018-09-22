@@ -42,7 +42,6 @@ class VersesDataManager {
             newVerse.setValue(bibleVerse.chapter, forKeyPath: CoreDataVerse.chapter)
             newVerse.setValue(bibleVerse.verse, forKeyPath: CoreDataVerse.verse)
             newVerse.setValue(bibleVerse.text, forKeyPath: CoreDataVerse.text)
-            newVerse.setValue(bibleVerse.id, forKeyPath: CoreDataVerse.id)
             
             do {
                 try managedContext.save()
@@ -85,6 +84,43 @@ class VersesDataManager {
             try managedContext.save()
         } catch {
             print("error")
+        }
+    }
+    
+    func loadBible() -> [BibleVerse] {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
+        var savedVerses = [BibleVerse]()
+        do {
+            let fetchedVerses = try managedContext.fetch(fetchRequest)
+            fetchedVerses.forEach { (verse) in
+                let newVerse = BibleVerse(fetchedVerse: verse)
+                savedVerses.append(newVerse)
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        return savedVerses
+    }
+    
+    func createBible(bibleVerse: BibleVerse) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: CoreDataBible.entity, in: managedContext)!
+        
+        let newVerse = NSManagedObject(entity: entity, insertInto: managedContext)
+        newVerse.setValue(bibleVerse.book, forKeyPath: CoreDataBible.book)
+        newVerse.setValue(bibleVerse.chapter, forKeyPath: CoreDataBible.chapter)
+        newVerse.setValue(bibleVerse.verse, forKeyPath: CoreDataBible.verse)
+        newVerse.setValue(bibleVerse.text, forKeyPath: CoreDataBible.text)
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
         }
     }
     

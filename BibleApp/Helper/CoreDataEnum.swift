@@ -14,7 +14,14 @@ enum CoreDataVerse {
     static let chapter = "chapter"
     static let verse = "verse"
     static let text = "text"
-    static let id = "id"
+}
+
+enum CoreDataBible {
+    static let entity = "CDBible"
+    static let book = "book"
+    static let chapter = "chapter"
+    static let verse = "verse"
+    static let text = "text"
 }
 
 

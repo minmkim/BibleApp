@@ -20,20 +20,30 @@ class Bible {
     let booksOfNewTestamentStrings = ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]
     
     var bookVerseDictionary = [String:[Int:[String]]]()
+    var bible = [String: [BibleVerse]]()
     
     init() {
-        var oldCounter = 0
-        var newCounter = 0
-        DispatchQueue.global(qos: .userInitiated).async { // 1
-            self.booksOfOldTestament.forEach { (book) in
-                self.bookVerseDictionary[self.booksOfOldTestamentStrings[oldCounter]] = self.createBookDictionary(book)
-                oldCounter += 1
+        let didCreateCoreDataBible = UserDefaults.standard.bool(forKey: "didCreateCoreDataBible")
+        if !didCreateCoreDataBible {
+            var oldCounter = 0
+            var newCounter = 0
+            DispatchQueue.main.async { // 1
+                self.booksOfOldTestament.forEach { (book) in
+                    self.bookVerseDictionary[self.booksOfOldTestamentStrings[oldCounter]] = self.createBookDictionary(book)
+                    oldCounter += 1
+                }
+                self.booksOfNewTestament.forEach { (book) in
+                    self.bookVerseDictionary[self.booksOfNewTestamentStrings[newCounter]] = self.createBookDictionary(book)
+                    newCounter += 1
+                }
+                self.createCoreDatabible()
             }
-            self.booksOfNewTestament.forEach { (book) in
-                self.bookVerseDictionary[self.booksOfNewTestamentStrings[newCounter]] = self.createBookDictionary(book)
-                newCounter += 1
-            }
+            UserDefaults.standard.set(true, forKey: "didCreateCoreDataBible")
+        } else {
+            loadBible()
         }
+        
+        
     }
     
     private func removeNumber(_ verse: String) -> String {
@@ -46,7 +56,7 @@ class Bible {
         }
     }
     
-    func createBookDictionary(_ book: String) -> [Int:[String]] {
+    private func createBookDictionary(_ book: String) -> [Int:[String]] {
         let bookArray = book.components(separatedBy: "\n")
         var currentChapter = 1
         var versesInchapterArray = [String]()
@@ -88,6 +98,31 @@ class Bible {
             }
         }
         return bookDict
+    }
+    
+    lazy var verseDataManager = VersesDataManager()
+    
+    private func createCoreDatabible() {
+        bookVerseDictionary.forEach { (book, chapterVerse) in
+            for (chapter, verses) in chapterVerse {
+                var verseCounter = 0
+                for text in verses {
+                    verseCounter += 1
+                    let bibleVerse = BibleVerse(book: book, chapter: chapter, verse: verseCounter, text: text)
+                    verseDataManager.createBible(bibleVerse: bibleVerse)
+                }
+            }
+        }
+    }
+    
+    private func loadBible() {
+        let bibleVerses = verseDataManager.loadBible()
+        bibleVerses.forEach { (bibleVerse) in
+            var bibleVerseArray = [BibleVerse]()
+            bibleVerseArray = bible[bibleVerse.book] ?? []
+            bibleVerseArray.append(bibleVerse)
+            bible[bibleVerse.book] = bibleVerseArray
+        }
     }
     
 }

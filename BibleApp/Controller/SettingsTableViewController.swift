@@ -15,8 +15,10 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
-        if dominantHand == "" {
+        if dominantHand == nil {
             UserDefaults.standard.set("Left", forKey: "DominantHand")
+            dominantHand = "Left"
+            tableView.reloadData()
         }
         tableView = UITableView(frame: .zero, style: .grouped)
         navigationController?.navigationBar.prefersLargeTitles = true

@@ -6,9 +6,7 @@
 //  Copyright © 2018 Min Kim. All rights reserved.
 //
 
-import Foundation
 import CoreData
-import UIKit
 
 class BibleVerse {
     
@@ -29,12 +27,6 @@ class BibleVerse {
         self.chapter = fetchedVerse.value(forKey: CoreDataVerse.chapter) as! Int
         self.verse = fetchedVerse.value(forKey: CoreDataVerse.verse) as! Int
         self.text = fetchedVerse.value(forKey: CoreDataVerse.text) as! String
-    }
-    
-    let dataManager = VersesDataManager()
-    
-    func saveToCoreData() {
-        dataManager.saveToCoreData(bibleVerse: self)
     }
     
 }

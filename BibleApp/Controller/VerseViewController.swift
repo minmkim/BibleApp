@@ -21,7 +21,6 @@ class VerseViewController: UIViewController {
                 deleteButton.setTitleColor(UIColor.lightGray, for: .normal)
                 deleteButton.isEnabled = false
             } else {
-//                deleteButton.setTitleColor(UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0), for: .normal)
                 deleteButton.setTitleColor(.white, for: .normal)
                 deleteButton.isEnabled = true
             }

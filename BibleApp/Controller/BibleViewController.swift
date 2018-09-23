@@ -37,8 +37,9 @@ class BibleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
-        if dominantHand == "" {
+        if dominantHand == nil {
             UserDefaults.standard.set("Left", forKey: "DominantHand")
+            dominantHand = "Left"
         }
         view.addSubview(containerView)
         view.addSubview(bibleTableView)
@@ -151,22 +152,6 @@ class BibleViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-//    func presentBookAndScroll(for dict: [Int : [String]], book: String, chapter: Int, verse: Int) {
-//        let controller = BookTableController()
-//        controller.bookDict = dict
-//        controller.navigationItem.title = book
-//        self.navigationController?.pushViewController(controller, animated: true)
-//        let indexPath = IndexPath(item: verse - 1, section: chapter - 1)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-//            controller.bookTableView.scrollToRow(at: indexPath, at: .middle, animated: true)
-//            controller.bookTableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
-//            let _ = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false) { timer in
-//                controller.bookTableView.deselectRow(at: indexPath, animated: true)
-//            }
-//        }
-//    }
-    
 }
 
 extension BibleViewController: UITableViewDelegate, UITableViewDataSource, IndexListDelegate {
@@ -181,9 +166,9 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if indexPath.section < bible.booksOfOldTestament.count {
-            cell.textLabel?.text = bible.booksOfOldTestamentStrings[indexPath.section]
+            cell.textLabel?.text = bible.booksOfOldTestament[indexPath.section]
         } else {
-            cell.textLabel?.text = bible.booksOfNewTestamentStrings[indexPath.section - bible.booksOfOldTestament.count]
+            cell.textLabel?.text = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
         }
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
@@ -212,10 +197,10 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         if indexList.indexState == .scrollingTable {
             guard let firstCell = bibleTableView.visibleCells.first else {return}
             guard let firstBook = firstCell.textLabel?.text else {return}
-            if let index = bible.booksOfOldTestamentStrings.index(of: firstBook) {
+            if let index = bible.booksOfOldTestament.index(of: firstBook) {
                 indexList.updatePositionOfBookMarker(index: index)
             }
-            if let index = bible.booksOfNewTestamentStrings.index(of: firstBook) {
+            if let index = bible.booksOfNewTestament.index(of: firstBook) {
                 let newIndex = index + 39
                 indexList.updatePositionOfBookMarker(index: newIndex)
             }

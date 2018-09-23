@@ -50,9 +50,9 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
     func openBibleBook(for indexPath: IndexPath) {
         var book = ""
         if indexPath.section < bible.booksOfOldTestament.count {
-            book = bible.booksOfOldTestamentStrings[indexPath.section]
+            book = bible.booksOfOldTestament[indexPath.section]
         } else {
-            book = bible.booksOfNewTestamentStrings[indexPath.section - bible.booksOfOldTestament.count]
+            book = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
         }
         guard let dict = bible.bible[book] else {return}
         let controller = BookTableController()
@@ -64,9 +64,9 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
     func openBibleWebsite(for indexPath: IndexPath) {
         let controller = BibleBookDetailViewController()
         if indexPath.section < bible.booksOfOldTestament.count {
-            controller.book = bible.booksOfOldTestamentStrings[indexPath.section]
+            controller.book = bible.booksOfOldTestament[indexPath.section]
         } else {
-            controller.book = bible.booksOfNewTestamentStrings[indexPath.section - bible.booksOfOldTestament.count]
+            controller.book = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
         }
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
     }

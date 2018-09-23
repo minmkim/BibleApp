@@ -68,8 +68,6 @@ class HeaderView: UITableViewHeaderFooterView {
         }
     }
     
-    
-    
     var progressBarTrailingAnchor: NSLayoutConstraint?
     
     func layoutHeader() {

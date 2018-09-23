@@ -29,7 +29,7 @@ class SearchViewModel {
     
     init(bible: Bible) {
         self.bible = bible
-        bookStrings = bible.booksOfOldTestamentStrings + bible.booksOfNewTestamentStrings
+        bookStrings = bible.booksOfOldTestament + bible.booksOfNewTestament
     }
     
     func emptyFiltered() {

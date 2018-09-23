@@ -12,6 +12,8 @@ import CloudKit
 
 class BookTableController: UIViewController {
     
+    lazy var versesDataManager = VersesDataManager()
+    
     var bookDict = [Int: [BibleVerse]]() {
         didSet {
             bookTableView.reloadData()
@@ -113,14 +115,14 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        let save = UITableViewRowAction(style: .default, title: "Save") { (action, indexPath) in
+        let save = UITableViewRowAction(style: .default, title: "Save") { [weak self] (action, indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            guard let book = self.navigationItem.title else {return}
+            guard let book = self?.navigationItem.title else {return}
             let chapter = indexPath.section + 1
             let verse = indexPath.row + 1
             guard let text = cell.verseText.text else {return}
             let bibleVerse = BibleVerse(book: book, chapter: chapter, verse: verse, text: text)
-            bibleVerse.saveToCoreData()
+            self?.versesDataManager.saveToCoreData(bibleVerse: bibleVerse)
         }
         
         let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in

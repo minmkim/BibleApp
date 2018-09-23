@@ -12,7 +12,7 @@ import CloudKit
 
 class BookTableController: UIViewController {
     
-    var bookDict = [Int: [String]]() {
+    var bookDict = [Int: [BibleVerse]]() {
         didSet {
             bookTableView.reloadData()
         }
@@ -92,8 +92,8 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as!BookTableViewCell
-        cell.verse = bookDict[indexPath.section + 1]?[indexPath.row]
-        cell.numberLabel.text = String(indexPath.row + 1)
+        cell.bibleVerse = bookDict[indexPath.section + 1]?[indexPath.row]
+//        cell.numberLabel.text = String(indexPath.row + 1)
         return cell
     }
     
@@ -125,7 +125,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         
         let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            guard var word = cell.verse else {return}
+            guard var word = cell.bibleVerse?.text else {return}
             guard let book = self.navigationItem.title else {return}
             let chapter = indexPath.section + 1
             let verse = indexPath.row + 1
@@ -138,7 +138,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         
         let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            guard var verse = cell.verse else {return}
+            guard var verse = cell.bibleVerse?.text else {return}
             verse += "\n\(String(describing: self.navigationItem.title!)) \(indexPath.section + 1):\(indexPath.row + 1)"
             let activityVC = UIActivityViewController(activityItems: [verse], applicationActivities: nil)
             self.present(activityVC, animated: true, completion: nil)
@@ -151,7 +151,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-        guard var word = cell.verse else {return}
+        guard var word = cell.bibleVerse?.text else {return}
         guard let book = navigationItem.title else {return}
         let chapter = indexPath.section + 1
         let verse = indexPath.row + 1

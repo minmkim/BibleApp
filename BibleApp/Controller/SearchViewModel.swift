@@ -93,7 +93,7 @@ class SearchViewModel {
             })
         case .chapter:
             if filteredBooks.count != 0 {
-                guard let book = bible.bookVerseDictionary[filteredBooks[0]] else {return}
+                guard let book = bible.bible[filteredBooks[0]] else {return}
                 filteredChapters = Array(1...book.count)
                 
                 if splitText.count == 2 {
@@ -121,7 +121,7 @@ class SearchViewModel {
             }
            
             if filteredBooks.count != 0 {
-                guard let book = bible.bookVerseDictionary[filteredBooks[0]] else {return}
+                guard let book = bible.bible[filteredBooks[0]] else {return}
                 guard let verses = book[filteredChapters[0]] else {return}
                 filteredVerses = Array(1...verses.count)
                 guard let filteredVerse = Int(splitChapterVerse[1]) else {return}

@@ -10,6 +10,9 @@
 		8C09F1B4213B29AF00BF0EEE /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C09F1B3213B29AF00BF0EEE /* View.swift */; };
 		8C266065214DDE7C00EFAE42 /* VerseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */; };
 		8C266067214E05C600EFAE42 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266066214E05C600EFAE42 /* SearchCoordinator.swift */; };
+		8C4374EA21581E5E0059B383 /* MtZion.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8C4374E721581E5E0059B383 /* MtZion.sqlite */; };
+		8C4374EB21581E5E0059B383 /* MtZion.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 8C4374E821581E5E0059B383 /* MtZion.sqlite-shm */; };
+		8C4374EC21581E5E0059B383 /* MtZion.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 8C4374E921581E5E0059B383 /* MtZion.sqlite-wal */; };
 		8C46EF3B212F245300390BB0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */; };
 		8C5D869821323B42000F994E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869721323B42000F994E /* Colors.swift */; };
 		8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */; };
@@ -127,6 +130,9 @@
 		8C09F1B3213B29AF00BF0EEE /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCoordinator.swift; sourceTree = "<group>"; };
 		8C266066214E05C600EFAE42 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		8C4374E721581E5E0059B383 /* MtZion.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = MtZion.sqlite; path = ../../../../../../../Desktop/MtZion.sqlite; sourceTree = "<group>"; };
+		8C4374E821581E5E0059B383 /* MtZion.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MtZion.sqlite-shm"; path = "../../../../../../../Desktop/MtZion.sqlite-shm"; sourceTree = "<group>"; };
+		8C4374E921581E5E0059B383 /* MtZion.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MtZion.sqlite-wal"; path = "../../../../../../../Desktop/MtZion.sqlite-wal"; sourceTree = "<group>"; };
 		8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8C5D869721323B42000F994E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsColorTableViewCell.swift; sourceTree = "<group>"; };
@@ -295,6 +301,9 @@
 		8C66D93621306DD100EE6503 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				8C4374E721581E5E0059B383 /* MtZion.sqlite */,
+				8C4374E821581E5E0059B383 /* MtZion.sqlite-shm */,
+				8C4374E921581E5E0059B383 /* MtZion.sqlite-wal */,
 				8C66D93721306DDA00EE6503 /* VersesDataManager.swift */,
 			);
 			path = Data;
@@ -664,8 +673,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C4374EA21581E5E0059B383 /* MtZion.sqlite in Resources */,
 				A4FD28F22118922F008E0A69 /* LaunchScreen.storyboard in Resources */,
 				A4FD28EF2118922F008E0A69 /* Assets.xcassets in Resources */,
+				8C4374EB21581E5E0059B383 /* MtZion.sqlite-shm in Resources */,
+				8C4374EC21581E5E0059B383 /* MtZion.sqlite-wal in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

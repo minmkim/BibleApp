@@ -29,7 +29,7 @@ class BibleCoordinator: Coordinator {
     }
     
     func openBibleVerse(book: String, chapter: Int, verse: Int) {
-        guard let dict = bible.bookVerseDictionary[book] else {return}
+        guard let dict = bible.bible[book] else {return}
         let controller = BookTableController()
         controller.bookDict = dict
         controller.navigationItem.title = book
@@ -54,7 +54,7 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
         } else {
             book = bible.booksOfNewTestamentStrings[indexPath.section - bible.booksOfOldTestament.count]
         }
-        guard let dict = bible.bookVerseDictionary[book] else {return}
+        guard let dict = bible.bible[book] else {return}
         let controller = BookTableController()
         controller.bookDict = dict
         controller.navigationItem.title = book

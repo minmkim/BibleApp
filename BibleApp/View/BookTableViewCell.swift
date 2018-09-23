@@ -10,9 +10,10 @@ import UIKit
 
 class BookTableViewCell: UITableViewCell {
     
-    var verse: String? {
+    var bibleVerse: BibleVerse? {
         didSet {
-            verseText.text = verse
+            verseText.text = bibleVerse?.text
+            numberLabel.text = "\(bibleVerse?.verse ?? 0)"
             layoutIfNeeded()
         }
     }

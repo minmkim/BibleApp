@@ -21,13 +21,6 @@ class BibleCoordinator: Coordinator {
         self.bibleViewController.bibleCoordinatorDelegate = self
     }
     
-    deinit {
-        print("deinit bible")
-    }
-    
-    func start() {
-    }
-    
     func openBibleVerse(book: String, chapter: Int, verse: Int) {
         guard let dict = bible.bible[book] else {return}
         let controller = BookTableController()

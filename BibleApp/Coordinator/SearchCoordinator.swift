@@ -12,9 +12,7 @@ class SearchCoordinator: Coordinator {
     
     weak var bibleVerseDelegate: BibleVerseDelegate?
     let searchViewController: SearchViewController!
-    func start() {
-    }
-    
+
     init(searchViewController: SearchViewController) {
         self.searchViewController = searchViewController
         searchViewController.searchViewModel.searchBibleDelegate = self

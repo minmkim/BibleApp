@@ -40,7 +40,7 @@
 		A4FD28EA2118922B008E0A69 /* BibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD28E92118922B008E0A69 /* BibleViewController.swift */; };
 		A4FD28EF2118922F008E0A69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4FD28EE2118922F008E0A69 /* Assets.xcassets */; };
 		A4FD28F22118922F008E0A69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4FD28F02118922F008E0A69 /* LaunchScreen.storyboard */; };
-		A4FD29692118B284008E0A69 /* BibleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD29682118B284008E0A69 /* BibleModel.swift */; };
+		A4FD29692118B284008E0A69 /* Bible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD29682118B284008E0A69 /* Bible.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,7 +102,7 @@
 		A4FD28F32118922F008E0A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4FD28F82118922F008E0A69 /* BibleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BibleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4FD29032118922F008E0A69 /* BibleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BibleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4FD29682118B284008E0A69 /* BibleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleModel.swift; sourceTree = "<group>"; };
+		A4FD29682118B284008E0A69 /* Bible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bible.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,7 +259,7 @@
 		A4FD29722118CDB7008E0A69 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A4FD29682118B284008E0A69 /* BibleModel.swift */,
+				A4FD29682118B284008E0A69 /* Bible.swift */,
 				8C79AC30212DA5E300FCD313 /* BibleVerse.swift */,
 			);
 			path = Model;
@@ -499,7 +499,7 @@
 				A4FD28EA2118922B008E0A69 /* BibleViewController.swift in Sources */,
 				A43E1D0F21190ABA008235D6 /* BookTableViewCell.swift in Sources */,
 				8CF05636214E10EC00CD7AE5 /* BibleCoordinator.swift in Sources */,
-				A4FD29692118B284008E0A69 /* BibleModel.swift in Sources */,
+				A4FD29692118B284008E0A69 /* Bible.swift in Sources */,
 				8C79AC33212DA6B500FCD313 /* VerseViewController.swift in Sources */,
 				8C79AC31212DA5E300FCD313 /* BibleVerse.swift in Sources */,
 				A43E1D1121195A3C008235D6 /* MainViewController.swift in Sources */,

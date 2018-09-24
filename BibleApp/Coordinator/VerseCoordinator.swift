@@ -14,8 +14,6 @@ class VerseCoordinator: Coordinator {
     weak var bibleVerseDelegate: BibleVerseDelegate?
     let verseViewController: VerseViewController
     
-    func start() {
-    }
     
     deinit {
         print("deinit verse")

@@ -64,5 +64,4 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
     }
     
-    
 }

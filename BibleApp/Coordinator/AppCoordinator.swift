@@ -22,7 +22,6 @@ class AppCoordinator: Coordinator {
     
     let window: UIWindow?
     var coordinatorDict = [coordinatorType: Coordinator]()
-    
     let bible = Bible()
     
     lazy var rootViewController: MainViewController = {
@@ -95,7 +94,6 @@ extension AppCoordinator: TabSelectedDelegate {
             coordinatorDict = [:]
         default:
             print("default")
-            
         }
     }
 }

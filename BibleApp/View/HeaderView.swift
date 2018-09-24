@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderView: UITableViewHeaderFooterView {
+final class HeaderView: UITableViewHeaderFooterView {
     
     let containerView: UIView = {
         let cv = UIView()

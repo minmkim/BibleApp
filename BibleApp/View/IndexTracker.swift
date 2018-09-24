@@ -13,7 +13,7 @@ protocol IndexListDelegate: class {
     func pressedIndex(at index: Int)
 }
 
-class IndexTracker: UIView {
+final class IndexTracker: UIView {
     
     enum IndexState {
         case scrollingTable
@@ -152,7 +152,7 @@ class IndexTracker: UIView {
         if !didCalculateHeightOfMarker {
             calculateHeightOfMarker()
         }
-        let generator = UISelectionFeedbackGenerator()
+        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
         bookMarkerBottomAnchor?.isActive = false
         bookMarkerTopAnchor?.isActive = false
         switch index {
@@ -185,8 +185,9 @@ class IndexTracker: UIView {
                 }
             }
         }
-        generator.prepare()
-        generator.selectionChanged()
+        generator?.prepare()
+        generator?.selectionChanged()
+        generator = nil
         UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.layoutIfNeeded()
             

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VerseCollectionViewCell: UICollectionViewCell {
+final class VerseCollectionViewCell: UICollectionViewCell {
     
     var verse: BibleVerse? {
         didSet {

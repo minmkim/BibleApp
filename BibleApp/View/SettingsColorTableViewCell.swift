@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsColorTableViewCell: UITableViewCell {
+final class SettingsColorTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

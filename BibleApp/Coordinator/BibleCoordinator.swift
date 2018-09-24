@@ -15,7 +15,6 @@ class BibleCoordinator: Coordinator {
     let bible: Bible!
     
     init(bibleViewController: BibleViewController, bible: Bible) {
-        print("init bible coordinator")
         self.bibleViewController = bibleViewController
         self.bible = bible
         self.bibleViewController.bibleCoordinatorDelegate = self

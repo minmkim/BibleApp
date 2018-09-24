@@ -8,7 +8,7 @@
 
 import CoreData
 
-class BibleVerse {
+final class BibleVerse {
     
     var book: String
     var chapter: Int
@@ -27,6 +27,14 @@ class BibleVerse {
         self.chapter = fetchedVerse.value(forKey: CoreDataVerse.chapter) as! Int
         self.verse = fetchedVerse.value(forKey: CoreDataVerse.verse) as! Int
         self.text = fetchedVerse.value(forKey: CoreDataVerse.text) as! String
+    }
+    
+    func formattedVerse() -> String {
+        return "\(book) \(chapter): \(verse)"
+    }
+    
+    func formattedVerseAndText() -> String{
+        return "\(text)\n\(book) \(chapter): \(verse)"
     }
     
 }

@@ -212,13 +212,14 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         if index < 0 || index > (oldIndexArray.count - 1) {
             return
         }
-        let generator = UISelectionFeedbackGenerator()
+        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
         let indexPath = IndexPath(row: 0, section: index)
         UIView.animate(withDuration: 0.1) {
             self.bibleTableView.scrollToRow(at: indexPath, at: .top, animated: false)
             if index < 51 {
-                generator.prepare()
-                generator.selectionChanged()
+                generator?.prepare()
+                generator?.selectionChanged()
+                generator = nil
             }
         }       
     }

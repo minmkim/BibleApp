@@ -188,13 +188,14 @@ extension BookTableController: IndexListDelegate {
         if index < 0 || index > (bookDict.count - 1) {
             return
         }
-        let generator = UISelectionFeedbackGenerator()
+        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
         
         let indexPath = IndexPath(row: 0, section: index)
         UIView.animate(withDuration: 0.01) {
             self.bookTableView.scrollToRow(at: indexPath, at: .top, animated: false)
-            generator.prepare()
-            generator.selectionChanged()
+            generator?.prepare()
+            generator?.selectionChanged()
+            generator = nil
         }
     }
 }

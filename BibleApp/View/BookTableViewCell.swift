@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BookTableViewCell: UITableViewCell {
+final class BookTableViewCell: UITableViewCell {
     
     var bibleVerse: String? {
         didSet {

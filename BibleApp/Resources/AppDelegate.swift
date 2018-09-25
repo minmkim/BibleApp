@@ -93,20 +93,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleShortcutItem(withShortcutItem item: UIApplicationShortcutItem) -> Bool {
-        print("here")
         guard let shortcutType = item.type.components(separatedBy: ".").last else { return false }
         print(shortcutType)
         guard let mainView = self.window?.rootViewController as? MainViewController else {return false}
         switch shortcutType {
         case "Bible":
-            print("0")
             mainView.selectedIndex = 0
+            appCoordinator.didSelectTab(at: "Bible")
         case "Favorites":
-            print("1")
             mainView.selectedIndex = 1
+            appCoordinator.didSelectTab(at: "Verses")
         case "Search":
-            print("2")
             mainView.selectedIndex = 2
+            appCoordinator.didSelectTab(at: "Search")
         default:
             mainView.selectedIndex = 0
         }

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Intents
+import UIKit
 
 class SearchViewModel {
     
@@ -179,6 +181,10 @@ class SearchViewModel {
             return "\(filteredBooks[0]) \(filteredChapters[0]):"
         case .verse:
             guard let number = number else {return ""}
+            if #available(iOS 12.0, *) {
+//                donate(book: filteredBooks[0], chapter: filteredChapters[0], verse: filteredVerses[number])
+                donatePaste()
+            }
             searchBibleDelegate?.requestToOpenBibleVerse(book: filteredBooks[0], chapter: filteredChapters[0], verse: filteredVerses[number])
             return ""
         }
@@ -202,6 +208,10 @@ class SearchViewModel {
             guard let chapter = filteredChapters.first else { return [filteredBooks[0]]}
             guard let verse = filteredVerses.first else { return [filteredBooks[0], filteredChapters[0]] }
             searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: chapter, verse: verse)
+            if #available(iOS 12.0, *) {
+//                donate(book: book, chapter: chapter, verse: verse)
+                donatePaste()
+            }
             return [book, chapter, verse]
         }
     }
@@ -216,6 +226,60 @@ class SearchViewModel {
             return "Chapters"
         case .verse:
             return "Verses"
+        }
+    }
+    
+    @available(iOS 12.0, *)
+    func donatePaste() {
+        guard let pastedText = UIPasteboard.general.string else {return}
+        let splitText = pastedText.components(separatedBy: " ")
+        
+        let intent = SearchBibleIntentIntent()
+        
+        // 2
+        intent.book = splitText[1]
+        guard let chapter = Int(splitText[3]) as NSNumber? else {return}
+        intent.chapter = chapter
+        guard let verse = Int(splitText[5]) as NSNumber? else {return}
+        intent.verse = verse
+        
+        // 3
+        let interaction = INInteraction(intent: intent, response: nil)
+        
+        // 4
+        interaction.donate { (error) in
+            if error != nil {
+                if let error = error as NSError? {
+                    print("Interaction donation failed: \(error.description)")
+                } else {
+                    print("Successfully donated interaction")
+                }
+            }
+        }
+    }
+    
+    @available(iOS 12.0, *)
+    private func donate(book: String, chapter: Int, verse: Int) {
+        // 1
+        let intent = SearchBibleIntentIntent()
+        
+        // 2
+        intent.book = book
+        intent.chapter = chapter as NSNumber
+        intent.verse = verse as NSNumber
+        
+        // 3
+        let interaction = INInteraction(intent: intent, response: nil)
+        
+        // 4
+        interaction.donate { (error) in
+            if error != nil {
+                if let error = error as NSError? {
+                    print("Interaction donation failed: \(error.description)")
+                } else {
+                    print("Successfully donated interaction")
+                }
+            }
         }
     }
 

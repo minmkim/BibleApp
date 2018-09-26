@@ -147,5 +147,7 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating, UISe
         }
         searchController.searchBar.resignFirstResponder()
     }
+    
+    
    
 }

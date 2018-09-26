@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Intents
+import IntentsUI
 
 class SettingsTableViewController: UITableViewController {
     
@@ -32,11 +34,15 @@ class SettingsTableViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 2 {
+            return 1
+        } else {
         return 2
+        }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -46,7 +52,7 @@ class SettingsTableViewController: UITableViewController {
         case 1:
             return "Dominant Hand"
         case 2:
-            return "Test"
+            return "Siri Custom Shortcuts"
         default:
             return "Test"
         }
@@ -95,6 +101,10 @@ class SettingsTableViewController: UITableViewController {
                 cell.accessoryType = .none
             }
             return cell
+        case (2,0):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = "Convert Clipboard to Search Bible Verse"
+            return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             return cell
@@ -142,9 +152,36 @@ class SettingsTableViewController: UITableViewController {
                 let otherCell = tableView.cellForRow(at: otherIndex)
                 otherCell?.accessoryType = .none
             }
+        case (2,0):
+            if #available(iOS 12.0, *) {
+                let intent = SearchBibleIntentIntent()
+                intent.book = "Matthew"
+                intent.chapter = 1
+                intent.verse = 10
+                guard let shortcut = INShortcut(intent: intent) else {return}
+                let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
+                viewController.delegate = self
+                present(viewController, animated: true)
+            } else {
+                // Fallback on earlier versions
+            }
+            
         default:
             return
         }
     }
 
+}
+
+@available(iOS 12.0, *)
+extension SettingsTableViewController: INUIAddVoiceShortcutViewControllerDelegate {
+    func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
 }

@@ -25,61 +25,24 @@
 			<string>SearchBibleIntent</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key>verse,chapter,book</key>
+				<key></key>
 				<dict>
 					<key>INIntentParameterCombinationIsPrimary</key>
 					<true/>
 					<key>INIntentParameterCombinationSubtitle</key>
-					<string></string>
+					<string>Verse format: 'Book' chapter 'Chapter' verse 'Verse' </string>
 					<key>INIntentParameterCombinationSubtitleID</key>
 					<string>cdOIjx</string>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Search ${book} chapter ${chapter} verse ${verse}</string>
+					<string>Search Bible from Clipboard and Return Verse in Clipboard</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>dOq2Hq</string>
 				</dict>
 			</dict>
 			<key>INIntentParameters</key>
-			<array>
-				<dict>
-					<key>INIntentParameterDisplayPriority</key>
-					<integer>1</integer>
-					<key>INIntentParameterName</key>
-					<string>book</string>
-					<key>INIntentParameterSupportsMultipleValues</key>
-					<false/>
-					<key>INIntentParameterTag</key>
-					<integer>1</integer>
-					<key>INIntentParameterType</key>
-					<string>String</string>
-				</dict>
-				<dict>
-					<key>INIntentParameterDisplayPriority</key>
-					<integer>2</integer>
-					<key>INIntentParameterName</key>
-					<string>chapter</string>
-					<key>INIntentParameterSupportsMultipleValues</key>
-					<false/>
-					<key>INIntentParameterTag</key>
-					<integer>4</integer>
-					<key>INIntentParameterType</key>
-					<string>Integer</string>
-				</dict>
-				<dict>
-					<key>INIntentParameterDisplayPriority</key>
-					<integer>3</integer>
-					<key>INIntentParameterName</key>
-					<string>verse</string>
-					<key>INIntentParameterSupportsMultipleValues</key>
-					<false/>
-					<key>INIntentParameterTag</key>
-					<integer>5</integer>
-					<key>INIntentParameterType</key>
-					<string>Integer</string>
-				</dict>
-			</array>
+			<array/>
 			<key>INIntentResponse</key>
 			<dict>
 				<key>INIntentResponseCodes</key>

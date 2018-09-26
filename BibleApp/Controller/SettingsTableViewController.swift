@@ -155,9 +155,6 @@ class SettingsTableViewController: UITableViewController {
         case (2,0):
             if #available(iOS 12.0, *) {
                 let intent = SearchBibleIntentIntent()
-                intent.book = "Matthew"
-                intent.chapter = 1
-                intent.verse = 10
                 guard let shortcut = INShortcut(intent: intent) else {return}
                 let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
                 viewController.delegate = self

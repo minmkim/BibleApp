@@ -75,6 +75,10 @@
 		8C14617A215B31B100FDF339 /* songOfSongs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075EC215B23E000827675 /* songOfSongs.swift */; };
 		8C14617B215B31B100FDF339 /* zecahariah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07605215B23E300827675 /* zecahariah.swift */; };
 		8C14617C215B31B100FDF339 /* zephaniah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075ED215B23E000827675 /* zephaniah.swift */; };
+		8C1C89B9215C4E9900DC43FF /* TextParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1C89B8215C4E9900DC43FF /* TextParser.swift */; };
+		8C1C89BB215C4EB700DC43FF /* IntentBible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1C89BA215C4EB700DC43FF /* IntentBible.swift */; };
+		8C1C89BD215C4EE000DC43FF /* IntentBible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1C89BA215C4EB700DC43FF /* IntentBible.swift */; };
+		8C1C89BE215C4EE200DC43FF /* TextParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1C89B8215C4E9900DC43FF /* TextParser.swift */; };
 		8C266065214DDE7C00EFAE42 /* VerseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */; };
 		8C266067214E05C600EFAE42 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266066214E05C600EFAE42 /* SearchCoordinator.swift */; };
 		8C4374F0215831950059B383 /* MtZion.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8C4374ED215831950059B383 /* MtZion.sqlite */; };
@@ -233,6 +237,8 @@
 
 /* Begin PBXFileReference section */
 		8C09F1B3213B29AF00BF0EEE /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		8C1C89B8215C4E9900DC43FF /* TextParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextParser.swift; sourceTree = "<group>"; };
+		8C1C89BA215C4EB700DC43FF /* IntentBible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentBible.swift; sourceTree = "<group>"; };
 		8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCoordinator.swift; sourceTree = "<group>"; };
 		8C266066214E05C600EFAE42 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		8C4374ED215831950059B383 /* MtZion.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MtZion.sqlite; sourceTree = "<group>"; };
@@ -461,6 +467,8 @@
 				8CD075A4215B027800827675 /* Intents.intentdefinition */,
 				8CD07587215B025700827675 /* IntentHandler.swift */,
 				8CD075A8215B0C8400827675 /* SearchBibleIntentHandler.swift */,
+				8C1C89BA215C4EB700DC43FF /* IntentBible.swift */,
+				8C1C89B8215C4E9900DC43FF /* TextParser.swift */,
 				8CD07589215B025700827675 /* Info.plist */,
 			);
 			path = SearchBible;
@@ -978,6 +986,7 @@
 				8CD07620215B23E400827675 /* jeremiah.swift in Sources */,
 				8CD075D7215B23D300827675 /* secondJohn.swift in Sources */,
 				8CD07618215B23E400827675 /* jonah.swift in Sources */,
+				8C1C89B9215C4E9900DC43FF /* TextParser.swift in Sources */,
 				8CD07631215B24CC00827675 /* Intents.intentdefinition in Sources */,
 				8CD075D2215B23D300827675 /* jude.swift in Sources */,
 				8CD07615215B23E400827675 /* nahum.swift in Sources */,
@@ -1000,6 +1009,7 @@
 				8CD0760F215B23E400827675 /* lamentations.swift in Sources */,
 				8CD0760A215B23E400827675 /* obadiah.swift in Sources */,
 				8CD075C9215B23D300827675 /* firstThessalonians.swift in Sources */,
+				8C1C89BB215C4EB700DC43FF /* IntentBible.swift in Sources */,
 				8CD075DB215B23D300827675 /* titus.swift in Sources */,
 				8CD07616215B23E400827675 /* joshua.swift in Sources */,
 			);
@@ -1062,6 +1072,8 @@
 				8C146179215B31B100FDF339 /* secondSamuel.swift in Sources */,
 				8C146144215B31A800FDF339 /* hebrews.swift in Sources */,
 				8C14613F215B31A800FDF339 /* firstJohn.swift in Sources */,
+				8C1C89BE215C4EE200DC43FF /* TextParser.swift in Sources */,
+				8C1C89BD215C4EE000DC43FF /* IntentBible.swift in Sources */,
 				8C14616D215B31B100FDF339 /* leviticus.swift in Sources */,
 				8C14615A215B31B100FDF339 /* esther.swift in Sources */,
 				8C66D93821306DDA00EE6503 /* VersesDataManager.swift in Sources */,

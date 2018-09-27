@@ -19,7 +19,7 @@ final class HeaderView: UITableViewHeaderFooterView {
     
     var chapter: Int! {
         didSet {
-            chapterLabel.text = "CHAPTER \(chapter + 1)"
+            chapterLabel.text = "CHAPTER \(chapter ?? 1)"
         }
     }
     
@@ -53,6 +53,7 @@ final class HeaderView: UITableViewHeaderFooterView {
     }
     
     var multipler: Double = 0.0
+    weak var indexVerseDelegate: IndexVerseDelegate?
     
     func updateProgressBar(multipler: Double) {
         if multipler != self.multipler {
@@ -62,9 +63,17 @@ final class HeaderView: UITableViewHeaderFooterView {
             progressBarTrailingAnchor?.isActive = false
             progressBarTrailingAnchor = progressBar.trailingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(constant))
             progressBarTrailingAnchor?.isActive = true
-            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.layoutIfNeeded()
-            }, completion: nil)
+            if indexState == .scrollingTable {
+                UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.layoutIfNeeded()
+                }, completion: nil)
+            } else {
+                UIView.animate(withDuration: 0.01, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.layoutIfNeeded()
+                }, completion: nil)
+            }
+            
+            
         }
     }
     
@@ -83,4 +92,63 @@ final class HeaderView: UITableViewHeaderFooterView {
         chapterLabel.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
         chapterLabel.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
     }
+    
+    enum IndexState {
+        case scrollingTable
+        case scrollingIndex
+    }
+    
+    var indexState: IndexState = .scrollingTable
+    var currentMultiplier = 0.01
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        indexState = .scrollingIndex
+        if let touch = touches.first {
+            let currentPoint = touch.location(in: containerView)
+            let multiplier = calculatePosition(location: currentPoint)
+            if currentMultiplier != multiplier {
+                currentMultiplier = multiplier
+                indexVerseDelegate?.moveToVerse(multiplier: multiplier, chapter: chapter)
+                updateProgressBar(multipler: multiplier)
+            }
+            
+        }
+        
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        indexState = .scrollingIndex
+        if let touch = touches.first {
+            let currentPoint = touch.location(in: containerView)
+            let multiplier = calculatePosition(location: currentPoint)
+            if currentMultiplier != multiplier {
+                currentMultiplier = multiplier
+                indexVerseDelegate?.moveToVerse(multiplier: multiplier, chapter: chapter)
+                updateProgressBar(multipler: multiplier)
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        indexState = .scrollingTable
+        if let touch = touches.first {
+            let currentPoint = touch.location(in: containerView)
+            let multiplier = calculatePosition(location: currentPoint)
+            if currentMultiplier != multiplier {
+                currentMultiplier = multiplier
+                indexVerseDelegate?.moveToVerse(multiplier: multiplier, chapter: chapter)
+                updateProgressBar(multipler: multiplier)
+            }
+        }
+    }
+    
+    func calculatePosition(location: CGPoint) -> Double {
+        let yFrame = self.containerView.bounds.maxX - self.containerView.bounds.minX
+        let multiplier = location.x/yFrame
+        return Double(multiplier)
+    }
+}
+
+protocol IndexVerseDelegate: class {
+    func moveToVerse(multiplier: Double, chapter: Int)
 }

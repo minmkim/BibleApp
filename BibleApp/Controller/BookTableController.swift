@@ -110,7 +110,8 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = HeaderView(frame: .zero)
-        header.chapter = section
+        header.indexVerseDelegate = self
+        header.chapter = section + 1
         return header
     }
     
@@ -169,6 +170,8 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if indexList.indexState == .scrollingTable {
             guard let firstCell = bookTableView.visibleCells.first else {return}
@@ -198,4 +201,19 @@ extension BookTableController: IndexListDelegate {
             generator = nil
         }
     }
+}
+
+extension BookTableController: IndexVerseDelegate {
+    func moveToVerse(multiplier: Double, chapter: Int) {
+        guard let versesInChapter = bookDict[chapter] else {return}
+        print(chapter)
+        let numberOfVersesInCurrentChapter = versesInChapter.count
+        let verse = Int(multiplier * Double(numberOfVersesInCurrentChapter))
+        UIView.animate(withDuration: 0.01) {
+            self.bookTableView.scrollToRow(at: IndexPath(row: verse, section: chapter - 1), at: .top, animated: false)
+        }
+        
+    }
+    
+    
 }

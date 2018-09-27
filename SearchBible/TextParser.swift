@@ -15,9 +15,18 @@ class TextParser {
         case regularBook
     }
     
+    enum TypeOfVerse {
+        case withColon
+        case noColon
+    }
+    
     var typeOfBook = TypeOfBook.regularBook
+    var typeOfVerse = TypeOfVerse.noColon
     
     func parseVerse(for clipboardText: String) -> [String:String] {
+        if clipboardText.contains(":") {
+            typeOfVerse = .withColon
+        }
         let splitText = clipboardText.components(separatedBy: " ")
         var returnDict = [String: String]()
         returnDict["book"] = calculatebook(for: splitText)
@@ -56,6 +65,19 @@ class TextParser {
             index += 1
         }
         
+        if typeOfVerse == .withColon {
+            for split in splitText {
+                if split.contains(":") {
+                    let chapterVerse = split.components(separatedBy: ":")
+                    if let chapter = Int(chapterVerse[0]) {
+                        return chapter
+                    } else {
+                        return returnNumber(for: chapterVerse[1])
+                    }
+                }
+            }
+        }
+        
         var chapter = 1
         if splitText[index].lowercased() == "chapter" {
             if Int(splitText[index + 1]) == nil {
@@ -74,6 +96,19 @@ class TextParser {
     }
     
     func calculateVerse(for splitText: [String]) -> Int {
+        if typeOfVerse == .withColon {
+            for split in splitText {
+                if split.contains(":") {
+                    let chapterVerse = split.components(separatedBy: ":")
+                    if let verse = Int(chapterVerse[1]) {
+                        return verse
+                    } else {
+                        return returnNumber(for: chapterVerse[1])
+                    }
+                }
+            }
+        }
+        
         var index = 2
         if typeOfBook == .numberBook {
             index += 1

@@ -81,9 +81,6 @@
 		8C1C89BE215C4EE200DC43FF /* TextParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1C89B8215C4E9900DC43FF /* TextParser.swift */; };
 		8C266065214DDE7C00EFAE42 /* VerseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */; };
 		8C266067214E05C600EFAE42 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266066214E05C600EFAE42 /* SearchCoordinator.swift */; };
-		8C4374F0215831950059B383 /* MtZion.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8C4374ED215831950059B383 /* MtZion.sqlite */; };
-		8C4374F1215831950059B383 /* MtZion.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 8C4374EE215831950059B383 /* MtZion.sqlite-shm */; };
-		8C4374F2215831950059B383 /* MtZion.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 8C4374EF215831950059B383 /* MtZion.sqlite-wal */; };
 		8C46EF3B212F245300390BB0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */; };
 		8C5D869821323B42000F994E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869721323B42000F994E /* Colors.swift */; };
 		8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */; };
@@ -99,6 +96,9 @@
 		8C80FEDF2131B51B006BF071 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEDE2131B51B006BF071 /* Array.swift */; };
 		8C80FEE32131E60B006BF071 /* IndexTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE22131E60B006BF071 /* IndexTracker.swift */; };
 		8C80FEE52131E839006BF071 /* BibleBookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */; };
+		8C8D5901215C831600316CFE /* MtZion.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */; };
+		8C8D5902215C831600316CFE /* MtZion.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FF215C831600316CFE /* MtZion.sqlite */; };
+		8C8D5903215C831600316CFE /* MtZion.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D5900215C831600316CFE /* MtZion.sqlite-wal */; };
 		8CD0758F215B025800827675 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
 		8CD07592215B025800827675 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07591215B025800827675 /* IntentViewController.swift */; };
 		8CD07595215B025800827675 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CD07593215B025800827675 /* MainInterface.storyboard */; };
@@ -241,9 +241,6 @@
 		8C1C89BA215C4EB700DC43FF /* IntentBible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentBible.swift; sourceTree = "<group>"; };
 		8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCoordinator.swift; sourceTree = "<group>"; };
 		8C266066214E05C600EFAE42 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
-		8C4374ED215831950059B383 /* MtZion.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MtZion.sqlite; sourceTree = "<group>"; };
-		8C4374EE215831950059B383 /* MtZion.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-shm"; sourceTree = "<group>"; };
-		8C4374EF215831950059B383 /* MtZion.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-wal"; sourceTree = "<group>"; };
 		8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8C5D869721323B42000F994E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsColorTableViewCell.swift; sourceTree = "<group>"; };
@@ -263,6 +260,9 @@
 		8C80FEDE2131B51B006BF071 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		8C80FEE22131E60B006BF071 /* IndexTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexTracker.swift; sourceTree = "<group>"; };
 		8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookDetailViewController.swift; sourceTree = "<group>"; };
+		8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-shm"; sourceTree = "<group>"; };
+		8C8D58FF215C831600316CFE /* MtZion.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MtZion.sqlite; sourceTree = "<group>"; };
+		8C8D5900215C831600316CFE /* MtZion.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-wal"; sourceTree = "<group>"; };
 		8CD07585215B025700827675 /* SearchBible.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SearchBible.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD07587215B025700827675 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		8CD07589215B025700827675 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -436,9 +436,9 @@
 		8C66D93621306DD100EE6503 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				8C4374ED215831950059B383 /* MtZion.sqlite */,
-				8C4374EE215831950059B383 /* MtZion.sqlite-shm */,
-				8C4374EF215831950059B383 /* MtZion.sqlite-wal */,
+				8C8D58FF215C831600316CFE /* MtZion.sqlite */,
+				8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */,
+				8C8D5900215C831600316CFE /* MtZion.sqlite-wal */,
 				8C66D93721306DDA00EE6503 /* VersesDataManager.swift */,
 			);
 			path = Data;
@@ -898,11 +898,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C4374F0215831950059B383 /* MtZion.sqlite in Resources */,
 				A4FD28F22118922F008E0A69 /* LaunchScreen.storyboard in Resources */,
 				A4FD28EF2118922F008E0A69 /* Assets.xcassets in Resources */,
-				8C4374F1215831950059B383 /* MtZion.sqlite-shm in Resources */,
-				8C4374F2215831950059B383 /* MtZion.sqlite-wal in Resources */,
+				8C8D5902215C831600316CFE /* MtZion.sqlite in Resources */,
+				8C8D5901215C831600316CFE /* MtZion.sqlite-shm in Resources */,
+				8C8D5903215C831600316CFE /* MtZion.sqlite-wal in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

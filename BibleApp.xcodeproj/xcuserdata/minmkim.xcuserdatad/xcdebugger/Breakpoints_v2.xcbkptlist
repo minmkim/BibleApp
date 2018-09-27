@@ -2,4 +2,70 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleApp/Model/BibleModel.swift"
+            timestampString = "559710836.002863"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "loadBible()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleApp/Model/BibleModel.swift"
+            timestampString = "559710836.002924"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "loadBible()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BibleApp.Bible.(loadBible in _D40324E7FC42EF5BEA40978FCFA0C57E)() -&gt; ()"
+                  moduleName = "BibleApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/minmkim/Library/Mobile%20Documents/com~apple~CloudDocs/Swift/BibleApp/BibleApp/Model/BibleModel.swift"
+                  timestampString = "559710836.130151"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "133"
+                  endingLineNumber = "133"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (BibleApp.BibleVerse) -&gt; () in BibleApp.Bible.(loadBible in _D40324E7FC42EF5BEA40978FCFA0C57E)() -&gt; ()"
+                  moduleName = "BibleApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/minmkim/Library/Mobile%20Documents/com~apple~CloudDocs/Swift/BibleApp/BibleApp/Model/BibleModel.swift"
+                  timestampString = "559710836.13322"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

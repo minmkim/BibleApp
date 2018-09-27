@@ -166,9 +166,9 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if indexPath.section < bible.booksOfOldTestament.count {
-            cell.textLabel?.text = bible.booksOfOldTestament[indexPath.section]
+            cell.textLabel?.text = bible.booksOfOldTestamentStrings[indexPath.section]
         } else {
-            cell.textLabel?.text = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
+            cell.textLabel?.text = bible.booksOfNewTestamentStrings[indexPath.section - bible.booksOfOldTestament.count]
         }
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)

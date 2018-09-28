@@ -142,7 +142,6 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
             spinner.startAnimating()
             loadWiki()
         }
-        
     }
     
     func loadYoutube() {

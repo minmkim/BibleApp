@@ -88,6 +88,7 @@ class VerseViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         navigationItem.title = "Saved Verses"
         navigationController?.navigationBar.prefersLargeTitles = true

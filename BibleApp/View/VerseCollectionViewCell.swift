@@ -66,7 +66,6 @@ final class VerseCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 16
         layer.masksToBounds = true
         layoutViews()
-//        backgroundColor = .yellow
     }
     
     func layoutViews() {

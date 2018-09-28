@@ -34,11 +34,11 @@ class SettingsTableViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 {
+        if section == 1 {
             return 1
         } else {
         return 2
@@ -48,10 +48,8 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "Appearance"
-        case 1:
             return "Dominant Hand"
-        case 2:
+        case 1:
             return "Siri Custom Shortcuts"
         default:
             return "Test"
@@ -61,30 +59,27 @@ class SettingsTableViewController: UITableViewController {
     var heightOfColorRow: CGFloat = 0
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 1 {
-            return heightOfColorRow
-        } else {
-            return 50
-        }
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch (indexPath.section, indexPath.row) {
+//        case (0,0):
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+//            cell.textLabel?.text = "Set Main Accent Color"
+//            return cell
+//        case (0,1):
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "color", for: indexPath) as! SettingsColorTableViewCell
+//            cell.selectionStyle = .none
+//            cell.containerView.isHidden = true
+//            cell.sendColor = { (color) -> () in
+//                guard let color = color else {return}
+//                self.receivedColor(color: color)
+//            }
+//            return cell
         case (0,0):
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.text = "Set Main Accent Color"
-            return cell
-        case (0,1):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "color", for: indexPath) as! SettingsColorTableViewCell
-            cell.selectionStyle = .none
-            cell.containerView.isHidden = true
-            cell.sendColor = { (color) -> () in
-                guard let color = color else {return}
-                self.receivedColor(color: color)
-            }
-            return cell
-        case (1,0):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.tintColor = MainColor.redOrange
             cell.textLabel?.text = "Left Hand"
             if dominantHand == "Left" {
                 cell.accessoryType = .checkmark
@@ -92,8 +87,9 @@ class SettingsTableViewController: UITableViewController {
                 cell.accessoryType = .none
             }
             return cell
-        case (1,1):
+        case (0,1):
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.tintColor = MainColor.redOrange
             cell.textLabel?.text = "Right Hand"
             if dominantHand == "Right" {
                 cell.accessoryType = .checkmark
@@ -101,7 +97,7 @@ class SettingsTableViewController: UITableViewController {
                 cell.accessoryType = .none
             }
             return cell
-        case (2,0):
+        case (1,0):
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = "Convert Clipboard to Search Bible Verse"
             return cell
@@ -124,13 +120,13 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         switch (indexPath.section, indexPath.row) {
+//        case (0,0):
+//            heightOfColorRow = 60
+//            tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+//            let index = IndexPath(row: 1, section: 0)
+//            let cell = tableView.cellForRow(at: index) as! SettingsColorTableViewCell
+//            cell.containerView.isHidden = false
         case (0,0):
-            heightOfColorRow = 60
-            tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
-            let index = IndexPath(row: 1, section: 0)
-            let cell = tableView.cellForRow(at: index) as! SettingsColorTableViewCell
-            cell.containerView.isHidden = false
-        case (1,0):
             let cell = tableView.cellForRow(at: indexPath)
             if dominantHand == "Right" {
                 cell?.accessoryType = .checkmark
@@ -141,7 +137,7 @@ class SettingsTableViewController: UITableViewController {
                 let otherCell = tableView.cellForRow(at: otherIndex)
                 otherCell?.accessoryType = .none
             }
-        case (1,1):
+        case (0,1):
             let cell = tableView.cellForRow(at: indexPath)
             if dominantHand == "Left" {
                 cell?.accessoryType = .checkmark
@@ -152,7 +148,7 @@ class SettingsTableViewController: UITableViewController {
                 let otherCell = tableView.cellForRow(at: otherIndex)
                 otherCell?.accessoryType = .none
             }
-        case (2,0):
+        case (1,0):
             if #available(iOS 12.0, *) {
                 let intent = SearchBibleIntentIntent()
                 guard let shortcut = INShortcut(intent: intent) else {return}

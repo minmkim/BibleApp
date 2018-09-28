@@ -145,6 +145,7 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating, UISe
             searchController.searchBar.becomeFirstResponder()
             return
         }
+        searchController.searchBar.text = ""
         searchController.searchBar.resignFirstResponder()
     }
    

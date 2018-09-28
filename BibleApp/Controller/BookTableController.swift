@@ -22,6 +22,7 @@ class BookTableController: UIViewController {
 
     let bookTableView: UITableView = {
        let bt = UITableView()
+        bt.showsVerticalScrollIndicator = false
         return bt
     }()
     
@@ -206,7 +207,6 @@ extension BookTableController: IndexListDelegate {
 extension BookTableController: IndexVerseDelegate {
     func moveToVerse(multiplier: Double, chapter: Int) {
         guard let versesInChapter = bookDict[chapter] else {return}
-        print(chapter)
         let numberOfVersesInCurrentChapter = versesInChapter.count
         let verse = Int(multiplier * Double(numberOfVersesInCurrentChapter))
         UIView.animate(withDuration: 0.01) {

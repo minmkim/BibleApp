@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class VerseCoordinator: Coordinator {
+final class VerseCoordinator: Coordinator {
     
     weak var bibleVerseDelegate: BibleVerseDelegate?
     let verseViewController: VerseViewController

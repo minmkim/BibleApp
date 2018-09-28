@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SearchCoordinator: Coordinator {
+final class SearchCoordinator: Coordinator {
     
     weak var bibleVerseDelegate: BibleVerseDelegate?
     let searchViewController: SearchViewController!

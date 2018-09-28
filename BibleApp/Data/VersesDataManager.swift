@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class VersesDataManager {
+final class VersesDataManager {
     
     func loadVerses() -> [BibleVerse] {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class BibleCoordinator: Coordinator {
+final class BibleCoordinator: Coordinator {
     
     let bibleViewController: BibleViewController!
     let bible: Bible!

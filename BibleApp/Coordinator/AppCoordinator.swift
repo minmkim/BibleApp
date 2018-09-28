@@ -12,7 +12,7 @@ import UIKit
 protocol Coordinator {
 }
 
-class AppCoordinator: Coordinator {
+final class AppCoordinator: Coordinator {
     
     enum coordinatorType {
         case bible

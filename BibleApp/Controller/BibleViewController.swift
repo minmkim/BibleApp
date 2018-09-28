@@ -23,6 +23,7 @@ class BibleViewController: UIViewController {
     let bibleTableView: UITableView = {
        let tv = UITableView()
         tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.showsVerticalScrollIndicator = false
         return tv
     }()
     

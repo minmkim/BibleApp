@@ -25,9 +25,9 @@ final class IndexTracker: UIView {
     weak var delegate: IndexListDelegate?
     var frameHeight: CGFloat?
     var skipCounter = 1
-    var countOfList = 0
+    var countOfList = 0 // used for original count of list
     
-    let containerStack: UIStackView = {
+    var containerStack: UIStackView = {
         let cv = UIStackView()
         cv.axis = .vertical
         cv.distribution = .fillEqually
@@ -61,11 +61,13 @@ final class IndexTracker: UIView {
         layoutViews()
         setSkipCounter()
         processList()
+        setUpContainerStack()
     }
     
     func setSkipCounter() {
         if let frameHeight = self.frameHeight {
-            let numberOfRows = Int((frameHeight-24)/14)
+            skipCounter = 1
+            let numberOfRows = Int((frameHeight-24)/14) // number of possible rows
             var testing = false
             while !testing {
                 if skipCounter == 1 {
@@ -85,16 +87,28 @@ final class IndexTracker: UIView {
         }
     }
     
+    func newChapter(for arrayList: [String]) {
+        indexList =  arrayList
+        countOfList = indexList.count
+        setSkipCounter()
+        processList()
+        setUpContainerStack()
+    }
+    
     func processList() {
         var tempList = indexList
         tempList = tempList.enumerated().compactMap { index, element in index % skipCounter == 0 ? element : nil }
         if skipCounter > 1 {
-            let sep = "\u{2022}"
-            tempList = Array(tempList.map { [$0] }.joined(separator: [sep]))
+            let separator = "\u{2022}"
+            tempList = Array(tempList.map { [$0] }.joined(separator: [separator]))
             tempList.removeLast()
-            tempList.append(indexList.last!)
+            tempList.append(indexList.last!) // make sure the last element in array is the last element
         }
         indexList = tempList
+    }
+    
+    func setUpContainerStack() {
+        containerStack.removeSubViews()
         indexList.forEach { (index) in
             let label = UILabel()
             label.font = .systemFont(ofSize: 11, weight: .heavy)
@@ -103,44 +117,20 @@ final class IndexTracker: UIView {
             containerStack.addArrangedSubview(label)
         }
     }
-    
-    func setFrame(frameHeight: CGFloat) {
-        let count = indexList.count
-        let height = CGFloat(14*count)
-        if height < (frameHeight - 24) {
-            stackTopAnchor?.isActive = false
-            stackBottomAnchor?.isActive = false
-            stackHeightAnchor = containerStack.heightAnchor.constraint(equalToConstant: height)
-            stackHeightAnchor?.isActive = true
-            stackCenterYAnchor = containerStack.centerYAnchor.constraint(equalTo: centerYAnchor)
-            stackCenterYAnchor?.isActive = true
-            self.layoutIfNeeded()
-        }
-    }
-    
-    var stackHeightAnchor: NSLayoutConstraint?
-    var stackTopAnchor: NSLayoutConstraint?
-    var stackBottomAnchor: NSLayoutConstraint?
-    var stackCenterYAnchor: NSLayoutConstraint?
+
     var bookMarkerTopAnchor: NSLayoutConstraint?
     var bookMarkerBottomAnchor: NSLayoutConstraint?
     
     func layoutViews() {
-        stackTopAnchor = containerStack.topAnchor.constraint(equalTo: topAnchor)
-        stackTopAnchor?.isActive = true
         containerStack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         containerStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        stackBottomAnchor = containerStack.bottomAnchor.constraint(equalTo: bottomAnchor)
-        stackBottomAnchor?.isActive = true
+        containerStack.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
         bookMarker.heightAnchor.constraint(equalToConstant: 2).isActive = true
         bookMarker.widthAnchor.constraint(equalTo: containerStack.widthAnchor, multiplier: 1/4).isActive = true
         bookMarker.leadingAnchor.constraint(equalTo: containerStack.leadingAnchor).isActive = true
         bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: (34/3)/2)
         bookMarkerTopAnchor?.isActive = true
-    }
-    
-    override func layoutSubviews() {
     }
     
     func updatePositionOfBookMarker(index: Int) {
@@ -205,10 +195,10 @@ final class IndexTracker: UIView {
     
     func calculateHeightOfMarker() {
         let height = self.containerStack.bounds.maxY - self.containerStack.bounds.minY
+        let numberOfRows = indexList.count
         if height == 0 {
             return
         }
-        let numberOfRows = indexList.count
         if skipCounter == 1 {
             let heightOfGaps = Double(numberOfRows-1) * 2
             let heightOfNamesAndDots = Double(height) - Double(heightOfGaps)
@@ -279,9 +269,18 @@ final class IndexTracker: UIView {
     
     func calculateIndex(at location: CGPoint) -> Int {
         let yFrame = self.containerStack.bounds.maxY - self.containerStack.bounds.minY
+        print(location.y/yFrame)
         let index = Int(Float(location.y/yFrame) * Float(countOfList))
         return index
     }
     
-    
+}
+
+extension UIStackView {
+    func removeSubViews() {
+        for item in arrangedSubviews {
+            removeArrangedSubview(item)
+            item.removeFromSuperview()
+        }
+    }
 }

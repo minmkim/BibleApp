@@ -108,7 +108,7 @@ final class HeaderView: UITableViewHeaderFooterView {
             let multiplier = calculatePosition(location: currentPoint)
             if currentMultiplier != multiplier {
                 currentMultiplier = multiplier
-                indexVerseDelegate?.moveToVerse(multiplier: multiplier, chapter: chapter)
+                indexVerseDelegate?.moveToVerse(multiplier: multiplier)
                 updateProgressBar(multipler: multiplier)
             }
             
@@ -123,7 +123,7 @@ final class HeaderView: UITableViewHeaderFooterView {
             let multiplier = calculatePosition(location: currentPoint)
             if currentMultiplier != multiplier {
                 currentMultiplier = multiplier
-                indexVerseDelegate?.moveToVerse(multiplier: multiplier, chapter: chapter)
+                indexVerseDelegate?.moveToVerse(multiplier: multiplier)
                 updateProgressBar(multipler: multiplier)
             }
         }
@@ -136,7 +136,7 @@ final class HeaderView: UITableViewHeaderFooterView {
             let multiplier = calculatePosition(location: currentPoint)
             if currentMultiplier != multiplier {
                 currentMultiplier = multiplier
-                indexVerseDelegate?.moveToVerse(multiplier: multiplier, chapter: chapter)
+                indexVerseDelegate?.moveToVerse(multiplier: multiplier)
                 updateProgressBar(multipler: multiplier)
             }
         }
@@ -150,5 +150,5 @@ final class HeaderView: UITableViewHeaderFooterView {
 }
 
 protocol IndexVerseDelegate: class {
-    func moveToVerse(multiplier: Double, chapter: Int)
+    func moveToVerse(multiplier: Double)
 }

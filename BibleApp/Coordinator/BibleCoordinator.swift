@@ -13,6 +13,9 @@ final class BibleCoordinator: Coordinator {
     
     let bibleViewController: BibleViewController!
     let bible: Bible!
+    var currentChapter = 1
+    var currentBook = ""
+    weak var currentBookController: BookTableController?
     
     init(bibleViewController: BibleViewController, bible: Bible) {
         self.bibleViewController = bibleViewController
@@ -20,13 +23,30 @@ final class BibleCoordinator: Coordinator {
         self.bibleViewController.bibleCoordinatorDelegate = self
     }
     
+    deinit {
+        currentBookController = nil
+    }
+    
+    func loadBookTableController(verses: [String], book: String, chapter: Int) -> BookTableController {
+        let controller = BookTableController()
+        currentBookController = controller
+        currentChapter = chapter
+        currentBook = book
+        controller.verseArray = verses
+        controller.changeChapterDelegate = self
+        controller.chapter = chapter
+        controller.navigationItem.title = book
+        guard let numberOfChapters = bible.bible[book]?.count else {return controller}
+        controller.numberOfChapters = numberOfChapters
+        return controller
+    }
+    
     func openBibleVerse(book: String, chapter: Int, verse: Int) {
         guard let dict = bible.bible[book] else {return}
-        let controller = BookTableController()
-        controller.bookDict = dict
-        controller.navigationItem.title = book
+        guard let verses = dict[chapter] else {return}
+        let controller = loadBookTableController(verses: verses, book: book, chapter: chapter)
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
-        let indexPath = IndexPath(item: verse - 1, section: chapter - 1)
+        let indexPath = IndexPath(item: verse - 1, section: 0)
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
             controller.bookTableView.scrollToRow(at: indexPath, at: .middle, animated: true)
             controller.bookTableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
@@ -39,19 +59,6 @@ final class BibleCoordinator: Coordinator {
 }
 
 extension BibleCoordinator: BibleCoordinatorDelegate {
-    func openBibleBook(for indexPath: IndexPath) {
-        var book = ""
-        if indexPath.section < bible.booksOfOldTestament.count {
-            book = bible.booksOfOldTestament[indexPath.section]
-        } else {
-            book = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
-        }
-        guard let dict = bible.bible[book] else {return}
-        let controller = BookTableController()
-        controller.bookDict = dict
-        controller.navigationItem.title = book
-        bibleViewController.navigationController?.pushViewController(controller, animated: true)
-    }
     
     func openBibleWebsite(for indexPath: IndexPath) {
         let controller = BibleBookDetailViewController()
@@ -62,5 +69,34 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
         }
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
     }
+    
+    func openBibleChapter(book: String, chapter: Int) {
+        guard let dict = bible.bible[book] else {return}
+        guard let verses = dict[chapter] else {return}
+        let controller = loadBookTableController(verses: verses, book: book, chapter: chapter)
+        bibleViewController.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+}
+
+extension BibleCoordinator: ChangeChapterDelegate {
+    func previousChapter() {
+        currentChapter -= 1
+        guard let bookDict = bible.bible[currentBook] else {return}
+        guard let verses = bookDict[currentChapter] else {return}
+        currentBookController?.verseArray = verses
+        currentBookController?.chapter = currentChapter
+        currentBookController?.newChapter()
+    }
+    
+    func nextChapter() {
+        currentChapter += 1
+        guard let bookDict = bible.bible[currentBook] else {return}
+        guard let verses = bookDict[currentChapter] else {return}
+        currentBookController?.verseArray = verses
+        currentBookController?.chapter = currentChapter
+        currentBookController?.newChapter()
+    }
+    
     
 }

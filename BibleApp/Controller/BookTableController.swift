@@ -13,26 +13,37 @@ import CloudKit
 class BookTableController: UIViewController {
     
     lazy var versesDataManager = VersesDataManager()
-    
-    var bookDict = [Int: [String]]() {
+    weak var changeChapterDelegate: ChangeChapterDelegate?
+    var chapter = 0 {
         didSet {
-            bookTableView.reloadData()
+            bottomContainerView.chapterLabel.text = "CHAPTER \(chapter)"
         }
     }
-
+    
+    var verseArray = [String]()
+    var numberOfChapters: Int?
     let bookTableView: UITableView = {
        let bt = UITableView()
         bt.showsVerticalScrollIndicator = false
+        bt.translatesAutoresizingMaskIntoConstraints = false
         return bt
     }()
     
     lazy var indexList: IndexTracker = {
-        let il = IndexTracker(frame: .zero, indexList: Array(1...bookDict.count).map({String($0)}), height: view.frame.height - 200)
+        let il = IndexTracker(frame: .zero, indexList: Array(1...verseArray.count).map({String($0)}), height: view.frame.height - 250)
+        il.translatesAutoresizingMaskIntoConstraints = false
         return il
     }()
     
+    let bottomContainerView: ChapterView = {
+       let bc = ChapterView()
+        bc.translatesAutoresizingMaskIntoConstraints = false
+        bc.backgroundColor = .white
+        return bc
+    }()
+    
     deinit {
-        bookDict = [:]
+        verseArray = []
         print("deinit booktable")
     }
     
@@ -44,9 +55,12 @@ class BookTableController: UIViewController {
         }
         view.addSubview(bookTableView)
         view.addSubview(indexList)
+        view.addSubview(bottomContainerView)
+        bottomContainerView.numberOfChapters = numberOfChapters
         view.backgroundColor = .white
         layoutViews()
         indexList.delegate = self
+        bottomContainerView.chapterPressDelegate = self
         setupTableView()
     }
     
@@ -70,52 +84,45 @@ class BookTableController: UIViewController {
     var indexListTrailingAnchor: NSLayoutConstraint?
     
     func layoutViews() {
-        indexList.addSpecificAnchors(topContainer: self.view, leadingContainer: nil, trailingContainer: nil, bottomContainer: self.view, heightConstant: nil, widthConstant: 22, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 12, left: 0, bottom: -12, right: 0))
+        bottomContainerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        bottomContainerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        bottomContainerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        bottomContainerView.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        
+        indexList.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 12).isActive = true
+        indexList.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor, constant: -12).isActive = true
         if dominantHand == "Left" {
-            indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+            indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
             indexListLeadingAnchor?.isActive = true
         } else {
-            indexListTrailingAnchor = indexList.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            indexListTrailingAnchor = indexList.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
             indexListTrailingAnchor?.isActive = true
         }
         
-        bookTableView.fillContainer(for: self.view)
-        indexList.setFrame(frameHeight: view.frame.height - 200)
+        bookTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        bookTableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        bookTableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        bookTableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor).isActive = true
     }
-    
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        indexList.resetViews(indexList: Array(1...bookDict.count).map({String($0)}), height: view.frame.height - 200)
-//    }
     
 }
 
 extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return bookDict.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookDict[section + 1]!.count
+        return verseArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as!BookTableViewCell
-        cell.bibleVerse = bookDict[indexPath.section + 1]?[indexPath.row]
+        cell.bibleVerse = verseArray[indexPath.row]
         cell.numberLabel.text = String(indexPath.row + 1)
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 24
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = HeaderView(frame: .zero)
-        header.indexVerseDelegate = self
-        header.chapter = section + 1
-        return header
-    }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -171,30 +178,30 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if indexList.indexState == .scrollingTable {
             guard let firstCell = bookTableView.visibleCells.first else {return}
             guard let index = bookTableView.indexPath(for: firstCell) else {return}
-            indexList.updatePositionOfBookMarker(index: index.section)
-            guard let numberOfVersesInSection = bookDict[index.section + 1]?.count else {return}
-            let multiplier = Double(index.row + 1)/Double(numberOfVersesInSection)
-            guard let header = bookTableView.headerView(forSection: index.section) as? HeaderView else {return}
-            header.updateProgressBar(multipler: multiplier)
+            indexList.updatePositionOfBookMarker(index: index.row)
         }
+    }
+    
+    func newChapter() {
+        bookTableView.reloadData()
+        indexList.newChapter(for: Array(1...verseArray.count).map({String($0)}))
+        self.view.layoutIfNeeded()
     }
     
 }
 
 extension BookTableController: IndexListDelegate {
     func pressedIndex(at index: Int) {
-        if index < 0 || index > (bookDict.count - 1) {
+        if index < 0 || index > (verseArray.count - 1) {
             return
         }
         var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
         
-        let indexPath = IndexPath(row: 0, section: index)
+        let indexPath = IndexPath(row: index, section: 0)
         UIView.animate(withDuration: 0.01) {
             self.bookTableView.scrollToRow(at: indexPath, at: .top, animated: false)
             generator?.prepare()
@@ -205,15 +212,36 @@ extension BookTableController: IndexListDelegate {
 }
 
 extension BookTableController: IndexVerseDelegate {
-    func moveToVerse(multiplier: Double, chapter: Int) {
-        guard let versesInChapter = bookDict[chapter] else {return}
-        let numberOfVersesInCurrentChapter = versesInChapter.count
+    
+    func moveToVerse(multiplier: Double) {
+        let numberOfVersesInCurrentChapter = verseArray.count
         let verse = Int(multiplier * Double(numberOfVersesInCurrentChapter))
         UIView.animate(withDuration: 0.01) {
-            self.bookTableView.scrollToRow(at: IndexPath(row: verse, section: chapter - 1), at: .top, animated: false)
+            self.bookTableView.scrollToRow(at: IndexPath(row: verse, section: 0), at: .top, animated: false)
         }
         
     }
     
+}
+
+extension BookTableController: ChapterPressDelegate {
+    func didPressPreviousChapter() {
+        bookTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        changeChapterDelegate?.previousChapter()
+    }
     
+    func didPressNextChapter() {
+        bookTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        changeChapterDelegate?.nextChapter()
+    }
+    
+    func didPressChapterLabel() {
+    }
+    
+    
+}
+
+protocol ChangeChapterDelegate: class {
+    func previousChapter()
+    func nextChapter()
 }

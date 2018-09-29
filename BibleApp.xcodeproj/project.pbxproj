@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C070B16215DC04000833BE5 /* ChapterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C070B15215DC04000833BE5 /* ChapterTableViewCell.swift */; };
+		8C070B18215DC10500833BE5 /* ChapterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C070B17215DC10500833BE5 /* ChapterCollectionViewCell.swift */; };
+		8C070B1A215DDB6000833BE5 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C070B19215DDB6000833BE5 /* ChapterView.swift */; };
 		8C09F1B4213B29AF00BF0EEE /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C09F1B3213B29AF00BF0EEE /* View.swift */; };
 		8C14613A215B315C00FDF339 /* SearchBibleIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075A8215B0C8400827675 /* SearchBibleIntentHandler.swift */; };
 		8C14613B215B31A800FDF339 /* acts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075C7215B23D300827675 /* acts.swift */; };
@@ -81,6 +84,7 @@
 		8C1C89BE215C4EE200DC43FF /* TextParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1C89B8215C4E9900DC43FF /* TextParser.swift */; };
 		8C266065214DDE7C00EFAE42 /* VerseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */; };
 		8C266067214E05C600EFAE42 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266066214E05C600EFAE42 /* SearchCoordinator.swift */; };
+		8C328202215F221E00B79A90 /* LabelChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C328201215F221E00B79A90 /* LabelChapterView.swift */; };
 		8C46EF3B212F245300390BB0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */; };
 		8C5D869821323B42000F994E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869721323B42000F994E /* Colors.swift */; };
 		8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */; };
@@ -236,11 +240,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8C070B15215DC04000833BE5 /* ChapterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTableViewCell.swift; sourceTree = "<group>"; };
+		8C070B17215DC10500833BE5 /* ChapterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterCollectionViewCell.swift; sourceTree = "<group>"; };
+		8C070B19215DDB6000833BE5 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
 		8C09F1B3213B29AF00BF0EEE /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		8C1C89B8215C4E9900DC43FF /* TextParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextParser.swift; sourceTree = "<group>"; };
 		8C1C89BA215C4EB700DC43FF /* IntentBible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentBible.swift; sourceTree = "<group>"; };
 		8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCoordinator.swift; sourceTree = "<group>"; };
 		8C266066214E05C600EFAE42 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		8C328201215F221E00B79A90 /* LabelChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelChapterView.swift; sourceTree = "<group>"; };
 		8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8C5D869721323B42000F994E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsColorTableViewCell.swift; sourceTree = "<group>"; };
@@ -593,6 +601,10 @@
 				8C80FEE22131E60B006BF071 /* IndexTracker.swift */,
 				8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */,
 				8C5D869B213363E5000F994E /* HeaderView.swift */,
+				8C070B15215DC04000833BE5 /* ChapterTableViewCell.swift */,
+				8C070B17215DC10500833BE5 /* ChapterCollectionViewCell.swift */,
+				8C070B19215DDB6000833BE5 /* ChapterView.swift */,
+				8C328201215F221E00B79A90 /* LabelChapterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1038,6 +1050,7 @@
 				8C146161215B31B100FDF339 /* genesis.swift in Sources */,
 				8C146154215B31A800FDF339 /* thirdJohn.swift in Sources */,
 				8C14613B215B31A800FDF339 /* acts.swift in Sources */,
+				8C328202215F221E00B79A90 /* LabelChapterView.swift in Sources */,
 				8CF05636214E10EC00CD7AE5 /* BibleCoordinator.swift in Sources */,
 				8C146177215B31B100FDF339 /* secondChronicles.swift in Sources */,
 				8C146174215B31B100FDF339 /* proverbs.swift in Sources */,
@@ -1046,6 +1059,7 @@
 				8C146148215B31A800FDF339 /* luke.swift in Sources */,
 				8C146167215B31B100FDF339 /* job.swift in Sources */,
 				8C79AC33212DA6B500FCD313 /* VerseViewController.swift in Sources */,
+				8C070B1A215DDB6000833BE5 /* ChapterView.swift in Sources */,
 				8C79AC31212DA5E300FCD313 /* BibleVerse.swift in Sources */,
 				8C146146215B31A800FDF339 /* john.swift in Sources */,
 				8CD07637215B2EE800827675 /* Bible.swift in Sources */,
@@ -1059,6 +1073,7 @@
 				8C14617A215B31B100FDF339 /* songOfSongs.swift in Sources */,
 				A43E1D1121195A3C008235D6 /* MainViewController.swift in Sources */,
 				8C14615C215B31B100FDF339 /* ezekiel.swift in Sources */,
+				8C070B16215DC04000833BE5 /* ChapterTableViewCell.swift in Sources */,
 				8C146170215B31B100FDF339 /* nahum.swift in Sources */,
 				8C146162215B31B100FDF339 /* habakkuk.swift in Sources */,
 				8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */,
@@ -1082,6 +1097,7 @@
 				A4FD28E82118922B008E0A69 /* AppDelegate.swift in Sources */,
 				8C14615B215B31B100FDF339 /* exodus.swift in Sources */,
 				8C146171215B31B100FDF339 /* nehemiah.swift in Sources */,
+				8C070B18215DC10500833BE5 /* ChapterCollectionViewCell.swift in Sources */,
 				A4B6C57921287F2D003C9414 /* SearchViewModel.swift in Sources */,
 				8C14613E215B31A800FDF339 /* firstCorinthians.swift in Sources */,
 				8C146178215B31B100FDF339 /* secondKings.swift in Sources */,

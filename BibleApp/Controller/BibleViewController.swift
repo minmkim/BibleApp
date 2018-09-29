@@ -11,6 +11,16 @@ import UIKit
 class BibleViewController: UIViewController {
 
     var bible: Bible!
+    var selectedBookIndexPath: IndexPath? {
+        didSet {
+            bibleTableView.beginUpdates()
+            if let index = selectedBookIndexPath {
+                let cell = bibleTableView.cellForRow(at: index) as! ChapterTableViewCell
+                cell.layoutIfNeeded()
+            }
+            bibleTableView.endUpdates()
+        }
+    }
     weak var bibleCoordinatorDelegate: BibleCoordinatorDelegate?
     let oldIndexArray = ["Gn", "Ex", "Lv", "Nu", "Dt", "Jos", "Jdg", "Rut", "1Sa", "2Sa", "1Ki", "2Ki", "1Ch", "2Ch", "Ez", "Neh", "Es", "Job", "Ps", "Prv", "Ecc", "Sng", "Is", "Jer", "Lam", "Ez", "Dan", "Hos", "Jol", "Am", "Oba", "Jon", "Mic", "Nah", "Hab", "Zep", "Hag", "Zec", "Mal", "Mt", "Mk", "Lk", "Jn", "Ac", "Ro", "1Co", "2Co", "Gal", "Eph", "Php", "Col", "1Th", "2Th", "1Ti", "2Ti", "Ti", "Ph", "Heb", "Jm", "1Pt", "2Pt", "1Jn", "2Jn", "3Jn", "Jud", "Rv"]
     
@@ -54,6 +64,7 @@ class BibleViewController: UIViewController {
         tabBarController?.tabBar.isTranslucent = false
         self.navigationController?.navigationBar.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
         bibleTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        bibleTableView.register(ChapterTableViewCell.self, forCellReuseIdentifier: "chapterCell")
         bibleTableView.dataSource = self
         bibleTableView.delegate = self
         bibleTableView.separatorStyle = .none
@@ -161,27 +172,44 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        if indexPath.section < bible.booksOfOldTestament.count {
-            cell.textLabel?.text = bible.booksOfOldTestament[indexPath.section]
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            if indexPath.section < bible.booksOfOldTestament.count {
+                cell.textLabel?.text = bible.booksOfOldTestament[indexPath.section]
+            } else {
+                cell.textLabel?.text = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
+            }
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
+            cell.selectedBackgroundView = backgroundView
+            cell.accessoryType = .detailButton
+            cell.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
+            if isDarkMode {
+                let theme = Theme.dark
+                cell.backgroundColor = theme.backgroundColor
+                cell.textLabel?.textColor = theme.textColor
+            }
+            return cell
         } else {
-            cell.textLabel?.text = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "chapterCell", for: indexPath) as! ChapterTableViewCell
+            if indexPath.section < bible.booksOfOldTestament.count {
+                let book = bible.booksOfOldTestament[indexPath.section]
+                guard let chapterVerseDict = bible.bible[book] else {fatalError()}
+                cell.numberOfChapters = chapterVerseDict.count
+                cell.didSelectChapterCVDelegate = self
+            } else {
+                let book = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
+                guard let chapterVerseDict = bible.bible[book] else {fatalError()}
+                cell.numberOfChapters = chapterVerseDict.count
+                cell.didSelectChapterCVDelegate = self
+            }
+            return cell
         }
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
-        cell.selectedBackgroundView = backgroundView
-        cell.accessoryType = .detailButton
-        cell.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
-        if isDarkMode {
-            let theme = Theme.dark
-            cell.backgroundColor = theme.backgroundColor
-            cell.textLabel?.textColor = theme.textColor
-        }
-        return cell
+        
     }
     
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
@@ -191,7 +219,28 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        bibleCoordinatorDelegate?.openBibleBook(for: indexPath)
+        if indexPath.section == selectedBookIndexPath?.section && indexPath.row == 0 {
+            selectedBookIndexPath = nil
+            return
+        }
+        if !(indexPath.row == 1) {
+            selectedBookIndexPath = IndexPath(row: 1, section: indexPath.section)
+        }
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let index = selectedBookIndexPath {
+            if indexPath.row == index.row && indexPath.section == index.section {
+                return 30
+            }
+        }
+        if indexPath.row == 1 {
+            return 0
+        } else {
+            return 50
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -200,10 +249,12 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
             guard let firstBook = firstCell.textLabel?.text else {return}
             if let index = bible.booksOfOldTestament.index(of: firstBook) {
                 indexList.updatePositionOfBookMarker(index: index)
+                return
             }
             if let index = bible.booksOfNewTestament.index(of: firstBook) {
                 let newIndex = index + 39
                 indexList.updatePositionOfBookMarker(index: newIndex)
+                return
             }
         }
         
@@ -226,8 +277,20 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     }
 }
 
+extension BibleViewController: DidSelectChapterCVDelegate {
+    func didSelectChapter(for chapter: Int) {
+        guard let selectedIndex = selectedBookIndexPath else {return}
+        let cell = bibleTableView.cellForRow(at: IndexPath(row: 0, section: selectedIndex.section))
+        guard let book = cell?.textLabel?.text else {return}
+        bibleCoordinatorDelegate?.openBibleChapter(book: book, chapter: chapter)
+        selectedBookIndexPath = nil
+    }
+    
+    
+}
+
 protocol BibleCoordinatorDelegate: class {
-    func openBibleBook(for indexPath: IndexPath)
     func openBibleWebsite(for indexPath: IndexPath)
+    func openBibleChapter(book: String, chapter: Int)
 }
 

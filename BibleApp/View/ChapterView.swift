@@ -13,6 +13,13 @@ class ChapterView: UIView {
     
     var numberOfChapters: Int?
     weak var chapterPressDelegate: ChapterPressDelegate?
+    var currentChapter: Int? {
+        didSet {
+            if let currentChapter = currentChapter {
+                chapterLabel.text = "CHAPTER \(currentChapter)"
+            }
+        }
+    }
     
     let chapterLabel: UILabel = {
        let cl = UILabel()
@@ -42,6 +49,7 @@ class ChapterView: UIView {
     
     lazy var labelChapterView: LabelChapterView = {
         let lc = LabelChapterView(frame: .zero)
+        lc.didSelectChapterLabelViewDelegate = self
         lc.translatesAutoresizingMaskIntoConstraints = false
         return lc
     }()
@@ -52,6 +60,9 @@ class ChapterView: UIView {
         labelChapterViewTopAnchor?.isActive = false
         labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: topAnchor)
         labelChapterViewTopAnchor?.isActive = true
+        if let currentChapter = currentChapter {
+            labelChapterView.chapterCollectionView.scrollToItem(at: IndexPath(item: currentChapter - 1, section: 0), at: .centeredHorizontally, animated: false)
+        }
         
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
             self.layoutIfNeeded()
@@ -108,10 +119,22 @@ class ChapterView: UIView {
     
 }
 
+extension ChapterView: DidSelectChapterLabelViewDelegate {
+    func didSelectChapter(at chapter: Int) {
+        labelChapterViewTopAnchor?.isActive = false
+        labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: bottomAnchor, constant: 20)
+        labelChapterViewTopAnchor?.isActive = true
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
+            self.layoutIfNeeded()
+        }, completion: nil)
+        chapterPressDelegate?.didPressChapterLabel(for: chapter)
+    }
+}
+
 protocol ChapterPressDelegate: class {
     func didPressPreviousChapter()
     func didPressNextChapter()
-    func didPressChapterLabel()
+    func didPressChapterLabel(for chapter: Int)
 }
 
 class chapterButton: UIButton {

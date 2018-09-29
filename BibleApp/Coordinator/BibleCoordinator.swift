@@ -77,11 +77,7 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
     }
     
-}
-
-extension BibleCoordinator: ChangeChapterDelegate {
-    func previousChapter() {
-        currentChapter -= 1
+    func goToNewChapter() {
         guard let bookDict = bible.bible[currentBook] else {return}
         guard let verses = bookDict[currentChapter] else {return}
         currentBookController?.verseArray = verses
@@ -89,13 +85,22 @@ extension BibleCoordinator: ChangeChapterDelegate {
         currentBookController?.newChapter()
     }
     
+}
+
+extension BibleCoordinator: ChangeChapterDelegate {
+    func goToChapter(_ chapter: Int) {
+        currentChapter = chapter
+        goToNewChapter()
+    }
+    
+    func previousChapter() {
+        currentChapter -= 1
+        goToNewChapter()
+    }
+    
     func nextChapter() {
         currentChapter += 1
-        guard let bookDict = bible.bible[currentBook] else {return}
-        guard let verses = bookDict[currentChapter] else {return}
-        currentBookController?.verseArray = verses
-        currentBookController?.chapter = currentChapter
-        currentBookController?.newChapter()
+        goToNewChapter()
     }
     
     

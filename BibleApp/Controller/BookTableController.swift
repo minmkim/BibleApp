@@ -16,7 +16,7 @@ class BookTableController: UIViewController {
     weak var changeChapterDelegate: ChangeChapterDelegate?
     var chapter = 0 {
         didSet {
-            bottomContainerView.chapterLabel.text = "CHAPTER \(chapter)"
+            bottomContainerView.currentChapter = chapter
         }
     }
     
@@ -35,7 +35,7 @@ class BookTableController: UIViewController {
         return il
     }()
     
-    let bottomContainerView: ChapterView = {
+    lazy var bottomContainerView: ChapterView = {
        let bc = ChapterView()
         bc.translatesAutoresizingMaskIntoConstraints = false
         bc.backgroundColor = .white
@@ -53,10 +53,10 @@ class BookTableController: UIViewController {
         if dominantHand == "" {
             UserDefaults.standard.set("Left", forKey: "DominantHand")
         }
+        bottomContainerView.numberOfChapters = numberOfChapters
         view.addSubview(bookTableView)
         view.addSubview(indexList)
         view.addSubview(bottomContainerView)
-        bottomContainerView.numberOfChapters = numberOfChapters
         view.backgroundColor = .white
         layoutViews()
         indexList.delegate = self
@@ -235,7 +235,9 @@ extension BookTableController: ChapterPressDelegate {
         changeChapterDelegate?.nextChapter()
     }
     
-    func didPressChapterLabel() {
+    func didPressChapterLabel(for chapter: Int) {
+        bookTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        changeChapterDelegate?.goToChapter(chapter)
     }
     
     
@@ -244,4 +246,5 @@ extension BookTableController: ChapterPressDelegate {
 protocol ChangeChapterDelegate: class {
     func previousChapter()
     func nextChapter()
+    func goToChapter(_ chapter: Int)
 }

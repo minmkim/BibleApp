@@ -15,7 +15,7 @@ class BibleViewController: UIViewController {
         didSet {
             bibleTableView.beginUpdates()
             if let index = selectedBookIndexPath {
-                let cell = bibleTableView.cellForRow(at: index) as! ChapterTableViewCell
+                guard let cell = bibleTableView.cellForRow(at: index) as? ChapterTableViewCell else {return}
                 cell.layoutIfNeeded()
             }
             bibleTableView.endUpdates()
@@ -23,6 +23,8 @@ class BibleViewController: UIViewController {
     }
     weak var bibleCoordinatorDelegate: BibleCoordinatorDelegate?
     let oldIndexArray = ["Gn", "Ex", "Lv", "Nu", "Dt", "Jos", "Jdg", "Rut", "1Sa", "2Sa", "1Ki", "2Ki", "1Ch", "2Ch", "Ez", "Neh", "Es", "Job", "Ps", "Prv", "Ecc", "Sng", "Is", "Jer", "Lam", "Ez", "Dan", "Hos", "Jol", "Am", "Oba", "Jon", "Mic", "Nah", "Hab", "Zep", "Hag", "Zec", "Mal", "Mt", "Mk", "Lk", "Jn", "Ac", "Ro", "1Co", "2Co", "Gal", "Eph", "Php", "Col", "1Th", "2Th", "1Ti", "2Ti", "Ti", "Ph", "Heb", "Jm", "1Pt", "2Pt", "1Jn", "2Jn", "3Jn", "Jud", "Rv"]
+    
+    let numberOfChapters = [50, 40, 27, 36, 34, 24, 21, 4, 31, 24, 22, 25, 29, 36, 10, 13, 10, 42, 150, 31, 12, 8, 66, 52, 5, 48, 12, 14, 3, 9, 1, 4, 7, 3, 3, 3, 2, 14, 4, 28, 16, 24, 21, 28, 16, 16, 13, 6, 6, 4, 4, 5, 3, 6, 4, 3, 1, 13, 5, 5, 3, 5, 1, 1, 1, 22]
     
     let containerView: UIView = {
         let cv = UIView()
@@ -196,17 +198,15 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "chapterCell", for: indexPath) as! ChapterTableViewCell
-            if indexPath.section < bible.booksOfOldTestament.count {
-                let book = bible.booksOfOldTestament[indexPath.section]
-                guard let chapterVerseDict = bible.bible[book] else {fatalError()}
-                cell.numberOfChapters = chapterVerseDict.count
-                cell.didSelectChapterCVDelegate = self
+            if selectedBookIndexPath == indexPath {
+                cell.chapterCollectionView.isHidden = false
+                cell.numberOfChapters = numberOfChapters[indexPath.section]
+                cell.chapterCollectionView.reloadData()
             } else {
-                let book = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
-                guard let chapterVerseDict = bible.bible[book] else {fatalError()}
-                cell.numberOfChapters = chapterVerseDict.count
-                cell.didSelectChapterCVDelegate = self
+                cell.numberOfChapters = 0
+                cell.chapterCollectionView.isHidden = true
             }
+            cell.didSelectChapterCVDelegate = self
             return cell
         }
         
@@ -225,18 +225,19 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         }
         if !(indexPath.row == 1) {
             selectedBookIndexPath = IndexPath(row: 1, section: indexPath.section)
+            guard let cell = bibleTableView.cellForRow(at: IndexPath(row: 1, section: indexPath.section)) as? ChapterTableViewCell else {return}
+            cell.chapterCollectionView.isHidden = false
+            cell.numberOfChapters = numberOfChapters[indexPath.section]
+            cell.chapterCollectionView.reloadData()
         }
         
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let index = selectedBookIndexPath {
-            if indexPath.row == index.row && indexPath.section == index.section {
-                return 30
-            }
-        }
-        if indexPath.row == 1 {
+        if selectedBookIndexPath == indexPath {
+            return 30
+        } else if indexPath.row == 1 {
             return 0
         } else {
             return 50

@@ -107,7 +107,7 @@ final class VersesDataManager {
         return savedVerses
     }
     
-    func searchForWord(searchWord: String) -> [BibleVerse] {
+    func searchForWord(searchWord: String, fetchOffset: Int) -> [BibleVerse] {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return []}
         let context = appDelegate.persistentContainer.viewContext
@@ -116,6 +116,7 @@ final class VersesDataManager {
             let managedContext = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
             managedContext.predicate = NSPredicate(format: "text CONTAINS[cd] %@", searchWord.lowercased())
             managedContext.fetchLimit = 50
+            managedContext.fetchOffset = fetchOffset
             let fetchedVerses = try context.fetch(managedContext)
             fetchedVerses.forEach { (verse) in
                 let newVerse = BibleVerse(fetchedVerse: verse)

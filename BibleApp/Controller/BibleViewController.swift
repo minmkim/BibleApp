@@ -36,6 +36,7 @@ class BibleViewController: UIViewController {
        let tv = UITableView()
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.showsVerticalScrollIndicator = false
+        tv.rowHeight = UITableViewAutomaticDimension
         return tv
     }()
     
@@ -80,7 +81,6 @@ class BibleViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         print("rotated")
-//        indexList.layoutIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,6 +181,8 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+            cell.textLabel?.adjustsFontForContentSizeCategory = true
             if indexPath.section < bible.booksOfOldTestament.count {
                 cell.textLabel?.text = bible.booksOfOldTestament[indexPath.section]
             } else {
@@ -189,13 +191,6 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
             let backgroundView = UIView()
             backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
             cell.selectedBackgroundView = backgroundView
-            cell.accessoryType = .detailButton
-            cell.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
-            if isDarkMode {
-                let theme = Theme.dark
-                cell.backgroundColor = theme.backgroundColor
-                cell.textLabel?.textColor = theme.textColor
-            }
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "chapterCell", for: indexPath) as! ChapterTableViewCell
@@ -210,11 +205,6 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
             cell.didSelectChapterCVDelegate = self
             return cell
         }
-        
-    }
-    
-    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        bibleCoordinatorDelegate?.openBibleWebsite(for: indexPath)
         
     }
     
@@ -233,7 +223,6 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         }
         
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if selectedBookIndexPath == indexPath {
@@ -260,6 +249,19 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
             }
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    
+        let moreInfo = UITableViewRowAction(style: .default, title: "More Info") { [weak self] (action, indexPath) in
+            self?.bibleCoordinatorDelegate?.openBibleWebsite(for: indexPath)
+        }
+        moreInfo.backgroundColor = MainColor.redOrange
+        return [moreInfo]
     }
     
     func pressedIndex(at index: Int) {

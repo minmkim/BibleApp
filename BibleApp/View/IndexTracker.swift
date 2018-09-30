@@ -269,7 +269,6 @@ final class IndexTracker: UIView {
     
     func calculateIndex(at location: CGPoint) -> Int {
         let yFrame = self.containerStack.bounds.maxY - self.containerStack.bounds.minY
-        print(location.y/yFrame)
         let index = Int(Float(location.y/yFrame) * Float(countOfList))
         return index
     }

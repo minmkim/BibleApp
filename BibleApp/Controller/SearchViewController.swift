@@ -24,6 +24,7 @@ class SearchViewController: UITableViewController {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)], for: .normal)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
+        tableView.separatorStyle = .none
     }
     
     func setupSearchController() {
@@ -129,21 +130,30 @@ class SearchViewController: UITableViewController {
         return UITableViewAutomaticDimension
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if searchController.searchBar.selectedScopeButtonIndex == 1 {
+            searchViewModel.observeTableViewToLoadMoreVerses(for: indexPath.row, text: searchController.searchBar.text ?? "")
+        }
+        
+    }
 }
 
 extension SearchViewController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate{
     func updateSearchResults(for searchController: UISearchController) {
         searchBarIsEmpty()
-        filterContentForSearchText(searchController.searchBar.text!)
-        switch searchViewModel.searchParameter {
-        case .empty:
-            searchController.searchBar.keyboardType = .default
-        case .book:
-            searchController.searchBar.keyboardType = .default
-        default:
-            searchController.searchBar.keyboardType = .numbersAndPunctuation
+        if searchController.searchBar.selectedScopeButtonIndex == 0 {
+            filterContentForSearchText(searchController.searchBar.text!)
+            switch searchViewModel.searchParameter {
+            case .empty:
+                searchController.searchBar.keyboardType = .default
+            case .book:
+                searchController.searchBar.keyboardType = .default
+            default:
+                searchController.searchBar.keyboardType = .numbersAndPunctuation
+            }
+            searchController.searchBar.reloadInputViews()
         }
-        searchController.searchBar.reloadInputViews()
+        
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
@@ -184,8 +194,22 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
 }
 
 extension SearchViewController: SearchWordDelegate {
+    func didFinishLoadingMoreVerses(for indexPaths: [IndexPath]) {
+        print(tableView.numberOfRows(inSection: 0))
+        DispatchQueue.main.async {
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: indexPaths, with: .automatic)
+            self.tableView.endUpdates()
+        }
+    }
+    
     func didFinishSearching() {
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            if self.tableView.numberOfRows(inSection: 0) > 0 {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+        }
     }
     
 }

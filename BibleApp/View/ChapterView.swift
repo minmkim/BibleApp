@@ -94,9 +94,26 @@ class ChapterView: UIView {
         addSubview(leftButton)
         addSubview(rightButton)
         addSubview(labelChapterView)
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(didPressLabel))
-        chapterLabel.addGestureRecognizer(recognizer)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didPressLabel))
+        chapterLabel.addGestureRecognizer(tapRecognizer)
+        let rightSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
+        rightSwipeRecognizer.direction = .right
+        let leftSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
+        leftSwipeRecognizer.direction = .left
+        self.addGestureRecognizer(rightSwipeRecognizer)
+        self.addGestureRecognizer(leftSwipeRecognizer)
         layoutViews()
+    }
+    
+    @objc func didSwipe(_ gesture: UISwipeGestureRecognizer) {
+        switch gesture.direction {
+        case .left:
+            chapterPressDelegate?.didPressNextChapter()
+        case .right:
+            chapterPressDelegate?.didPressPreviousChapter()
+        default:
+            print("error swipe")
+        }
     }
     
     var labelChapterViewTopAnchor: NSLayoutConstraint?

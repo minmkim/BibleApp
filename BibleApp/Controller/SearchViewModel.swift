@@ -26,7 +26,15 @@ class SearchViewModel {
     
     
     let bible: Bible!
-    var searchParameter: SearchParameter = .empty
+    var searchParameter: SearchParameter = .empty {
+        didSet {
+            if searchParameter == .empty {
+                fetchOffset = 0
+                searchedVerses.removeAll()
+                searchWordDelegate?.didFinishSearching()
+            }
+        }
+    }
     var searchState: SearchState = .verse
     var verseDataManager: VersesDataManager!
     
@@ -35,6 +43,7 @@ class SearchViewModel {
     var filteredChapters = [Int]()
     var filteredVerses = [Int]()
     var searchedVerses = [BibleVerse]()
+    var fetchOffset = 0
     
     weak var searchWordDelegate: SearchWordDelegate?
     weak var searchBibleDelegate: SearchBibleDelegate?
@@ -242,7 +251,8 @@ class SearchViewModel {
                 return [book, chapter, verse]
             }
         } else {
-            searchedVerses = verseDataManager.searchForWord(searchWord: text)
+            fetchOffset = 0
+            searchedVerses = verseDataManager.searchForWord(searchWord: text, fetchOffset: fetchOffset)
             searchWordDelegate?.didFinishSearching()
             return []
         }
@@ -265,8 +275,26 @@ class SearchViewModel {
         } else {
             return "Verses"
         }
+    }
+    
+    var requestingMoreVerses = false
+    
+    func observeTableViewToLoadMoreVerses(for index: Int, text: String) {
+        if (index > (searchedVerses.count - 10)) && (searchedVerses.count%50 == 0) && searchedVerses.count != 0 {
+            if !requestingMoreVerses {
+                requestingMoreVerses.toggle()
+                fetchOffset += 50
+                let newVerses = verseDataManager.searchForWord(searchWord: text, fetchOffset: fetchOffset)
+                let newFirstRow = searchedVerses.count
+                searchedVerses += newVerses
+                let indexPathArray = Array(newFirstRow...(searchedVerses.count - 1)).map({IndexPath(row: $0, section: 0)})
+                requestingMoreVerses.toggle()
+                searchWordDelegate?.didFinishLoadingMoreVerses(for: indexPathArray)
+            }
+        }
         
     }
+    
     
     @available(iOS 12.0, *)
     func donatePaste(verse: String) {
@@ -295,5 +323,6 @@ protocol SearchBibleDelegate: class {
 
 protocol SearchWordDelegate: class {
     func didFinishSearching()
+    func didFinishLoadingMoreVerses(for indexPaths: [IndexPath])
 }
 

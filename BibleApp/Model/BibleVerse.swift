@@ -30,11 +30,11 @@ final class BibleVerse {
     }
     
     func formattedVerse() -> String {
-        return "\(book) \(chapter): \(verse)"
+        return "\(book) \(chapter):\(verse)"
     }
     
     func formattedVerseAndText() -> String{
-        return "\(text)\n\(book) \(chapter): \(verse)"
+        return "\(text)\n\(book) \(chapter):\(verse)"
     }
     
 }

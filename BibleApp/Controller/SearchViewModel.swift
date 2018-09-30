@@ -19,18 +19,29 @@ class SearchViewModel {
         case verse
     }
     
+    enum SearchState {
+        case verse
+        case word
+    }
+    
+    
     let bible: Bible!
     var searchParameter: SearchParameter = .empty
+    var searchState: SearchState = .verse
+    var verseDataManager: VersesDataManager!
     
     var bookStrings = [String]()
     var filteredBooks = [String]()
     var filteredChapters = [Int]()
     var filteredVerses = [Int]()
+    var searchedVerses = [BibleVerse]()
     
+    weak var searchWordDelegate: SearchWordDelegate?
     weak var searchBibleDelegate: SearchBibleDelegate?
     
-    init(bible: Bible) {
+    init(bible: Bible, verseDataManager: VersesDataManager) {
         self.bible = bible
+        self.verseDataManager = verseDataManager
         bookStrings = bible.booksOfOldTestament + bible.booksOfNewTestament
     }
     
@@ -133,28 +144,37 @@ class SearchViewModel {
     }
     
     func returnNumberOfRowsInSection() -> Int {
-        switch searchParameter {
-        case .empty:
-            return bookStrings.count
-        case .book:
-            return filteredBooks.count
-        case .chapter:
-            return filteredChapters.count
-        case .verse:
-            return filteredVerses.count
+        if searchState == .verse {
+            switch searchParameter {
+            case .empty:
+                return bookStrings.count
+            case .book:
+                return filteredBooks.count
+            case .chapter:
+                return filteredChapters.count
+            case .verse:
+                return filteredVerses.count
+            }
+        } else {
+            return searchedVerses.count
         }
+        
     }
     
     func returnTextLabel(for index: Int) -> String {
-        switch searchParameter {
-        case .empty:
-            return bookStrings[index]
-        case .book:
-            return filteredBooks[index]
-        case .chapter:
-            return String(filteredChapters[index])
-        case .verse:
-            return String(filteredVerses[index])
+        if searchState == .verse {
+            switch searchParameter {
+            case .empty:
+                return bookStrings[index]
+            case .book:
+                return filteredBooks[index]
+            case .chapter:
+                return String(filteredChapters[index])
+            case .verse:
+                return String(filteredVerses[index])
+            }
+        } else {
+            return searchedVerses[index].formattedVerse()
         }
     }
     
@@ -167,65 +187,85 @@ class SearchViewModel {
     }
     
     func didSelectItem(at index: Int, number: Int?) -> String {
-        switch searchParameter {
-        case .empty:
-            filteredBooks = [bookStrings[index]]
-            return "\(bookStrings[index]) "
-        case .book:
-            filteredBooks = [filteredBooks[index]]
-            return "\(filteredBooks[0]) "
-        case .chapter:
-            if let number = number {
-                filteredChapters = [number]
+        if searchState == .verse {
+            switch searchParameter {
+            case .empty:
+                filteredBooks = [bookStrings[index]]
+                return "\(bookStrings[index]) "
+            case .book:
+                filteredBooks = [filteredBooks[index]]
+                return "\(filteredBooks[0]) "
+            case .chapter:
+                if let number = number {
+                    filteredChapters = [number]
+                }
+                return "\(filteredBooks[0]) \(filteredChapters[0]):"
+            case .verse:
+                guard let number = number else {return ""}
+                if #available(iOS 12.0, *) {
+                    donatePaste(verse: "search \(filteredBooks[0]) chapter \(filteredChapters[0]) verse \(filteredVerses[number])")
+                }
+                searchBibleDelegate?.requestToOpenBibleVerse(book: filteredBooks[0], chapter: filteredChapters[0], verse: filteredVerses[number])
+                return ""
             }
-            return "\(filteredBooks[0]) \(filteredChapters[0]):"
-        case .verse:
-            guard let number = number else {return ""}
-            if #available(iOS 12.0, *) {
-                donatePaste(verse: "search \(filteredBooks[0]) chapter \(filteredChapters[0]) verse \(filteredVerses[number])")
-            }
-            searchBibleDelegate?.requestToOpenBibleVerse(book: filteredBooks[0], chapter: filteredChapters[0], verse: filteredVerses[number])
+        } else {
+            let verse = searchedVerses[index]
+            searchBibleDelegate?.requestToOpenBibleVerse(book: verse.book, chapter: verse.chapter, verse: verse.verse)
             return ""
         }
+        
     }
     
     func searchPressed(for text: String) -> [Any] {
-        switch searchParameter {
-        case .empty:
-            return []
-        case .book:
-            guard let book = filteredBooks.first else {return []}
-            searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: 1, verse: 1)
-            return [book]
-        case .chapter:
-            guard let book = filteredBooks.first else {return []}
-            guard let chapter = filteredChapters.first else { return [filteredBooks[0]]}
-            searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: chapter, verse: 1)
+        if searchState == .verse {
+            switch searchParameter {
+            case .empty:
+                return []
+            case .book:
+                guard let book = filteredBooks.first else {return []}
+                searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: 1, verse: 1)
+                return [book]
+            case .chapter:
+                guard let book = filteredBooks.first else {return []}
+                guard let chapter = filteredChapters.first else { return [filteredBooks[0]]}
+                searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: chapter, verse: 1)
                 return [book, chapter]
-        case .verse:
-            guard let book = filteredBooks.first else {return []}
-            guard let chapter = filteredChapters.first else { return [filteredBooks[0]]}
-            guard let verse = filteredVerses.first else { return [filteredBooks[0], filteredChapters[0]] }
-            searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: chapter, verse: verse)
-            if #available(iOS 12.0, *) {
-//                donate(book: book, chapter: chapter, verse: verse)
-                donatePaste(verse: "search \(book) chapter \(chapter) verse \(verse)")
+            case .verse:
+                guard let book = filteredBooks.first else {return []}
+                guard let chapter = filteredChapters.first else { return [filteredBooks[0]]}
+                guard let verse = filteredVerses.first else { return [filteredBooks[0], filteredChapters[0]] }
+                searchBibleDelegate?.requestToOpenBibleVerse(book: book, chapter: chapter, verse: verse)
+                if #available(iOS 12.0, *) {
+                    //                donate(book: book, chapter: chapter, verse: verse)
+                    donatePaste(verse: "search \(book) chapter \(chapter) verse \(verse)")
+                }
+                return [book, chapter, verse]
             }
-            return [book, chapter, verse]
+        } else {
+            searchedVerses = verseDataManager.searchForWord(searchWord: text)
+            searchWordDelegate?.didFinishSearching()
+            return []
         }
+        
+        
     }
     
     func returnHeaderLabel() -> String {
-        switch searchParameter {
-        case .empty:
-            return "Books"
-        case .book:
-            return "Books"
-        case .chapter:
-            return "Chapters"
-        case .verse:
+        if searchState == .verse {
+            switch searchParameter {
+            case .empty:
+                return "Books"
+            case .book:
+                return "Books"
+            case .chapter:
+                return "Chapters"
+            case .verse:
+                return "Verses"
+            }
+        } else {
             return "Verses"
         }
+        
     }
     
     @available(iOS 12.0, *)
@@ -247,35 +287,13 @@ class SearchViewModel {
             }
         }
     }
-    
-//    @available(iOS 12.0, *)
-//    private func donate(book: String, chapter: Int, verse: Int) {
-//        // 1
-//        let intent = SearchBibleIntentIntent()
-//
-//        // 2
-//        intent.book = book
-//        intent.chapter = chapter as NSNumber
-//        intent.verse = verse as NSNumber
-//
-//        // 3
-//        let interaction = INInteraction(intent: intent, response: nil)
-//
-//        // 4
-//        interaction.donate { (error) in
-//            if error != nil {
-//                if let error = error as NSError? {
-//                    print("Interaction donation failed: \(error.description)")
-//                } else {
-//                    print("Successfully donated interaction")
-//                }
-//            }
-//        }
-//    }
-
 }
 
 protocol SearchBibleDelegate: class {
     func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int)
+}
+
+protocol SearchWordDelegate: class {
+    func didFinishSearching()
 }
 

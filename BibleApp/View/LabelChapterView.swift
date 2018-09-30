@@ -39,6 +39,9 @@ class LabelChapterView: UIView {
         addSubview(chapterCollectionView)
         chapterCollectionView.delegate = self
         chapterCollectionView.dataSource = self
+    }
+    
+    override func layoutSubviews() {
         layoutViews()
     }
     

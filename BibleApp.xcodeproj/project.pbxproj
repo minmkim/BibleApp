@@ -103,6 +103,7 @@
 		8C8D5901215C831600316CFE /* MtZion.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */; };
 		8C8D5902215C831600316CFE /* MtZion.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FF215C831600316CFE /* MtZion.sqlite */; };
 		8C8D5903215C831600316CFE /* MtZion.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D5900215C831600316CFE /* MtZion.sqlite-wal */; };
+		8C95869C216055A800825D21 /* SearchWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */; };
 		8CD0758F215B025800827675 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
 		8CD07592215B025800827675 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07591215B025800827675 /* IntentViewController.swift */; };
 		8CD07595215B025800827675 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CD07593215B025800827675 /* MainInterface.storyboard */; };
@@ -180,6 +181,7 @@
 		8CD07633215B260E00827675 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07587215B025700827675 /* IntentHandler.swift */; };
 		8CD07637215B2EE800827675 /* Bible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD29682118B284008E0A69 /* Bible.swift */; };
 		8CD1F1E021378A57006FAAD4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD1F1DF21378A57006FAAD4 /* Theme.swift */; };
+		8CE3DBD4216025F20069692C /* SearchHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE3DBD3216025F20069692C /* SearchHeader.swift */; };
 		8CF05635214E10EC00CD7AE5 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF05633214E10EC00CD7AE5 /* AppCoordinator.swift */; };
 		8CF05636214E10EC00CD7AE5 /* BibleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF05634214E10EC00CD7AE5 /* BibleCoordinator.swift */; };
 		A43E1D0D21190903008235D6 /* BookTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E1D0C21190903008235D6 /* BookTableController.swift */; };
@@ -271,6 +273,7 @@
 		8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-shm"; sourceTree = "<group>"; };
 		8C8D58FF215C831600316CFE /* MtZion.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MtZion.sqlite; sourceTree = "<group>"; };
 		8C8D5900215C831600316CFE /* MtZion.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-wal"; sourceTree = "<group>"; };
+		8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordTableViewCell.swift; sourceTree = "<group>"; };
 		8CD07585215B025700827675 /* SearchBible.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SearchBible.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD07587215B025700827675 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		8CD07589215B025700827675 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -347,6 +350,7 @@
 		8CD07608215B23E400827675 /* deuteronomy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deuteronomy.swift; sourceTree = "<group>"; };
 		8CD07609215B23E400827675 /* hosea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = hosea.swift; sourceTree = "<group>"; };
 		8CD1F1DF21378A57006FAAD4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		8CE3DBD3216025F20069692C /* SearchHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeader.swift; sourceTree = "<group>"; };
 		8CF05633214E10EC00CD7AE5 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		8CF05634214E10EC00CD7AE5 /* BibleCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibleCoordinator.swift; sourceTree = "<group>"; };
 		A43E1D0C21190903008235D6 /* BookTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableController.swift; sourceTree = "<group>"; };
@@ -605,6 +609,8 @@
 				8C070B17215DC10500833BE5 /* ChapterCollectionViewCell.swift */,
 				8C070B19215DDB6000833BE5 /* ChapterView.swift */,
 				8C328201215F221E00B79A90 /* LabelChapterView.swift */,
+				8CE3DBD3216025F20069692C /* SearchHeader.swift */,
+				8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1075,6 +1081,7 @@
 				8C14615C215B31B100FDF339 /* ezekiel.swift in Sources */,
 				8C070B16215DC04000833BE5 /* ChapterTableViewCell.swift in Sources */,
 				8C146170215B31B100FDF339 /* nahum.swift in Sources */,
+				8CE3DBD4216025F20069692C /* SearchHeader.swift in Sources */,
 				8C146162215B31B100FDF339 /* habakkuk.swift in Sources */,
 				8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */,
 				8C146176215B31B100FDF339 /* ruth.swift in Sources */,
@@ -1139,6 +1146,7 @@
 				8C14614A215B31A800FDF339 /* matthew.swift in Sources */,
 				8C5D869C213363E5000F994E /* HeaderView.swift in Sources */,
 				8C14614C215B31A800FDF339 /* philippians.swift in Sources */,
+				8C95869C216055A800825D21 /* SearchWordTableViewCell.swift in Sources */,
 				8C14613A215B315C00FDF339 /* SearchBibleIntentHandler.swift in Sources */,
 				8C146140215B31A800FDF339 /* firstPeter.swift in Sources */,
 			);

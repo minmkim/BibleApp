@@ -24,6 +24,7 @@ final class BibleCoordinator: Coordinator {
     }
     
     deinit {
+        print("deinit biblecoordinator")
         currentBookController = nil
     }
     
@@ -34,7 +35,7 @@ final class BibleCoordinator: Coordinator {
         currentBook = book
         controller.verseArray = verses
         controller.changeChapterDelegate = self
-        controller.chapter = chapter
+        controller.currentChapter = chapter
         controller.navigationItem.title = book
         guard let numberOfChapters = bible.bible[book]?.count else {return controller}
         controller.numberOfChapters = numberOfChapters
@@ -54,6 +55,46 @@ final class BibleCoordinator: Coordinator {
                 controller.bookTableView.deselectRow(at: indexPath, animated: true)
             }
         }
+    }
+    
+    func goToNextBook() {
+        if let index = bible.booksOfOldTestament.firstIndex(of: currentBook) {
+            if index < 38 {
+                let book = bible.booksOfOldTestament[index + 1]
+                currentBook = book
+                currentChapter = 1
+                currentBookController?.navigationItem.title = book
+                guard let numberOfChapters = bible.bible[book]?.count else {return}
+                currentBookController?.numberOfChapters = numberOfChapters
+                currentBookController?.currentChapter = 1
+                goToNewChapter()
+            } else { // last book of old testament then go to new testament
+                let book = bible.booksOfNewTestament[0]
+                currentBook = book
+                currentChapter = 1
+                currentBookController?.navigationItem.title = book
+                guard let numberOfChapters = bible.bible[book]?.count else {return}
+                currentBookController?.numberOfChapters = numberOfChapters
+                currentBookController?.currentChapter = 1
+                goToNewChapter()
+            }
+            return
+        }
+        if let index = bible.booksOfNewTestament.firstIndex(of: currentBook) {
+            if index != 38 { // Revelation
+                let book = bible.booksOfNewTestament[index + 1]
+                currentBook = book
+                currentChapter = 1
+                currentBookController?.navigationItem.title = book
+                guard let numberOfChapters = bible.bible[book]?.count else {return}
+                currentBookController?.numberOfChapters = numberOfChapters
+                currentBookController?.currentChapter = 1
+                goToNewChapter()
+                return
+            }
+        }
+        
+        
     }
     
 }
@@ -81,13 +122,17 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
         guard let bookDict = bible.bible[currentBook] else {return}
         guard let verses = bookDict[currentChapter] else {return}
         currentBookController?.verseArray = verses
-        currentBookController?.chapter = currentChapter
+        currentBookController?.currentChapter = currentChapter
         currentBookController?.newChapter()
     }
     
 }
 
 extension BibleCoordinator: ChangeChapterDelegate {
+    func closedController() {
+//        currentBookController = nil
+    }
+    
     func goToChapter(_ chapter: Int) {
         currentChapter = chapter
         goToNewChapter()
@@ -100,6 +145,11 @@ extension BibleCoordinator: ChangeChapterDelegate {
     
     func nextChapter() {
         currentChapter += 1
+        if let chapters = bible.bible[currentBook] {
+            if currentChapter > chapters.count {
+                goToNextBook()
+            }
+        }
         goToNewChapter()
     }
     

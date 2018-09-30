@@ -22,7 +22,8 @@ final class AppCoordinator: Coordinator {
     
     let window: UIWindow?
     var coordinatorDict = [coordinatorType: Coordinator]()
-    let bible = Bible()
+    lazy var verseDataManager = VersesDataManager()
+    lazy var bible = Bible(verseDataManager: verseDataManager)
     
     lazy var rootViewController: MainViewController = {
         let controller = MainViewController()
@@ -31,10 +32,14 @@ final class AppCoordinator: Coordinator {
     }()
     
     lazy var bibleViewController = BibleViewController()
-    lazy var verseViewController = VerseViewController()
+    lazy var verseViewController: VerseViewController = {
+        let controller = VerseViewController()
+        controller.dataManager = verseDataManager
+        return controller
+    }()
     lazy var searchViewController: SearchViewController = {
         let controller = SearchViewController()
-        controller.searchViewModel = SearchViewModel(bible: bible)
+        controller.searchViewModel = SearchViewModel(bible: bible, verseDataManager: verseDataManager)
         return controller
     }()
     lazy var settingsViewController = SettingsTableViewController()
@@ -65,6 +70,8 @@ final class AppCoordinator: Coordinator {
         coordinatorDict[coordinatorType.bible] = bibleCoordinator
     }
     
+    
+    
 }
 
 extension AppCoordinator: TabSelectedDelegate {
@@ -75,9 +82,20 @@ extension AppCoordinator: TabSelectedDelegate {
                 coordinatorDict = [:]
                 let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible)
                 coordinatorDict[coordinatorType.bible] = bibleCoordinator
+            } else {
+                coordinatorDict[coordinatorType.savedVerses] = nil
+                coordinatorDict[coordinatorType.search] = nil
             }
         case "Verses":
             if coordinatorDict[coordinatorType.savedVerses] == nil {
+                if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
+                    if coordinator.currentBookController != nil {
+                        let verseCoordinator = VerseCoordinator(verseViewController: verseViewController)
+                        verseCoordinator.bibleVerseDelegate = self
+                        coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
+                        return
+                    }
+                }
                 coordinatorDict = [:]
                 let verseCoordinator = VerseCoordinator(verseViewController: verseViewController)
                 verseCoordinator.bibleVerseDelegate = self
@@ -85,13 +103,30 @@ extension AppCoordinator: TabSelectedDelegate {
             }
         case "Search":
             if coordinatorDict[coordinatorType.search] == nil {
+                if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
+                    if coordinator.currentBookController != nil {
+                        let searchCoordinator = SearchCoordinator(searchViewController: searchViewController)
+                        searchCoordinator.bibleVerseDelegate = self
+                        coordinatorDict[coordinatorType.search] = searchCoordinator
+                        return
+                    }
+                }
+
                 coordinatorDict = [:]
                 let searchCoordinator = SearchCoordinator(searchViewController: searchViewController)
                 searchCoordinator.bibleVerseDelegate = self
                 coordinatorDict[coordinatorType.search] = searchCoordinator
             }
         case "Settings":
-            coordinatorDict = [:]
+            if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
+                if coordinator.currentBookController != nil {
+                    coordinatorDict[coordinatorType.savedVerses] = nil
+                    coordinatorDict[coordinatorType.search] = nil
+                    return
+                }
+            } else {
+                coordinatorDict = [:]
+            }
         default:
             print("default")
         }

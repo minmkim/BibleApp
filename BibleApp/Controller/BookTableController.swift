@@ -14,14 +14,18 @@ class BookTableController: UIViewController {
     
     lazy var versesDataManager = VersesDataManager()
     weak var changeChapterDelegate: ChangeChapterDelegate?
-    var chapter = 0 {
+    var currentChapter = 0 {
         didSet {
-            bottomContainerView.currentChapter = chapter
+            bottomContainerView.currentChapter = currentChapter
         }
     }
     
     var verseArray = [String]()
-    var numberOfChapters: Int?
+    var numberOfChapters: Int? {
+        didSet {
+            bottomContainerView.numberOfChapters = numberOfChapters
+        }
+    }
     let bookTableView: UITableView = {
        let bt = UITableView()
         bt.showsVerticalScrollIndicator = false
@@ -44,6 +48,7 @@ class BookTableController: UIViewController {
     
     deinit {
         verseArray = []
+        changeChapterDelegate?.closedController()
         print("deinit booktable")
     }
     
@@ -53,7 +58,7 @@ class BookTableController: UIViewController {
         if dominantHand == "" {
             UserDefaults.standard.set("Left", forKey: "DominantHand")
         }
-        bottomContainerView.numberOfChapters = numberOfChapters
+        bottomContainerView.updateProgressBar()
         view.addSubview(bookTableView)
         view.addSubview(indexList)
         view.addSubview(bottomContainerView)
@@ -247,4 +252,5 @@ protocol ChangeChapterDelegate: class {
     func previousChapter()
     func nextChapter()
     func goToChapter(_ chapter: Int)
+    func closedController()
 }

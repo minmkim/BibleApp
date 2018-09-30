@@ -17,8 +17,7 @@ final class Bible {
     
     var bible = [String: [Int:[String]]](minimumCapacity: 66)
     
-    init() {
-        let verseDataManager = VersesDataManager()
+    init(verseDataManager: VersesDataManager) {
         let didCreateCoreDataBible = UserDefaults.standard.bool(forKey: "didCreateCoreDataBible")
         if !didCreateCoreDataBible {
             verseDataManager.preloadDBData()

@@ -15,6 +15,7 @@ class ChapterView: UIView {
     weak var chapterPressDelegate: ChapterPressDelegate?
     var currentChapter: Int? {
         didSet {
+            updateProgressBar()
             if let currentChapter = currentChapter {
                 chapterLabel.text = "CHAPTER \(currentChapter)"
             }
@@ -54,6 +55,15 @@ class ChapterView: UIView {
         return lc
     }()
     
+    let progressBar: UIView = {
+        let pb = UIView()
+        pb.translatesAutoresizingMaskIntoConstraints = false
+        pb.backgroundColor = MainColor.redOrange
+        pb.alpha = 0.1
+        pb.isUserInteractionEnabled = false
+        return pb
+    }()
+    
     @objc func didPressLabel() {
         labelChapterView.numberOfChapters = numberOfChapters
         labelChapterView.chapterCollectionView.reloadData()
@@ -79,6 +89,7 @@ class ChapterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addSubview(progressBar)
         addSubview(chapterLabel)
         addSubview(leftButton)
         addSubview(rightButton)
@@ -89,8 +100,13 @@ class ChapterView: UIView {
     }
     
     var labelChapterViewTopAnchor: NSLayoutConstraint?
+    var progressBarTrailingAnchor: NSLayoutConstraint?
     
     func layoutViews() {
+        progressBar.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        progressBar.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        progressBar.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        
         chapterLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         chapterLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         chapterLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
@@ -100,16 +116,16 @@ class ChapterView: UIView {
         leftButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
         leftButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
         leftButton.widthAnchor.constraint(equalTo: leftButton.heightAnchor).isActive = true
-        
+
         rightButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         rightButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
         rightButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
         rightButton.widthAnchor.constraint(equalTo: rightButton.heightAnchor).isActive = true
-        
-        labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: bottomAnchor, constant: 20)
+
+        labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: bottomAnchor, constant: 10)
         labelChapterViewTopAnchor?.isActive = true
-        labelChapterView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        labelChapterView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        labelChapterView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        labelChapterView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         labelChapterView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
     }
     
@@ -117,12 +133,31 @@ class ChapterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        
+        updateProgressBar()
+    }
+    
+    func updateProgressBar() {
+        let frameWidth = self.frame.width
+        guard let currentChapter = currentChapter else {return}
+        guard let numberOfChapters = numberOfChapters else {return}
+        let multiplier = Double(currentChapter)/Double(numberOfChapters)
+        let constant = frameWidth * CGFloat(multiplier)
+        progressBarTrailingAnchor?.isActive = false
+        progressBarTrailingAnchor = progressBar.trailingAnchor.constraint(equalTo: leadingAnchor, constant: constant)
+        progressBarTrailingAnchor?.isActive = true
+        UIView.animate(withDuration: 0.1) {
+            self.layoutIfNeeded()
+        }
+    }
+    
 }
 
 extension ChapterView: DidSelectChapterLabelViewDelegate {
     func didSelectChapter(at chapter: Int) {
         labelChapterViewTopAnchor?.isActive = false
-        labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: bottomAnchor, constant: 20)
+        labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         labelChapterViewTopAnchor?.isActive = true
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
             self.layoutIfNeeded()

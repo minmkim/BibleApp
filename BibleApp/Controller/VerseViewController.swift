@@ -13,7 +13,7 @@ class VerseViewController: UIViewController {
     
     weak var savedVerseDelegate: SavedVerseDelegate?
     var savedVerses = [BibleVerse]()
-    let dataManager = VersesDataManager()
+    var dataManager: VersesDataManager?
     var isEditingVerses = false
     var indexPathToDelete = [IndexPath]() {
         didSet {
@@ -61,7 +61,7 @@ class VerseViewController: UIViewController {
         indexPathToDelete.forEach { (indexPath) in
             let cell = self.verseCollectionView.cellForItem(at: indexPath) as! VerseCollectionViewCell
             cell.deleteImage.isHidden = true
-            dataManager.deleteVerse(for: savedVerses[indexPath.row])
+            dataManager?.deleteVerse(for: savedVerses[indexPath.row])
         }
         savedVerses.removeIndexPaths(at: indexPathToDelete)
         verseCollectionView.performBatchUpdates({
@@ -83,12 +83,12 @@ class VerseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         savedVerses.removeAll()
-        savedVerses = dataManager.loadVerses()
+        guard let verses = dataManager?.loadVerses() else {return}
+        savedVerses = verses
         verseCollectionView.reloadData()
     }
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         navigationItem.title = "Saved Verses"
         navigationController?.navigationBar.prefersLargeTitles = true

@@ -105,6 +105,28 @@ final class VersesDataManager {
         return savedVerses
     }
     
+    func searchForWord(searchWord: String) -> [BibleVerse] {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return []}
+        let context = appDelegate.persistentContainer.viewContext
+        var savedVerses = [BibleVerse]()
+        do {
+            let managedContext = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
+            managedContext.predicate = NSPredicate(format: "text CONTAINS[cd] %@", searchWord.lowercased())
+            managedContext.fetchLimit = 50
+            let fetchedVerses = try context.fetch(managedContext)
+            fetchedVerses.forEach { (verse) in
+                let newVerse = BibleVerse(fetchedVerse: verse)
+                savedVerses.append(newVerse)
+            }
+            return savedVerses
+        }
+        catch {
+            print ("fetch task failed", error)
+            return []
+        }
+    }
+    
     func preloadDBData() {
         let sqlitePath = Bundle.main.path(forResource: "MtZion", ofType: "sqlite")
         let sqlitePath_shm = Bundle.main.path(forResource: "MtZion", ofType: "sqlite-shm")

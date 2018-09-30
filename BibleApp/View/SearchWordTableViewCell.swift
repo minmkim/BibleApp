@@ -48,7 +48,6 @@ class SearchWordTableViewCell: UITableViewCell {
         bibleText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
         bibleText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
         bibleText.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
-        
     }
 
     override func awakeFromNib() {

@@ -133,7 +133,7 @@ class SettingsTableViewController: UITableViewController {
                 let defaults = UserDefaults.standard
                 defaults.set("Left", forKey: "DominantHand")
                 dominantHand = "Left"
-                let otherIndex = IndexPath(row: 1, section: 1)
+                let otherIndex = IndexPath(row: 1, section: 0)
                 let otherCell = tableView.cellForRow(at: otherIndex)
                 otherCell?.accessoryType = .none
             }
@@ -144,7 +144,7 @@ class SettingsTableViewController: UITableViewController {
                 let defaults = UserDefaults.standard
                 defaults.set("Right", forKey: "DominantHand")
                 dominantHand = "Right"
-                let otherIndex = IndexPath(row: 0, section: 1)
+                let otherIndex = IndexPath(row: 0, section: 0)
                 let otherCell = tableView.cellForRow(at: otherIndex)
                 otherCell?.accessoryType = .none
             }

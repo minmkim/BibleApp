@@ -12,16 +12,16 @@ import CoreData
 
 final class VersesDataManager {
     
-    func loadVerses() -> [BibleVerse] {
+    func loadVerses() -> [SavedVerse] {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataVerse.entity)
-        var savedVerses = [BibleVerse]()
+        var savedVerses = [SavedVerse]()
         do {
             let fetchedVerses = try managedContext.fetch(fetchRequest)
             fetchedVerses.forEach { (verse) in
-                let newVerse = BibleVerse(fetchedVerse: verse)
+                let newVerse = SavedVerse(fetchedVerse: verse)
                 savedVerses.append(newVerse)
             }
         } catch let error as NSError {
@@ -30,7 +30,7 @@ final class VersesDataManager {
         return savedVerses
     }
     
-    func saveToCoreData(bibleVerse: BibleVerse) {
+    func saveToCoreData(bibleVerse: SavedVerse) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -42,6 +42,8 @@ final class VersesDataManager {
             newVerse.setValue(bibleVerse.chapter, forKeyPath: CoreDataVerse.chapter)
             newVerse.setValue(bibleVerse.verse, forKeyPath: CoreDataVerse.verse)
             newVerse.setValue(bibleVerse.text, forKeyPath: CoreDataVerse.text)
+            newVerse.setValue(bibleVerse.isMultipleVerses, forKey: CoreDataVerse.isMultipleVerses)
+            newVerse.setValue(bibleVerse.upToVerse, forKey: CoreDataVerse.upToVerse)
             
             do {
                 try managedContext.save()
@@ -51,7 +53,7 @@ final class VersesDataManager {
         }
     }
     
-    func isDuplicateVerse(for bibleVerse: BibleVerse) -> Bool {
+    func isDuplicateVerse(for bibleVerse: SavedVerse) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -65,7 +67,7 @@ final class VersesDataManager {
         return verses.count == 0 ? false : true
     }
     
-    func deleteVerse(for bibleVerse: BibleVerse) {
+    func deleteVerse(for bibleVerse: SavedVerse) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         

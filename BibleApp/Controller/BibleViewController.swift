@@ -71,6 +71,7 @@ class BibleViewController: UIViewController {
         bibleTableView.delegate = self
         bibleTableView.separatorStyle = .none
         bibleTableView.showsVerticalScrollIndicator = false
+        bibleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
         navigationItem.title = "Mt. Zion"
         indexList.delegate = self
     }

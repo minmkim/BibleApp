@@ -19,6 +19,8 @@ class BookTableController: UIViewController {
             bottomContainerView.currentChapter = currentChapter
         }
     }
+    var isSelecting = false
+    var selectedVerses = [IndexPath]()
     
     var verseArray = [String]()
     var numberOfChapters: Int? {
@@ -63,10 +65,38 @@ class BookTableController: UIViewController {
         view.addSubview(indexList)
         view.addSubview(bottomContainerView)
         view.backgroundColor = .white
+        let rightButton = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didPressSelect))
+        navigationItem.rightBarButtonItem = rightButton
         layoutViews()
         indexList.delegate = self
         bottomContainerView.chapterPressDelegate = self
         setupTableView()
+    }
+    
+    @objc func didPressSelect(_ sender: UIBarButtonItem) {
+        if sender.title == "Select" {
+            sender.title = "Save"
+            isSelecting = true
+        } else {
+            sender.title = "Select"
+            isSelecting = false
+            if !selectedVerses.isEmpty {
+                var bibleVerses = [BibleVerse]()
+                guard let book = navigationItem.title else {return}
+                selectedVerses.forEach { (indexPath) in
+                    let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: indexPath.row + 1, text: verseArray[indexPath.row])
+                    bibleVerses.append(bibleVerse)
+                    bookTableView.deselectRow(at: indexPath, animated: true)
+                }
+                guard let savedVerses = SavedVerse(bibleVerses: bibleVerses) else {return}
+                var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
+                versesDataManager.saveToCoreData(bibleVerse: savedVerses)
+                selectedVerses.removeAll()
+                generator?.prepare()
+                generator?.selectionChanged()
+                generator = nil
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -140,7 +170,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             let chapter = indexPath.section + 1
             let verse = indexPath.row + 1
             guard let text = cell.verseText.text else {return}
-            let bibleVerse = BibleVerse(book: book, chapter: chapter, verse: verse, text: text)
+            let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text)
             self?.versesDataManager.saveToCoreData(bibleVerse: bibleVerse)
         }
         
@@ -171,16 +201,28 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-        guard var word = cell.bibleVerse else {return}
-        guard let book = navigationItem.title else {return}
-        let chapter = indexPath.section + 1
-        let verse = indexPath.row + 1
-        word += "\n\(book) \(chapter):\(verse)"
-        UIPasteboard.general.string = word
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-            self.bookTableView.deselectRow(at: indexPath, animated: true)
+        if isSelecting {
+            if selectedVerses.contains(indexPath) {
+                selectedVerses.removeAll { (index) -> Bool in
+                    index == indexPath
+                }
+            } else {
+                selectedVerses.append(indexPath)
+            }
+        } else {
+            let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
+            guard var word = cell.bibleVerse else {return}
+            guard let book = navigationItem.title else {return}
+            let chapter = indexPath.section + 1
+            let verse = indexPath.row + 1
+            word += "\n\(book) \(chapter):\(verse)"
+            UIPasteboard.general.string = word
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+                self.bookTableView.deselectRow(at: indexPath, animated: true)
+            }
         }
+        
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -14,6 +14,8 @@ enum CoreDataVerse {
     static let chapter = "chapter"
     static let verse = "verse"
     static let text = "text"
+    static let isMultipleVerses = "isMultipleVerses"
+    static let upToVerse = "upToVerse"
 }
 
 enum CoreDataBible {

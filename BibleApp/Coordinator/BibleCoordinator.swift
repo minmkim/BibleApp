@@ -93,8 +93,52 @@ final class BibleCoordinator: Coordinator {
                 return
             }
         }
+    }
+    
+    func goToPreviousBook() {
+        if let index = bible.booksOfOldTestament.firstIndex(of: currentBook) {
+            if index != 0 {
+                let previousBookIndex = index - 1
+                setUpControllerForPreviousChapter(for: previousBookIndex, isOldTestament: true)
+                goToNewChapter()
+                return
+            }
+        }
+        if let index = bible.booksOfNewTestament.firstIndex(of: currentBook) {
+            if index != 0 { // Revelation
+                let previousBookIndex = index - 1
+                setUpControllerForPreviousChapter(for: previousBookIndex, isOldTestament: false)
+                goToNewChapter()
+                return
+            } else {
+                let previousBookIndex = 38
+                setUpControllerForPreviousChapter(for: previousBookIndex, isOldTestament: true)
+                goToNewChapter()
+            }
+        }
         
-        
+    }
+    
+    func setUpControllerForPreviousChapter(for newIndex: Int, isOldTestament: Bool) {
+        if isOldTestament {
+            let previousBook = bible.booksOfOldTestament[newIndex]
+            guard let numberOfChapters = bible.bible[previousBook]?.count else {return}
+            currentBook = previousBook
+            currentChapter = numberOfChapters
+            currentBookController?.navigationItem.title = previousBook
+            currentBookController?.numberOfChapters = numberOfChapters
+            currentBookController?.currentChapter = currentChapter
+            goToNewChapter()
+        } else {
+            let previousBook = bible.booksOfNewTestament[newIndex]
+            currentBook = previousBook
+            guard let numberOfChapters = bible.bible[previousBook]?.count else {return}
+            currentChapter = numberOfChapters
+            currentBookController?.navigationItem.title = previousBook
+            currentBookController?.numberOfChapters = numberOfChapters
+            currentBookController?.currentChapter = numberOfChapters
+            goToNewChapter()
+        }
     }
     
 }
@@ -139,8 +183,12 @@ extension BibleCoordinator: ChangeChapterDelegate {
     }
     
     func previousChapter() {
-        currentChapter -= 1
-        goToNewChapter()
+        if currentChapter == 1 {
+            goToPreviousBook()
+        } else {
+            currentChapter -= 1
+            goToNewChapter()
+        }
     }
     
     func nextChapter() {

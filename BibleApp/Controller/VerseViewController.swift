@@ -12,7 +12,7 @@ import CoreData
 class VerseViewController: UIViewController {
     
     weak var savedVerseDelegate: SavedVerseDelegate?
-    var savedVerses = [BibleVerse]()
+    var savedVerses = [SavedVerse]()
     var dataManager: VersesDataManager?
     var isEditingVerses = false
     var indexPathToDelete = [IndexPath]() {
@@ -108,10 +108,14 @@ class VerseViewController: UIViewController {
     }
     
     @objc func didPressEdit(sender: UIBarButtonItem) {
+        setupEditView()
+    }
+    
+    func setupEditView() {
         deleteButtonTopAnchor?.isActive = false
         if isEditingVerses {
             isEditingVerses = !isEditingVerses
-            sender.title = "Edit"
+            navigationItem.rightBarButtonItem?.title = "Edit"
             removeDeleteImage()
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
                 self.deleteButtonTopAnchor = self.deleteButton.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: (self.tabBarController?.tabBar.frame.size.height ?? 50))
@@ -120,7 +124,7 @@ class VerseViewController: UIViewController {
             }, completion: nil)
         } else {
             isEditingVerses = !isEditingVerses
-            sender.title = "Cancel"
+            navigationItem.rightBarButtonItem?.title = "Cancel"
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
                 self.deleteButtonTopAnchor = self.deleteButton.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -40)
                 self.deleteButtonTopAnchor?.isActive = true
@@ -160,6 +164,27 @@ class VerseViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    var didLongPress = false
+    
+    @objc func didLongPressCell(_ recognizer: UILongPressGestureRecognizer) {
+        if !didLongPress {
+            didLongPress.toggle()
+            let touchPoint = recognizer.location(in: self.view)
+            if let indexPath = verseCollectionView.indexPathForItem(at: touchPoint) {
+                if let cell = verseCollectionView.cellForItem(at: indexPath) as? VerseCollectionViewCell {
+                    if cell.deleteImage.isHidden {
+                        cell.deleteImage.isHidden = false
+                        indexPathToDelete.append(indexPath)
+                    } else {
+                        cell.deleteImage.isHidden = true
+                        indexPathToDelete = indexPathToDelete.filter( {$0 != indexPath})
+                    }
+                }
+            }
+            setupEditView()
+        }
+    }
 
 }
 
@@ -171,6 +196,8 @@ extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = verseCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! VerseCollectionViewCell
         cell.verse = savedVerses[indexPath.item]
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPressCell))
+        cell.addGestureRecognizer(longPress)
         return cell
     }
     
@@ -206,5 +233,5 @@ extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSou
 }
 
 protocol SavedVerseDelegate: class {
-    func requestToOpenVerse(for verse: BibleVerse)
+    func requestToOpenVerse(for verse: SavedVerse)
 }

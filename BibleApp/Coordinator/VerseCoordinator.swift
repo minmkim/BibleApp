@@ -28,7 +28,7 @@ final class VerseCoordinator: Coordinator {
 }
 
 extension VerseCoordinator: SavedVerseDelegate {
-    func requestToOpenVerse(for verse: BibleVerse) {
+    func requestToOpenVerse(for verse: SavedVerse) {
         bibleVerseDelegate?.openBibleVerse(book: verse.book, chapter: verse.chapter, verse: verse.verse)
     }
     

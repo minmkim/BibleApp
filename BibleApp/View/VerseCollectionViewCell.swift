@@ -10,11 +10,10 @@ import UIKit
 
 final class VerseCollectionViewCell: UICollectionViewCell {
     
-    var verse: BibleVerse? {
+    var verse: SavedVerse? {
         didSet {
             if let verse = verse {
-                let verseLabel = "\(verse.book) \(verse.chapter):\(verse.verse)"
-                bibleVerseLabel.text = verseLabel
+                bibleVerseLabel.text = verse.formattedVerse()
                 bibleVerseText.text = verse.text
             }
         }

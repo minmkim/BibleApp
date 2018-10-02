@@ -63,7 +63,7 @@ class SavedVerse {
         self.verse = fetchedVerse.value(forKey: CoreDataVerse.verse) as! Int
         self.text = fetchedVerse.value(forKey: CoreDataVerse.text) as! String
         self.upToVerse = fetchedVerse.value(forKey: CoreDataVerse.upToVerse) as? Int
-        self.isMultipleVerses = fetchedVerse.value(forKey: CoreDataVerse.isMultipleVerses) as! Bool
+        self.isMultipleVerses = (fetchedVerse.value(forKey: CoreDataVerse.isMultipleVerses) as? Bool) ?? false
     }
     
     func formattedVerse() -> String {

@@ -97,6 +97,7 @@
 		8C79AC33212DA6B500FCD313 /* VerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C79AC32212DA6B500FCD313 /* VerseViewController.swift */; };
 		8C79AC35212E083E00FCD313 /* VerseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C79AC34212E083E00FCD313 /* VerseCollectionViewCell.swift */; };
 		8C79DBF2212E4EA000A428C8 /* iCloudVerses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C79DBF1212E4EA000A428C8 /* iCloudVerses.swift */; };
+		8C7FED582162FD1A00267299 /* SavedVerseActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7FED572162FD1A00267299 /* SavedVerseActionBar.swift */; };
 		8C80FEDF2131B51B006BF071 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEDE2131B51B006BF071 /* Array.swift */; };
 		8C80FEE32131E60B006BF071 /* IndexTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE22131E60B006BF071 /* IndexTracker.swift */; };
 		8C80FEE52131E839006BF071 /* BibleBookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */; };
@@ -268,6 +269,7 @@
 		8C79AC34212E083E00FCD313 /* VerseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C79DBEC212E4E7000A428C8 /* BibleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BibleApp.entitlements; sourceTree = "<group>"; };
 		8C79DBF1212E4EA000A428C8 /* iCloudVerses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudVerses.swift; sourceTree = "<group>"; };
+		8C7FED572162FD1A00267299 /* SavedVerseActionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseActionBar.swift; sourceTree = "<group>"; };
 		8C80FEDE2131B51B006BF071 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		8C80FEE22131E60B006BF071 /* IndexTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexTracker.swift; sourceTree = "<group>"; };
 		8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookDetailViewController.swift; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 				8C328201215F221E00B79A90 /* LabelChapterView.swift */,
 				8CE3DBD3216025F20069692C /* SearchHeader.swift */,
 				8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */,
+				8C7FED572162FD1A00267299 /* SavedVerseActionBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1105,6 +1108,7 @@
 				8C146173215B31B100FDF339 /* obadiah.swift in Sources */,
 				8C14614D215B31A800FDF339 /* revelation.swift in Sources */,
 				A4FD28E82118922B008E0A69 /* AppDelegate.swift in Sources */,
+				8C7FED582162FD1A00267299 /* SavedVerseActionBar.swift in Sources */,
 				8C14615B215B31B100FDF339 /* exodus.swift in Sources */,
 				8C146171215B31B100FDF339 /* nehemiah.swift in Sources */,
 				8C070B18215DC10500833BE5 /* ChapterCollectionViewCell.swift in Sources */,

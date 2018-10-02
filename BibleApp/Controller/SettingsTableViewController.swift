@@ -27,6 +27,7 @@ class SettingsTableViewController: UITableViewController {
         navigationItem.title = "Settings"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(SettingsColorTableViewCell.self, forCellReuseIdentifier: "color")
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,14 +35,14 @@ class SettingsTableViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
             return 1
         } else {
-        return 2
+            return 2
         }
     }
     
@@ -51,16 +52,16 @@ class SettingsTableViewController: UITableViewController {
             return "Dominant Hand"
         case 1:
             return "Siri Custom Shortcuts"
+        case 2:
+            return "Legal"
         default:
             return "Test"
         }
     }
     
-    var heightOfColorRow: CGFloat = 0
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 50
+//    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch (indexPath.section, indexPath.row) {
@@ -101,21 +102,30 @@ class SettingsTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = "Convert Clipboard to Search Bible Verse"
             return cell
+        case (2,0):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = "Privacy Policy"
+            return cell
+        case (2,1):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = "Unless otherwise indicated, all Scripture quotations are taken from THE HOLY BIBLE, NEW INTERNATIONAL VERSION®, NIV® Copyright © 1973, 1978, 1984, 2011 by Biblica, Inc.™ Used by permission. All rights reserved worldwide."
+            cell.textLabel?.numberOfLines = 0
+            return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             return cell
         }
     }
     
-    func receivedColor(color: UIColor) {
-//        let defaults = UserDefaults.standard
+//    func receivedColor(color: UIColor) {
+////        let defaults = UserDefaults.standard
+//////        defaults.set(color, forKey: "MainColor")
+////        tabBarController?.tabBar.tintColor = color
 ////        defaults.set(color, forKey: "MainColor")
-//        tabBarController?.tabBar.tintColor = color
-//        defaults.set(color, forKey: "MainColor")
-//
-//        let newColor = defaults.object(forKey: "MainColor") as! UIColor
-//        print("New Color is \(newColor)")
-    }
+////
+////        let newColor = defaults.object(forKey: "MainColor") as! UIColor
+////        print("New Color is \(newColor)")
+//    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -158,7 +168,6 @@ class SettingsTableViewController: UITableViewController {
             } else {
                 // Fallback on earlier versions
             }
-            
         default:
             return
         }

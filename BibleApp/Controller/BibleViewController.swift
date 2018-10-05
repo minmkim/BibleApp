@@ -37,6 +37,9 @@ class BibleViewController: UIViewController {
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.showsVerticalScrollIndicator = false
         tv.rowHeight = UITableViewAutomaticDimension
+        tv.separatorStyle = .none
+        tv.showsVerticalScrollIndicator = false
+        tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
         return tv
     }()
     
@@ -58,26 +61,15 @@ class BibleViewController: UIViewController {
         view.addSubview(containerView)
         view.addSubview(bibleTableView)
         view.addSubview(indexList)
+        view.backgroundColor = .white
         layoutViews()
-        self.navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
-        tabBarController?.tabBar.barTintColor = .white
-        tabBarController?.tabBar.isTranslucent = false
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
         bibleTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         bibleTableView.register(ChapterTableViewCell.self, forCellReuseIdentifier: "chapterCell")
         bibleTableView.dataSource = self
         bibleTableView.delegate = self
-        bibleTableView.separatorStyle = .none
-        bibleTableView.showsVerticalScrollIndicator = false
-        bibleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
         navigationItem.title = "Mt. Zion"
         indexList.delegate = self
     }
-    
-    var isDarkMode = false
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         print("rotated")

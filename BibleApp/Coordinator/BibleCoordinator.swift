@@ -81,7 +81,7 @@ final class BibleCoordinator: Coordinator {
             return
         }
         if let index = bible.booksOfNewTestament.firstIndex(of: currentBook) {
-            if index != 39 { // Revelation
+            if index != 26 { // Revelation
                 let book = bible.booksOfNewTestament[index + 1]
                 currentBook = book
                 currentChapter = 1
@@ -90,6 +90,8 @@ final class BibleCoordinator: Coordinator {
                 currentBookController?.numberOfChapters = numberOfChapters
                 currentBookController?.currentChapter = 1
                 goToNewChapter()
+                return
+            } else {
                 return
             }
         }

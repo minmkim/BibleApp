@@ -101,6 +101,7 @@
 		8C80FEDF2131B51B006BF071 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEDE2131B51B006BF071 /* Array.swift */; };
 		8C80FEE32131E60B006BF071 /* IndexTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE22131E60B006BF071 /* IndexTracker.swift */; };
 		8C80FEE52131E839006BF071 /* BibleBookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */; };
+		8C88B2B02166F429000EAFA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C88B2AF2166F429000EAFA7 /* Assets.xcassets */; };
 		8C8D5901215C831600316CFE /* MtZion.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */; };
 		8C8D5902215C831600316CFE /* MtZion.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FF215C831600316CFE /* MtZion.sqlite */; };
 		8C8D5903215C831600316CFE /* MtZion.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D5900215C831600316CFE /* MtZion.sqlite-wal */; };
@@ -193,7 +194,6 @@
 		A4B6C57921287F2D003C9414 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B6C57821287F2D003C9414 /* SearchViewModel.swift */; };
 		A4FD28E82118922B008E0A69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD28E72118922B008E0A69 /* AppDelegate.swift */; };
 		A4FD28EA2118922B008E0A69 /* BibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD28E92118922B008E0A69 /* BibleViewController.swift */; };
-		A4FD28EF2118922F008E0A69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4FD28EE2118922F008E0A69 /* Assets.xcassets */; };
 		A4FD28F22118922F008E0A69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4FD28F02118922F008E0A69 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -273,6 +273,7 @@
 		8C80FEDE2131B51B006BF071 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		8C80FEE22131E60B006BF071 /* IndexTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexTracker.swift; sourceTree = "<group>"; };
 		8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookDetailViewController.swift; sourceTree = "<group>"; };
+		8C88B2AF2166F429000EAFA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-shm"; sourceTree = "<group>"; };
 		8C8D58FF215C831600316CFE /* MtZion.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MtZion.sqlite; sourceTree = "<group>"; };
 		8C8D5900215C831600316CFE /* MtZion.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-wal"; sourceTree = "<group>"; };
@@ -365,7 +366,6 @@
 		A4FD28E42118922B008E0A69 /* BibleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4FD28E72118922B008E0A69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4FD28E92118922B008E0A69 /* BibleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleViewController.swift; sourceTree = "<group>"; };
-		A4FD28EE2118922F008E0A69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A4FD28F12118922F008E0A69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A4FD28F32118922F008E0A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4FD28F82118922F008E0A69 /* BibleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BibleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -443,7 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				A4FD28E72118922B008E0A69 /* AppDelegate.swift */,
-				A4FD28EE2118922F008E0A69 /* Assets.xcassets */,
+				8C88B2AF2166F429000EAFA7 /* Assets.xcassets */,
 				A4FD28F02118922F008E0A69 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -923,10 +923,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4FD28F22118922F008E0A69 /* LaunchScreen.storyboard in Resources */,
-				A4FD28EF2118922F008E0A69 /* Assets.xcassets in Resources */,
 				8C8D5902215C831600316CFE /* MtZion.sqlite in Resources */,
 				8C8D5901215C831600316CFE /* MtZion.sqlite-shm in Resources */,
 				8C8D5903215C831600316CFE /* MtZion.sqlite-wal in Resources */,
+				8C88B2B02166F429000EAFA7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

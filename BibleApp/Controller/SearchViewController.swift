@@ -42,8 +42,6 @@ class SearchViewController: UITableViewController {
         }
     }
     
-    
-    
     func searchBarIsEmpty() {
         searchViewModel.searchParameter = (searchController.searchBar.text?.isEmpty ?? true) ? .empty : .book
     }
@@ -132,6 +130,7 @@ class SearchViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if searchController.searchBar.selectedScopeButtonIndex == 1 {
+            searchController.searchBar.resignFirstResponder()
             searchViewModel.observeTableViewToLoadMoreVerses(for: indexPath.row, text: searchController.searchBar.text ?? "")
         }
         

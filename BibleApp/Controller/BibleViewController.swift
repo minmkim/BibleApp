@@ -28,6 +28,14 @@ class BibleViewController: UIViewController {
     
     let containerView: UIView = {
         let cv = UIView()
+        cv.backgroundColor = .white
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        return cv
+    }()
+    
+    let topView: UIView = {
+        let cv = UIView()
+        cv.backgroundColor = .white
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
@@ -58,6 +66,7 @@ class BibleViewController: UIViewController {
             UserDefaults.standard.set("Left", forKey: "DominantHand")
             dominantHand = "Left"
         }
+        view.addSubview(topView)
         view.addSubview(containerView)
         view.addSubview(bibleTableView)
         view.addSubview(indexList)
@@ -130,6 +139,8 @@ class BibleViewController: UIViewController {
     
     
     func layoutViews() {
+        topView.frame = CGRect(x: 0, y: -80, width: self.view.frame.width, height: 80)
+        
         indexListWidthAnchor = indexList.widthAnchor.constraint(equalToConstant: 25)
         indexListWidthAnchor?.isActive = true
         if dominantHand == "Left" {

@@ -167,7 +167,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         let save = UITableViewRowAction(style: .default, title: "Save") { [weak self] (action, indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
             guard let book = self?.navigationItem.title else {return}
-            let chapter = indexPath.section + 1
+            guard let chapter = self?.currentChapter else {return}
             let verse = indexPath.row + 1
             guard let text = cell.verseText.text else {return}
             let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text)
@@ -178,7 +178,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
             guard var word = cell.bibleVerse else {return}
             guard let book = self.navigationItem.title else {return}
-            let chapter = indexPath.section + 1
+            let chapter = self.currentChapter
             let verse = indexPath.row + 1
             word += "\n\(book) \(chapter):\(verse)"
             UIPasteboard.general.string = word
@@ -190,7 +190,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
             guard var verse = cell.bibleVerse else {return}
-            verse += "\n\(String(describing: self.navigationItem.title!)) \(indexPath.section + 1):\(indexPath.row + 1)"
+            verse += "\n\(String(describing: self.navigationItem.title!)) \(self.currentChapter):\(indexPath.row + 1)"
             let activityVC = UIActivityViewController(activityItems: [verse], applicationActivities: nil)
             self.present(activityVC, animated: true, completion: nil)
         }
@@ -200,15 +200,26 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         return [share, copy, save]
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if isSelecting {
             if selectedVerses.contains(indexPath) {
                 selectedVerses.removeAll { (index) -> Bool in
                     index == indexPath
                 }
-            } else {
-                selectedVerses.append(indexPath)
             }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isSelecting {
+            selectedVerses.append(indexPath)
+//            if selectedVerses.contains(indexPath) {
+//                selectedVerses.removeAll { (index) -> Bool in
+//                    index == indexPath
+//                }
+//            } else {
+//                selectedVerses.append(indexPath)
+//            }
         } else {
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
             guard var word = cell.bibleVerse else {return}

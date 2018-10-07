@@ -84,6 +84,8 @@
 		8C1C89BE215C4EE200DC43FF /* TextParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1C89B8215C4E9900DC43FF /* TextParser.swift */; };
 		8C266065214DDE7C00EFAE42 /* VerseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */; };
 		8C266067214E05C600EFAE42 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C266066214E05C600EFAE42 /* SearchCoordinator.swift */; };
+		8C2AE7E22167B38E00365C26 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8C2AE7E52167B38E00365C26 /* Intents.intentdefinition */; };
+		8C2AE7E32167B38E00365C26 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8C2AE7E52167B38E00365C26 /* Intents.intentdefinition */; };
 		8C328202215F221E00B79A90 /* LabelChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C328201215F221E00B79A90 /* LabelChapterView.swift */; };
 		8C46EF3B212F245300390BB0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */; };
 		8C5D869821323B42000F994E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869721323B42000F994E /* Colors.swift */; };
@@ -179,8 +181,6 @@
 		8CD0762E215B23E400827675 /* firstKings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07607215B23E400827675 /* firstKings.swift */; };
 		8CD0762F215B23E400827675 /* deuteronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07608215B23E400827675 /* deuteronomy.swift */; };
 		8CD07630215B23E400827675 /* hosea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07609215B23E400827675 /* hosea.swift */; };
-		8CD07631215B24CC00827675 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075A4215B027800827675 /* Intents.intentdefinition */; };
-		8CD07632215B24CF00827675 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075A4215B027800827675 /* Intents.intentdefinition */; };
 		8CD07633215B260E00827675 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07587215B025700827675 /* IntentHandler.swift */; };
 		8CD07637215B2EE800827675 /* Bible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD29682118B284008E0A69 /* Bible.swift */; };
 		8CD1F1E021378A57006FAAD4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD1F1DF21378A57006FAAD4 /* Theme.swift */; };
@@ -252,6 +252,8 @@
 		8C1C89BA215C4EB700DC43FF /* IntentBible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentBible.swift; sourceTree = "<group>"; };
 		8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCoordinator.swift; sourceTree = "<group>"; };
 		8C266066214E05C600EFAE42 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		8C2AE7E42167B38E00365C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Intents.intentdefinition; sourceTree = "<group>"; };
+		8C2AE7E72167B3ED00365C26 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Intents.strings; sourceTree = "<group>"; };
 		8C328201215F221E00B79A90 /* LabelChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelChapterView.swift; sourceTree = "<group>"; };
 		8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8C5D869721323B42000F994E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -286,7 +288,6 @@
 		8CD07591215B025800827675 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
 		8CD07594215B025800827675 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		8CD07596215B025800827675 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8CD075A4215B027800827675 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Intents.intentdefinition; path = SearchBible/Intents.intentdefinition; sourceTree = SOURCE_ROOT; };
 		8CD075A8215B0C8400827675 /* SearchBibleIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBibleIntentHandler.swift; sourceTree = "<group>"; };
 		8CD075AD215B23D000827675 /* luke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = luke.swift; sourceTree = "<group>"; };
 		8CD075AE215B23D000827675 /* firstThessalonians.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firstThessalonians.swift; sourceTree = "<group>"; };
@@ -480,7 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				8CD075AA215B239D00827675 /* Bible */,
-				8CD075A4215B027800827675 /* Intents.intentdefinition */,
+				8C2AE7E52167B38E00365C26 /* Intents.intentdefinition */,
 				8CD07587215B025700827675 /* IntentHandler.swift */,
 				8CD075A8215B0C8400827675 /* SearchBibleIntentHandler.swift */,
 				8C1C89BA215C4EB700DC43FF /* IntentBible.swift */,
@@ -1011,7 +1012,7 @@
 				8CD075D7215B23D300827675 /* secondJohn.swift in Sources */,
 				8CD07618215B23E400827675 /* jonah.swift in Sources */,
 				8C1C89B9215C4E9900DC43FF /* TextParser.swift in Sources */,
-				8CD07631215B24CC00827675 /* Intents.intentdefinition in Sources */,
+				8C2AE7E32167B38E00365C26 /* Intents.intentdefinition in Sources */,
 				8CD075D2215B23D300827675 /* jude.swift in Sources */,
 				8CD07615215B23E400827675 /* nahum.swift in Sources */,
 				8CD075A9215B0C8400827675 /* SearchBibleIntentHandler.swift in Sources */,
@@ -1118,7 +1119,7 @@
 				8C95869E21608E5200825D21 /* SavedVerse.swift in Sources */,
 				8C14615D215B31B100FDF339 /* ezra.swift in Sources */,
 				8C146158215B31B100FDF339 /* deuteronomy.swift in Sources */,
-				8CD07632215B24CF00827675 /* Intents.intentdefinition in Sources */,
+				8C2AE7E22167B38E00365C26 /* Intents.intentdefinition in Sources */,
 				8C266065214DDE7C00EFAE42 /* VerseCoordinator.swift in Sources */,
 				8C14614E215B31A800FDF339 /* romans.swift in Sources */,
 				8C146142215B31A800FDF339 /* firstTimothy.swift in Sources */,
@@ -1200,6 +1201,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		8C2AE7E52167B38E00365C26 /* Intents.intentdefinition */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8C2AE7E42167B38E00365C26 /* Base */,
+				8C2AE7E72167B3ED00365C26 /* en */,
+			);
+			name = Intents.intentdefinition;
+			path = SearchBible;
+			sourceTree = SOURCE_ROOT;
+		};
 		8CD07593215B025800827675 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -255,7 +255,6 @@
 		8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCoordinator.swift; sourceTree = "<group>"; };
 		8C266066214E05C600EFAE42 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		8C2AE7E42167B38E00365C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Intents.intentdefinition; sourceTree = "<group>"; };
-		8C2AE7E72167B3ED00365C26 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Intents.strings; sourceTree = "<group>"; };
 		8C328201215F221E00B79A90 /* LabelChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelChapterView.swift; sourceTree = "<group>"; };
 		8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8C5D869721323B42000F994E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -268,6 +267,7 @@
 		8C66D91F21305ECA00EE6503 /* MtZionUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MtZionUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C66D92021305ECA00EE6503 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		8C66D93721306DDA00EE6503 /* VersesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesDataManager.swift; sourceTree = "<group>"; };
+		8C71E572216BE72900C91507 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Intents.strings; sourceTree = "<group>"; };
 		8C79AC30212DA5E300FCD313 /* BibleVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerse.swift; sourceTree = "<group>"; };
 		8C79AC32212DA6B500FCD313 /* VerseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseViewController.swift; sourceTree = "<group>"; };
 		8C79AC34212E083E00FCD313 /* VerseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1214,7 +1214,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8C2AE7E42167B38E00365C26 /* Base */,
-				8C2AE7E72167B3ED00365C26 /* en */,
+				8C71E572216BE72900C91507 /* en */,
 			);
 			name = Intents.intentdefinition;
 			path = SearchBible;

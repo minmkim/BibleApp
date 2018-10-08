@@ -234,8 +234,8 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if indexList.indexState == .scrollingTable {
-            guard let firstCell = bibleTableView.visibleCells.first else {return}
-            guard let firstBook = firstCell.textLabel?.text else {return}
+            guard let firstCell = bibleTableView.visibleCells.first as? BibleTableViewCell else {return}
+            guard let firstBook = firstCell.bibleBook else {return}
             if let index = bible.booksOfOldTestament.index(of: firstBook) {
                 indexList.updatePositionOfBookMarker(index: index)
                 return

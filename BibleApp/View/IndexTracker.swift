@@ -90,6 +90,7 @@ final class IndexTracker: UIView {
     func newChapter(for arrayList: [String]) {
         indexList =  arrayList
         countOfList = indexList.count
+        didCalculateHeightOfMarker = false
         setSkipCounter()
         processList()
         setUpContainerStack()

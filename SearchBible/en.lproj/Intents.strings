@@ -1,8 +1,10 @@
 "26sTnT" = "Search for bible verse";
 
+"EmQwXx" = "Search with clipboard";
+
 "Z7VjFn" = "Invalid Verse";
 
-"cdOIjx" = "Verse format: 'Book' chapter 'Chapter' verse 'Verse' ";
+"cdOIjx" = "Verse formats: 'Book' chapter 'Chapter' verse 'Verse'  or 'Book' 'Chapter' verse 'Verse' or 'Book' 'Chapter':'Verse'";
 
 "dOq2Hq" = "Search Bible from Clipboard and Return Verse in Clipboard";
 

@@ -22,7 +22,6 @@ class BibleViewController: UIViewController {
         }
     }
     weak var bibleCoordinatorDelegate: BibleCoordinatorDelegate?
-    let oldIndexArray = ["Gn", "Ex", "Lv", "Nu", "Dt", "Jos", "Jdg", "Rut", "1Sa", "2Sa", "1Ki", "2Ki", "1Ch", "2Ch", "Ez", "Neh", "Es", "Job", "Ps", "Prv", "Ecc", "Sng", "Is", "Jer", "Lam", "Ez", "Dan", "Hos", "Jol", "Am", "Oba", "Jon", "Mic", "Nah", "Hab", "Zep", "Hag", "Zec", "Mal", "Mt", "Mk", "Lk", "Jn", "Ac", "Ro", "1Co", "2Co", "Gal", "Eph", "Php", "Col", "1Th", "2Th", "1Ti", "2Ti", "Ti", "Ph", "Heb", "Jm", "1Pt", "2Pt", "1Jn", "2Jn", "3Jn", "Jud", "Rv"]
     
     let numberOfChapters = [50, 40, 27, 36, 34, 24, 21, 4, 31, 24, 22, 25, 29, 36, 10, 13, 10, 42, 150, 31, 12, 8, 66, 52, 5, 48, 12, 14, 3, 9, 1, 4, 7, 3, 3, 3, 2, 14, 4, 28, 16, 24, 21, 28, 16, 16, 13, 6, 6, 4, 4, 5, 3, 6, 4, 3, 1, 13, 5, 5, 3, 5, 1, 1, 1, 22]
     
@@ -52,6 +51,7 @@ class BibleViewController: UIViewController {
     }()
     
     lazy var indexList: IndexTracker = {
+        let oldIndexArray = ["Gn", "Ex", "Lv", "Nu", "Dt", "Jos", "Jdg", "Rut", "1Sa", "2Sa", "1Ki", "2Ki", "1Ch", "2Ch", "Ez", "Neh", "Es", "Job", "Ps", "Prv", "Ecc", "Sng", "Is", "Jer", "Lam", "Ez", "Dan", "Hos", "Jol", "Am", "Oba", "Jon", "Mic", "Nah", "Hab", "Zep", "Hag", "Zec", "Mal", "Mt", "Mk", "Lk", "Jn", "Ac", "Ro", "1Co", "2Co", "Gal", "Eph", "Php", "Col", "1Th", "2Th", "1Ti", "2Ti", "Ti", "Ph", "Heb", "Jm", "1Pt", "2Pt", "1Jn", "2Jn", "3Jn", "Jud", "Rv"]
         let il = IndexTracker(frame: .zero, indexList: oldIndexArray, height: view.frame.height - 200)
         il.translatesAutoresizingMaskIntoConstraints = false
         return il
@@ -72,7 +72,7 @@ class BibleViewController: UIViewController {
         view.addSubview(indexList)
         view.backgroundColor = .white
         layoutViews()
-        bibleTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        bibleTableView.register(BibleTableViewCell.self, forCellReuseIdentifier: "cell")
         bibleTableView.register(ChapterTableViewCell.self, forCellReuseIdentifier: "chapterCell")
         bibleTableView.dataSource = self
         bibleTableView.delegate = self
@@ -183,17 +183,12 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-            cell.textLabel?.adjustsFontForContentSizeCategory = true
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BibleTableViewCell
             if indexPath.section < bible.booksOfOldTestament.count {
-                cell.textLabel?.text = bible.booksOfOldTestament[indexPath.section]
+                cell.bibleBook = bible.booksOfOldTestament[indexPath.section]
             } else {
-                cell.textLabel?.text = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
+                cell.bibleBook = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
             }
-            let backgroundView = UIView()
-            backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
-            cell.selectedBackgroundView = backgroundView
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "chapterCell", for: indexPath) as! ChapterTableViewCell
@@ -268,7 +263,8 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     }
     
     func pressedIndex(at index: Int) {
-        if index < 0 || index > (oldIndexArray.count - 1) {
+        let numberOfIndexesInBible = 65
+        if index < 0 || index > (numberOfIndexesInBible) {
             return
         }
         var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
@@ -287,8 +283,8 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
 extension BibleViewController: DidSelectChapterCVDelegate {
     func didSelectChapter(for chapter: Int) {
         guard let selectedIndex = selectedBookIndexPath else {return}
-        let cell = bibleTableView.cellForRow(at: IndexPath(row: 0, section: selectedIndex.section))
-        guard let book = cell?.textLabel?.text else {return}
+        let cell = bibleTableView.cellForRow(at: IndexPath(row: 0, section: selectedIndex.section)) as? BibleTableViewCell
+        guard let book = cell?.bibleBook else {return}
         bibleCoordinatorDelegate?.openBibleChapter(book: book, chapter: chapter)
         selectedBookIndexPath = nil
     }

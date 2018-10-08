@@ -30,19 +30,20 @@ final class Bible {
     }
     
     private func loadBible(verseDataManager: VersesDataManager) {
-        let bibleVerses = verseDataManager.loadBible()
-        bibleVerses.forEach { (bibleVerse) in
-            if var chapterVerseArray = bible[bibleVerse.book] {
-                if var verseArray = chapterVerseArray[bibleVerse.chapter] {
-                    verseArray.append(bibleVerse.text)
-                    chapterVerseArray[bibleVerse.chapter] = verseArray
-                    bible[bibleVerse.book] = chapterVerseArray
+        verseDataManager.loadBible { (bibleVerses) in
+            bibleVerses.forEach { (bibleVerse) in
+                if var chapterVerseArray = bible[bibleVerse.book] {
+                    if var verseArray = chapterVerseArray[bibleVerse.chapter] {
+                        verseArray.append(bibleVerse.text)
+                        chapterVerseArray[bibleVerse.chapter] = verseArray
+                        bible[bibleVerse.book] = chapterVerseArray
+                    } else {
+                        chapterVerseArray[bibleVerse.chapter] = [bibleVerse.text]
+                        bible[bibleVerse.book] = chapterVerseArray
+                    }
                 } else {
-                    chapterVerseArray[bibleVerse.chapter] = [bibleVerse.text]
-                    bible[bibleVerse.book] = chapterVerseArray
+                    bible[bibleVerse.book] = [bibleVerse.chapter:[bibleVerse.text]]
                 }
-            } else {
-                bible[bibleVerse.book] = [bibleVerse.chapter:[bibleVerse.text]]
             }
         }
     }

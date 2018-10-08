@@ -12,8 +12,8 @@ import CoreData
 
 final class VersesDataManager {
     
-    func loadVerses() -> [SavedVerse] {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
+    func loadVerses(completion: ([SavedVerse]) -> Void) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataVerse.entity)
@@ -24,10 +24,10 @@ final class VersesDataManager {
                 let newVerse = SavedVerse(fetchedVerse: verse)
                 savedVerses.append(newVerse)
             }
+            completion(savedVerses)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        return savedVerses
     }
     
     func saveToCoreData(bibleVerse: SavedVerse) {
@@ -89,8 +89,8 @@ final class VersesDataManager {
         }
     }
     
-    func loadBible() -> [BibleVerse] {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
+    func loadBible(completion: ([BibleVerse]) -> Void) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
@@ -101,10 +101,10 @@ final class VersesDataManager {
                 let newVerse = BibleVerse(fetchedVerse: verse)
                 savedVerses.append(newVerse)
             }
+            completion(savedVerses)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        return savedVerses
     }
     
     func searchForWord(searchWord: String, fetchOffset: Int) -> [BibleVerse] {

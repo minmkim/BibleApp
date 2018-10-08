@@ -140,6 +140,16 @@ class BookTableController: UIViewController {
         bookTableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor).isActive = true
     }
     
+    func formatedVerse(for indexPath: IndexPath) -> String {
+        let cell = bookTableView.cellForRow(at: indexPath) as! BookTableViewCell
+        guard var word = cell.bibleVerse else {return ""}
+        guard let book = self.navigationItem.title else {return ""}
+        let chapter = self.currentChapter
+        let verse = indexPath.row + 1
+        word += "\n\(book) \(chapter):\(verse)"
+        return word
+    }
+    
 }
 
 extension BookTableController: UITableViewDelegate, UITableViewDataSource {
@@ -175,23 +185,16 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in
-            let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            guard var word = cell.bibleVerse else {return}
-            guard let book = self.navigationItem.title else {return}
-            let chapter = self.currentChapter
-            let verse = indexPath.row + 1
-            word += "\n\(book) \(chapter):\(verse)"
-            UIPasteboard.general.string = word
+            let verseText = self.formatedVerse(for: indexPath)
+            UIPasteboard.general.string = verseText
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
                 self.bookTableView.deselectRow(at: indexPath, animated: true)
             }
         }
         
         let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
-            let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            guard var verse = cell.bibleVerse else {return}
-            verse += "\n\(String(describing: self.navigationItem.title!)) \(self.currentChapter):\(indexPath.row + 1)"
-            let activityVC = UIActivityViewController(activityItems: [verse], applicationActivities: nil)
+            let verseText = self.formatedVerse(for: indexPath)
+            let activityVC = UIActivityViewController(activityItems: [verseText], applicationActivities: nil)
             self.present(activityVC, animated: true, completion: nil)
         }
         share.backgroundColor = .lightGray
@@ -213,26 +216,13 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isSelecting {
             selectedVerses.append(indexPath)
-//            if selectedVerses.contains(indexPath) {
-//                selectedVerses.removeAll { (index) -> Bool in
-//                    index == indexPath
-//                }
-//            } else {
-//                selectedVerses.append(indexPath)
-//            }
         } else {
-            let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            guard var word = cell.bibleVerse else {return}
-            guard let book = navigationItem.title else {return}
-            let chapter = indexPath.section + 1
-            let verse = indexPath.row + 1
-            word += "\n\(book) \(chapter):\(verse)"
-            UIPasteboard.general.string = word
+            let verseText = self.formatedVerse(for: indexPath)
+            UIPasteboard.general.string = verseText
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
                 self.bookTableView.deselectRow(at: indexPath, animated: true)
             }
         }
-        
         
     }
     
@@ -258,7 +248,6 @@ extension BookTableController: IndexListDelegate {
             return
         }
         var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
-        
         let indexPath = IndexPath(row: index, section: 0)
         UIView.animate(withDuration: 0.01) {
             self.bookTableView.scrollToRow(at: indexPath, at: .top, animated: false)
@@ -277,7 +266,6 @@ extension BookTableController: IndexVerseDelegate {
         UIView.animate(withDuration: 0.01) {
             self.bookTableView.scrollToRow(at: IndexPath(row: verse, section: 0), at: .top, animated: false)
         }
-        
     }
     
 }
@@ -297,7 +285,6 @@ extension BookTableController: ChapterPressDelegate {
         bookTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         changeChapterDelegate?.goToChapter(chapter)
     }
-    
     
 }
 

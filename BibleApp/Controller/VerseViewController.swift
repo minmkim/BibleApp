@@ -43,9 +43,12 @@ class VerseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         savedVerses.removeAll()
-        guard let verses = dataManager?.loadVerses() else {return}
-        savedVerses = verses
-        verseCollectionView.reloadData()
+        dataManager?.loadVerses(completion: { [weak self] (savedVerses) in
+            self?.savedVerses = savedVerses
+            DispatchQueue.main.async {
+                self?.verseCollectionView.reloadData()
+            }
+        })
     }
 
     override func viewDidLoad() {
@@ -218,8 +221,7 @@ extension VerseViewController: SavedVerseActionBarDelegate {
             self.present(activityVC, animated: true, completion: nil)
             setupEditView()
         }
-    }
-    
+    }    
     
 }
 

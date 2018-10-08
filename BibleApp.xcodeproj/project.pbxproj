@@ -104,6 +104,7 @@
 		8C80FEE32131E60B006BF071 /* IndexTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE22131E60B006BF071 /* IndexTracker.swift */; };
 		8C80FEE52131E839006BF071 /* BibleBookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */; };
 		8C88B2B02166F429000EAFA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C88B2AF2166F429000EAFA7 /* Assets.xcassets */; };
+		8C8920A5216B082D0035A516 /* BibleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8920A4216B082D0035A516 /* BibleTableViewCell.swift */; };
 		8C8D5901215C831600316CFE /* MtZion.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */; };
 		8C8D5902215C831600316CFE /* MtZion.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FF215C831600316CFE /* MtZion.sqlite */; };
 		8C8D5903215C831600316CFE /* MtZion.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D5900215C831600316CFE /* MtZion.sqlite-wal */; };
@@ -277,6 +278,7 @@
 		8C80FEE22131E60B006BF071 /* IndexTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexTracker.swift; sourceTree = "<group>"; };
 		8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookDetailViewController.swift; sourceTree = "<group>"; };
 		8C88B2AF2166F429000EAFA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8C8920A4216B082D0035A516 /* BibleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleTableViewCell.swift; sourceTree = "<group>"; };
 		8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-shm"; sourceTree = "<group>"; };
 		8C8D58FF215C831600316CFE /* MtZion.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MtZion.sqlite; sourceTree = "<group>"; };
 		8C8D5900215C831600316CFE /* MtZion.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-wal"; sourceTree = "<group>"; };
@@ -621,6 +623,7 @@
 				8CE3DBD3216025F20069692C /* SearchHeader.swift */,
 				8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */,
 				8C7FED572162FD1A00267299 /* SavedVerseActionBar.swift */,
+				8C8920A4216B082D0035A516 /* BibleTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1070,6 +1073,7 @@
 				8C14613B215B31A800FDF339 /* acts.swift in Sources */,
 				8C328202215F221E00B79A90 /* LabelChapterView.swift in Sources */,
 				8CF05636214E10EC00CD7AE5 /* BibleCoordinator.swift in Sources */,
+				8C8920A5216B082D0035A516 /* BibleTableViewCell.swift in Sources */,
 				8C146177215B31B100FDF339 /* secondChronicles.swift in Sources */,
 				8C146174215B31B100FDF339 /* proverbs.swift in Sources */,
 				8C14616C215B31B100FDF339 /* lamentations.swift in Sources */,

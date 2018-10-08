@@ -30,7 +30,7 @@
 					<key>INIntentParameterCombinationIsPrimary</key>
 					<true/>
 					<key>INIntentParameterCombinationSubtitle</key>
-					<string>Verse format: 'Book' chapter 'Chapter' verse 'Verse' </string>
+					<string>Verse formats: 'Book' chapter 'Chapter' verse 'Verse'  or 'Book' 'Chapter' verse 'Verse' or 'Book' 'Chapter':'Verse'</string>
 					<key>INIntentParameterCombinationSubtitleID</key>
 					<string>cdOIjx</string>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>

@@ -185,5 +185,4 @@ extension SettingsTableViewController: INUIAddVoiceShortcutViewControllerDelegat
         dismiss(animated: true, completion: nil)
     }
     
-    
 }

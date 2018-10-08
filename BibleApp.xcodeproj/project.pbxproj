@@ -107,6 +107,7 @@
 		8C8D5901215C831600316CFE /* MtZion.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */; };
 		8C8D5902215C831600316CFE /* MtZion.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FF215C831600316CFE /* MtZion.sqlite */; };
 		8C8D5903215C831600316CFE /* MtZion.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D5900215C831600316CFE /* MtZion.sqlite-wal */; };
+		8C912A822169C98200BF9433 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C912A842169C98200BF9433 /* AppIntentVocabulary.plist */; };
 		8C95869C216055A800825D21 /* SearchWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */; };
 		8C95869E21608E5200825D21 /* SavedVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C95869D21608E5200825D21 /* SavedVerse.swift */; };
 		8CD0758F215B025800827675 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
@@ -279,6 +280,8 @@
 		8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-shm"; sourceTree = "<group>"; };
 		8C8D58FF215C831600316CFE /* MtZion.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = MtZion.sqlite; sourceTree = "<group>"; };
 		8C8D5900215C831600316CFE /* MtZion.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-wal"; sourceTree = "<group>"; };
+		8C912A832169C98200BF9433 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		8C912A852169C98400BF9433 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordTableViewCell.swift; sourceTree = "<group>"; };
 		8C95869D21608E5200825D21 /* SavedVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerse.swift; sourceTree = "<group>"; };
 		8CD07585215B025700827675 /* SearchBible.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SearchBible.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -487,6 +490,7 @@
 				8C1C89BA215C4EB700DC43FF /* IntentBible.swift */,
 				8C1C89B8215C4E9900DC43FF /* TextParser.swift */,
 				8CD07589215B025700827675 /* Info.plist */,
+				8C912A842169C98200BF9433 /* AppIntentVocabulary.plist */,
 			);
 			path = SearchBible;
 			sourceTree = "<group>";
@@ -908,6 +912,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C912A822169C98200BF9433 /* AppIntentVocabulary.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1210,6 +1215,15 @@
 			name = Intents.intentdefinition;
 			path = SearchBible;
 			sourceTree = SOURCE_ROOT;
+		};
+		8C912A842169C98200BF9433 /* AppIntentVocabulary.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8C912A832169C98200BF9433 /* Base */,
+				8C912A852169C98400BF9433 /* en */,
+			);
+			name = AppIntentVocabulary.plist;
+			sourceTree = "<group>";
 		};
 		8CD07593215B025800827675 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;

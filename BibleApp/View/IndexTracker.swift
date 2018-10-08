@@ -99,7 +99,7 @@ final class IndexTracker: UIView {
         var tempList = indexList
         tempList = tempList.enumerated().compactMap { index, element in index % skipCounter == 0 ? element : nil }
         if skipCounter > 1 {
-            let separator = "\u{2022}"
+            let separator = "\u{2022}" //dot symbol
             tempList = Array(tempList.map { [$0] }.joined(separator: [separator]))
             tempList.removeLast()
             tempList.append(indexList.last!) // make sure the last element in array is the last element

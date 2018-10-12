@@ -38,7 +38,7 @@ class SearchViewModel {
     var searchState: SearchState = .verse
     var verseDataManager: VersesDataManager!
     
-    var bookStrings = [String]()
+    var bookStrings = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]
     var filteredBooks = [String]()
     var filteredChapters = [Int]()
     var filteredVerses = [Int]()
@@ -51,7 +51,6 @@ class SearchViewModel {
     init(bible: Bible, verseDataManager: VersesDataManager) {
         self.bible = bible
         self.verseDataManager = verseDataManager
-        bookStrings = bible.booksOfOldTestament + bible.booksOfNewTestament
     }
     
     func emptyFiltered() {
@@ -115,8 +114,8 @@ class SearchViewModel {
             })
         case .chapter:
             if filteredBooks.count != 0 {
-                guard let book = bible.bible[filteredBooks[0]] else {return}
-                filteredChapters = Array(1...book.count)
+                guard let numberOfChapters = bible.numberOfChaptersInBook(for: filteredBooks[0]) else {return}
+                filteredChapters = Array(1...numberOfChapters)
                 
                 if splitText.count == 2 {
                     guard let filteredChapter = Int(splitText[1]) else {return}
@@ -143,7 +142,7 @@ class SearchViewModel {
             }
            
             if filteredBooks.count != 0 {
-                guard let book = bible.bible[filteredBooks[0]] else {return}
+                guard let book = bible.returnBookDict(for: filteredBooks[0]) else {return}
                 guard let verses = book[filteredChapters[0]] else {return}
                 filteredVerses = Array(1...verses.count)
                 guard let filteredVerse = Int(splitChapterVerse[1]) else {return}

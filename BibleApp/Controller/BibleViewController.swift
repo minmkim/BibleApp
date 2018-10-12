@@ -174,7 +174,7 @@ class BibleViewController: UIViewController {
 
 extension BibleViewController: UITableViewDelegate, UITableViewDataSource, IndexListDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return (bible.booksOfOldTestament.count + bible.booksOfNewTestament.count)
+        return 66
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -184,11 +184,7 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BibleTableViewCell
-            if indexPath.section < bible.booksOfOldTestament.count {
-                cell.bibleBook = bible.booksOfOldTestament[indexPath.section]
-            } else {
-                cell.bibleBook = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
-            }
+            cell.bibleBook = bible.returnBook(for: indexPath.section)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "chapterCell", for: indexPath) as! ChapterTableViewCell
@@ -236,14 +232,8 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource, Index
         if indexList.indexState == .scrollingTable {
             guard let firstCell = bibleTableView.visibleCells.first as? BibleTableViewCell else {return}
             guard let firstBook = firstCell.bibleBook else {return}
-            if let index = bible.booksOfOldTestament.index(of: firstBook) {
+            if let index = bible.bookIndex(for: firstBook) {
                 indexList.updatePositionOfBookMarker(index: index)
-                return
-            }
-            if let index = bible.booksOfNewTestament.index(of: firstBook) {
-                let newIndex = index + 39
-                indexList.updatePositionOfBookMarker(index: newIndex)
-                return
             }
         }
         

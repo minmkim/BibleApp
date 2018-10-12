@@ -41,8 +41,6 @@ class SearchBibleIntentHandler: NSObject, SearchBibleIntentIntentHandling {
         } else {
             return completion(SearchBibleIntentIntentResponse(code: .invalidVerse, userActivity: nil))
         }
-        
-        
     }
     
 }

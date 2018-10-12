@@ -37,13 +37,13 @@ final class BibleCoordinator: Coordinator {
         controller.changeChapterDelegate = self
         controller.currentChapter = chapter
         controller.navigationItem.title = book
-        guard let numberOfChapters = bible.bible[book]?.count else {return controller}
+        guard let numberOfChapters = bible.numberOfChaptersInBook(for: book) else {return controller}
         controller.numberOfChapters = numberOfChapters
         return controller
     }
     
     func openBibleVerse(book: String, chapter: Int, verse: Int) {
-        guard let dict = bible.bible[book] else {return}
+        guard let dict = bible.returnBookDict(for: book) else {return}
         guard let verses = dict[chapter] else {return}
         let controller = loadBookTableController(verses: verses, book: book, chapter: chapter)
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
@@ -58,89 +58,28 @@ final class BibleCoordinator: Coordinator {
     }
     
     func goToNextBook() {
-        if let index = bible.booksOfOldTestament.firstIndex(of: currentBook) {
-            if index < 38 {
-                let book = bible.booksOfOldTestament[index + 1]
-                currentBook = book
-                currentChapter = 1
-                currentBookController?.navigationItem.title = book
-                guard let numberOfChapters = bible.bible[book]?.count else {return}
-                currentBookController?.numberOfChapters = numberOfChapters
-                currentBookController?.currentChapter = 1
-                goToNewChapter()
-            } else { // last book of old testament then go to new testament
-                let book = bible.booksOfNewTestament[0]
-                currentBook = book
-                currentChapter = 1
-                currentBookController?.navigationItem.title = book
-                guard let numberOfChapters = bible.bible[book]?.count else {return}
-                currentBookController?.numberOfChapters = numberOfChapters
-                currentBookController?.currentChapter = 1
-                goToNewChapter()
-            }
-            return
-        }
-        if let index = bible.booksOfNewTestament.firstIndex(of: currentBook) {
-            if index != 26 { // Revelation
-                let book = bible.booksOfNewTestament[index + 1]
-                currentBook = book
-                currentChapter = 1
-                currentBookController?.navigationItem.title = book
-                guard let numberOfChapters = bible.bible[book]?.count else {return}
-                currentBookController?.numberOfChapters = numberOfChapters
-                currentBookController?.currentChapter = 1
-                goToNewChapter()
-                return
-            } else {
-                return
-            }
-        }
+        guard let index = bible.bookIndex(for: currentBook) else {return}
+        
+        guard let book = bible.returnNextBook(for: index) else {return}
+        currentBookController?.navigationItem.title = book
+        currentBook = book
+        currentChapter = 1
+        guard let numberOfChapters = bible.numberOfChaptersInBook(for: book) else {return}
+        currentBookController?.numberOfChapters = numberOfChapters
+        currentBookController?.currentChapter = 1
+        goToNewChapter()
     }
     
     func goToPreviousBook() {
-        if let index = bible.booksOfOldTestament.firstIndex(of: currentBook) {
-            if index != 0 {
-                let previousBookIndex = index - 1
-                setUpControllerForPreviousChapter(for: previousBookIndex, isOldTestament: true)
-                goToNewChapter()
-                return
-            }
-        }
-        if let index = bible.booksOfNewTestament.firstIndex(of: currentBook) {
-            if index != 0 { // Revelation
-                let previousBookIndex = index - 1
-                setUpControllerForPreviousChapter(for: previousBookIndex, isOldTestament: false)
-                goToNewChapter()
-                return
-            } else {
-                let previousBookIndex = 38
-                setUpControllerForPreviousChapter(for: previousBookIndex, isOldTestament: true)
-                goToNewChapter()
-            }
-        }
-        
-    }
-    
-    func setUpControllerForPreviousChapter(for newIndex: Int, isOldTestament: Bool) {
-        if isOldTestament {
-            let previousBook = bible.booksOfOldTestament[newIndex]
-            guard let numberOfChapters = bible.bible[previousBook]?.count else {return}
-            currentBook = previousBook
-            currentChapter = numberOfChapters
-            currentBookController?.navigationItem.title = previousBook
-            currentBookController?.numberOfChapters = numberOfChapters
-            currentBookController?.currentChapter = currentChapter
-            goToNewChapter()
-        } else {
-            let previousBook = bible.booksOfNewTestament[newIndex]
-            currentBook = previousBook
-            guard let numberOfChapters = bible.bible[previousBook]?.count else {return}
-            currentChapter = numberOfChapters
-            currentBookController?.navigationItem.title = previousBook
-            currentBookController?.numberOfChapters = numberOfChapters
-            currentBookController?.currentChapter = numberOfChapters
-            goToNewChapter()
-        }
+        guard let index = bible.bookIndex(for: currentBook) else {return}
+        guard let book = bible.returnPreviousBook(for: index) else {return}
+        guard let numberOfChapters = bible.numberOfChaptersInBook(for: book) else {return}
+        currentBook = book
+        currentChapter = numberOfChapters
+        currentBookController?.navigationItem.title = book
+        currentBookController?.numberOfChapters = numberOfChapters
+        currentBookController?.currentChapter = currentChapter
+        goToNewChapter()
     }
     
 }
@@ -149,23 +88,19 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
     
     func openBibleWebsite(for indexPath: IndexPath) {
         let controller = BibleBookDetailViewController()
-        if indexPath.section < bible.booksOfOldTestament.count {
-            controller.book = bible.booksOfOldTestament[indexPath.section]
-        } else {
-            controller.book = bible.booksOfNewTestament[indexPath.section - bible.booksOfOldTestament.count]
-        }
+        controller.book = bible.returnBook(for: indexPath.section)
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
     }
     
     func openBibleChapter(book: String, chapter: Int) {
-        guard let dict = bible.bible[book] else {return}
+        guard let dict = bible.returnBookDict(for: book) else {return}
         guard let verses = dict[chapter] else {return}
         let controller = loadBookTableController(verses: verses, book: book, chapter: chapter)
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
     }
     
     func goToNewChapter() {
-        guard let bookDict = bible.bible[currentBook] else {return}
+        guard let bookDict = bible.returnBookDict(for: currentBook) else {return}
         guard let verses = bookDict[currentChapter] else {return}
         currentBookController?.verseArray = verses
         currentBookController?.currentChapter = currentChapter
@@ -176,8 +111,9 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
 
 extension BibleCoordinator: ChangeChapterDelegate {
     func closedController() {
-//        currentBookController = nil
+//
     }
+    
     
     func goToChapter(_ chapter: Int) {
         currentChapter = chapter
@@ -194,13 +130,16 @@ extension BibleCoordinator: ChangeChapterDelegate {
     }
     
     func nextChapter() {
-        currentChapter += 1
-        if let chapters = bible.bible[currentBook] {
-            if currentChapter > chapters.count {
+        if let chapters = bible.numberOfChaptersInBook(for: currentBook) {
+            if currentChapter >= chapters {
                 goToNextBook()
+                return
+            } else {
+                currentChapter += 1
+                goToNewChapter()
+                return
             }
         }
-        goToNewChapter()
     }
     
     

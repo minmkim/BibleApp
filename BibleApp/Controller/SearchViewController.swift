@@ -37,9 +37,7 @@ class SearchViewController: UITableViewController {
         searchController.searchBar.tintColor = MainColor.redOrange
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = false
-        }
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     func searchBarIsEmpty() {

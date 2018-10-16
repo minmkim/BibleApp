@@ -151,7 +151,7 @@ class SearchViewModel {
         }
     }
     
-    func returnNumberOfRowsInSection() -> Int {
+    func getNumberOfRowsInSection() -> Int {
         if searchState == .verse {
             switch searchParameter {
             case .empty:
@@ -169,7 +169,7 @@ class SearchViewModel {
         
     }
     
-    func returnTextLabel(for index: Int) -> String {
+    func getTextLabel(for index: Int) -> String {
         if searchState == .verse {
             switch searchParameter {
             case .empty:
@@ -259,7 +259,7 @@ class SearchViewModel {
         
     }
     
-    func returnHeaderLabel() -> String {
+    func getHeaderLabel() -> String {
         if searchState == .verse {
             switch searchParameter {
             case .empty:

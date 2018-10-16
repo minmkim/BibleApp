@@ -41,7 +41,6 @@ class SavedVerseActionBar: UIView {
         savedVerseActionBarDelegate?.didPressTrash()
     }
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(trashButton)

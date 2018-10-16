@@ -82,6 +82,7 @@ class BibleViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         print("rotated")
+//        indexList.layoutIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {

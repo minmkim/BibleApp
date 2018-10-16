@@ -61,13 +61,13 @@ class SearchViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchViewModel.returnNumberOfRowsInSection()
+        return searchViewModel.getNumberOfRowsInSection()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if searchViewModel.searchState == .verse {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            let text = searchViewModel.returnTextLabel(for: indexPath.row)
+            let text = searchViewModel.getTextLabel(for: indexPath.row)
             cell.textLabel?.text = text
             let backgroundView = UIView()
             backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
@@ -116,7 +116,7 @@ class SearchViewController: UITableViewController {
     
     func layoutHeader(chapter: Int) -> UIView {
         let headerView = SearchHeader()
-        headerView.headerLabel.text = searchViewModel.returnHeaderLabel()
+        headerView.headerLabel.text = searchViewModel.getHeaderLabel()
         return headerView
     }
     
@@ -169,8 +169,6 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
         } else {
             tableView.reloadData()
         }
-        
-//        searchController.searchBar.text = ""
         searchController.searchBar.resignFirstResponder()
     }
     

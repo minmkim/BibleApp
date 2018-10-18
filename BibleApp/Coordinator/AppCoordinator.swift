@@ -55,20 +55,25 @@ final class AppCoordinator: Coordinator {
         navigationController1.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController1.navigationBar.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
         bibleViewController.bible = self.bible
-        bibleViewController.tabBarItem = UITabBarItem(title: "Bible", image: UIImage(named: "literature"), tag: 0)
+        bibleViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "literature"), tag: 0)
+        bibleViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         
         let navigationController2 = UINavigationController(rootViewController: verseViewController)
         navigationController2.navigationBar.prefersLargeTitles = true
         navigationController2.navigationBar.barTintColor = .white
         navigationController2.navigationBar.isTranslucent = false
         navigationController2.navigationBar.setValue(true, forKey: "hidesShadow")
-        verseViewController.tabBarItem = UITabBarItem(title: "Verses", image: UIImage(named: "for_you"), tag: 1)
+        verseViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "for_you"), tag: 1)
+        verseViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         
         let navigationController3 = UINavigationController(rootViewController: searchViewController)
-        searchViewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "search"), tag: 2)
+        searchViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "search"), tag: 2)
+        searchViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         
         let navigationController4 = UINavigationController(rootViewController: settingsViewController)
-        settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 3)
+        settingsViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "settings"), tag: 3)
+        settingsViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+
         
         rootViewController.viewControllers = [navigationController1, navigationController2, navigationController3, navigationController4]
     }

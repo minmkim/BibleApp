@@ -21,6 +21,9 @@ final class Bible {
     
     private var bible = [Book: [Chapter:[VerseText]]](minimumCapacity: 66)
     
+    private let countOfOldTestament = 39
+    private let countOfNewTestament = 27
+    
     init(verseDataManager: VersesDataManager) {
         let didCreateCoreDataBible = UserDefaults.standard.bool(forKey: "didCreateCoreDataBible")
         if !didCreateCoreDataBible {
@@ -69,10 +72,10 @@ final class Bible {
     
     func returnBook(for index: Int) -> String {
         switch index {
-        case (0...38):
+        case (0..<countOfOldTestament):
             return booksOfOldTestament[index]
-        case (39...65):
-            return booksOfNewTestament[index - 39]
+        case (countOfOldTestament...(countOfOldTestament+countOfNewTestament)):
+            return booksOfNewTestament[index - countOfOldTestament]
         default:
             fatalError("tried to return book outside of range of bible")
         }
@@ -87,7 +90,7 @@ final class Bible {
             return index
         }
         if let index = booksOfNewTestament.firstIndex(of: book) {
-            return index + 39
+            return index + countOfOldTestament
         }
         return nil
     }
@@ -95,9 +98,9 @@ final class Bible {
     func returnNextBook(for index: Int) -> String? {
         let newIndex = index + 1
         switch newIndex {
-        case (0...38):
+        case (0..<countOfOldTestament):
             return booksOfOldTestament[newIndex]
-        case (39...65):
+        case (countOfOldTestament..<(countOfOldTestament+countOfNewTestament)):
             return booksOfNewTestament[newIndex - 39]
         default:
             return nil
@@ -107,9 +110,9 @@ final class Bible {
     func returnPreviousBook(for index: Int) -> String? {
         let newIndex = index - 1
         switch newIndex {
-        case (0...38):
+        case (0..<countOfOldTestament):
             return booksOfOldTestament[newIndex]
-        case (39...66):
+        case (countOfOldTestament..<(countOfOldTestament+countOfNewTestament)):
             return booksOfNewTestament[newIndex - 39]
         default:
             return nil

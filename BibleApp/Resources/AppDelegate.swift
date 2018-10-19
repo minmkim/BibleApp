@@ -105,14 +105,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let mainView = self.window?.rootViewController as? MainViewController else {return false}
         switch shortcutType {
         case "Bible":
-            mainView.selectedIndex = 0
-            appCoordinator.didSelectTab(at: "Bible")
+            let index = 0
+            mainView.selectedIndex = index
+            appCoordinator.didSelectTab(at: index)
         case "Favorites":
-            mainView.selectedIndex = 1
-            appCoordinator.didSelectTab(at: "Verses")
+            let index = 1
+            mainView.selectedIndex = index
+            appCoordinator.didSelectTab(at: index)
         case "Search":
-            mainView.selectedIndex = 2
-            appCoordinator.didSelectTab(at: "Search")
+            let index = 2
+            mainView.selectedIndex = index
+            appCoordinator.didSelectTab(at: index)
         default:
             mainView.selectedIndex = 0
         }

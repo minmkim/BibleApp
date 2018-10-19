@@ -27,11 +27,11 @@ class MainViewController: UITabBarController {
 
 extension MainViewController: UITabBarControllerDelegate {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        guard let title = item.title else {return}
-        tabSelectedDelegate?.didSelectTab(at: title)
+        let index = item.tag
+        tabSelectedDelegate?.didSelectTab(at: index)
     }
 }
 
 protocol TabSelectedDelegate: class {
-    func didSelectTab(at tab: String)
+    func didSelectTab(at index: Int)
 }

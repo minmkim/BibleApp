@@ -90,9 +90,9 @@ final class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator: TabSelectedDelegate {
-    func didSelectTab(at tab: String) {
-        switch tab {
-        case "Bible":
+    func didSelectTab(at index: Int) {
+        switch index {
+        case 0:
             if coordinatorDict[coordinatorType.bible] == nil {
                 coordinatorDict = [:]
                 let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible)
@@ -101,7 +101,7 @@ extension AppCoordinator: TabSelectedDelegate {
                 coordinatorDict[coordinatorType.savedVerses] = nil
                 coordinatorDict[coordinatorType.search] = nil
             }
-        case "Verses":
+        case 1:
             if coordinatorDict[coordinatorType.savedVerses] == nil {
                 if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
                     if coordinator.currentBookController != nil {
@@ -116,7 +116,7 @@ extension AppCoordinator: TabSelectedDelegate {
                 verseCoordinator.bibleVerseDelegate = self
                 coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
             }
-        case "Search":
+        case 2:
             if coordinatorDict[coordinatorType.search] == nil {
                 if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
                     if coordinator.currentBookController != nil {
@@ -132,7 +132,7 @@ extension AppCoordinator: TabSelectedDelegate {
                 searchCoordinator.bibleVerseDelegate = self
                 coordinatorDict[coordinatorType.search] = searchCoordinator
             }
-        case "Settings":
+        case 3:
             if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
                 if coordinator.currentBookController != nil {
                     coordinatorDict[coordinatorType.savedVerses] = nil

@@ -10,6 +10,8 @@ import UIKit
 
 final class BookTableViewCell: UITableViewCell {
     
+    var dominantHand = "Left"
+    
     var bibleVerse: String? {
         didSet {
             verseText.text = bibleVerse
@@ -39,10 +41,6 @@ final class BookTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         addSubview(verseText)
         addSubview(numberLabel)
-        dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
-        if dominantHand == "" {
-            UserDefaults.standard.set("Left", forKey: "DominantHand")
-        }
         layoutViews()
     }
 
@@ -52,8 +50,6 @@ final class BookTableViewCell: UITableViewCell {
         backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
         selectedBackgroundView = backgroundView
     }
-    
-    var dominantHand: String?
     
     func layoutViews() {
         if dominantHand == "Left" {

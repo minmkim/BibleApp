@@ -21,7 +21,7 @@ class BookTableController: UIViewController {
     }
     var isSelecting = false
     var selectedVerses = [IndexPath]()
-    
+    var dominantHand = "Left"
     var verseArray = [String]()
     var numberOfChapters: Int? {
         didSet {
@@ -50,16 +50,12 @@ class BookTableController: UIViewController {
     
     deinit {
         verseArray = []
-        changeChapterDelegate?.closedController()
         print("deinit booktable")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
-        if dominantHand == "" {
-            UserDefaults.standard.set("Left", forKey: "DominantHand")
-        }
+        dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? "Left"
         bottomContainerView.updateProgressBar()
         view.addSubview(bookTableView)
         view.addSubview(indexList)
@@ -101,6 +97,17 @@ class BookTableController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
+        guard let newDominantHand = UserDefaults.standard.string(forKey: "DominantHand") else {return}
+        if dominantHand != newDominantHand {
+            changeChapterDelegate?.closeController()
+//            dominantHand = newDominantHand
+//            indexListLeadingAnchor?.isActive = false
+//            indexListTrailingAnchor?.isActive = false
+//            setDominantHandIndexLayout()
+//            DispatchQueue.main.async {
+//                self.bookTableView.reloadData()
+//            }
+        }
     }
     
     func setupTableView() {
@@ -114,7 +121,6 @@ class BookTableController: UIViewController {
         bookTableView.allowsMultipleSelectionDuringEditing = true
     }
     
-    var dominantHand: String?
     var indexListLeadingAnchor: NSLayoutConstraint?
     var indexListTrailingAnchor: NSLayoutConstraint?
     
@@ -126,6 +132,16 @@ class BookTableController: UIViewController {
         
         indexList.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 12).isActive = true
         indexList.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor, constant: -12).isActive = true
+        indexList.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        setDominantHandIndexLayout()
+        
+        bookTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        bookTableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        bookTableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        bookTableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor).isActive = true
+    }
+    
+    func setDominantHandIndexLayout() {
         if dominantHand == "Left" {
             indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
             indexListLeadingAnchor?.isActive = true
@@ -133,11 +149,6 @@ class BookTableController: UIViewController {
             indexListTrailingAnchor = indexList.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
             indexListTrailingAnchor?.isActive = true
         }
-        
-        bookTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        bookTableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        bookTableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        bookTableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor).isActive = true
     }
     
     func formatedVerse(for indexPath: IndexPath) -> String {
@@ -163,6 +174,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as!BookTableViewCell
+        cell.dominantHand = dominantHand
         cell.bibleVerse = verseArray[indexPath.row]
         cell.numberLabel.text = String(indexPath.row + 1)
         return cell
@@ -292,5 +304,5 @@ protocol ChangeChapterDelegate: class {
     func previousChapter()
     func nextChapter()
     func goToChapter(_ chapter: Int)
-    func closedController()
+    func closeController()
 }

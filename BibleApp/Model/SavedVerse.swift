@@ -67,7 +67,7 @@ class SavedVerse {
     }
     
     func formattedVerse() -> String {
-        return !isMultipleVerses ? "\(book) \(chapter):\(verse)" : "\(book) \(chapter):\(verse)-\(upToVerse ?? 0)"
+        return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(book) \(chapter):\(verse)"
         
     }
     

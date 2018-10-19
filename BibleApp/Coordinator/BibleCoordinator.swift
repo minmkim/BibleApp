@@ -110,10 +110,9 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
 }
 
 extension BibleCoordinator: ChangeChapterDelegate {
-    func closedController() {
-//
+    func closeController() {
+        bibleViewController.navigationController?.popViewController(animated: false)
     }
-    
     
     func goToChapter(_ chapter: Int) {
         currentChapter = chapter
@@ -141,6 +140,4 @@ extension BibleCoordinator: ChangeChapterDelegate {
             }
         }
     }
-    
-    
 }

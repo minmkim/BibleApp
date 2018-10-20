@@ -100,13 +100,6 @@ class BookTableController: UIViewController {
         guard let newDominantHand = UserDefaults.standard.string(forKey: "DominantHand") else {return}
         if dominantHand != newDominantHand {
             changeChapterDelegate?.closeController()
-//            dominantHand = newDominantHand
-//            indexListLeadingAnchor?.isActive = false
-//            indexListTrailingAnchor?.isActive = false
-//            setDominantHandIndexLayout()
-//            DispatchQueue.main.async {
-//                self.bookTableView.reloadData()
-//            }
         }
     }
     

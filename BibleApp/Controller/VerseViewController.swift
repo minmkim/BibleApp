@@ -50,6 +50,15 @@ class VerseViewController: UIViewController {
             }
         })
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isEditingVerses {
+            removeDeleteImage()
+            indexPathToDelete.removeAll()
+            setupEditView()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

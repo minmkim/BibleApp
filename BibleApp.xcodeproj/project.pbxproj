@@ -490,6 +490,7 @@
 		8C05BD72217D55D400AE964B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A400F03F2118EBFE00F9F9C5 /* UIViews */,
 				8C05BD79217D574A00AE964B /* TableViews */,
 				8C80FEE22131E60B006BF071 /* IndexTracker.swift */,
 				8C05BD70217D558E00AE964B /* TableViewCells */,
@@ -762,7 +763,6 @@
 			isa = PBXGroup;
 			children = (
 				8C05BD72217D55D400AE964B /* Views */,
-				A400F03F2118EBFE00F9F9C5 /* UIViews */,
 				A4FD29722118CDB7008E0A69 /* Model */,
 				A4FD29732118CDC3008E0A69 /* Screens */,
 				8C1A1E49214DA169007DE952 /* Coordinator */,

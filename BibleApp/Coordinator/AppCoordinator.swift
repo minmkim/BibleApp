@@ -39,6 +39,8 @@ final class AppCoordinator: Coordinator {
         controller.dataManager = verseDataManager
         return controller
     }()
+    
+    lazy var savedVerseViewController = SavedVerseViewController()
     lazy var searchViewController: SearchViewController = {
         let controller = SearchViewController()
         controller.searchViewModel = SearchViewModel(bible: bible, verseDataManager: verseDataManager)
@@ -74,8 +76,14 @@ final class AppCoordinator: Coordinator {
         settingsViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "settings"), tag: 3)
         settingsViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
 
-        
-        rootViewController.viewControllers = [navigationController1, navigationController2, navigationController3, navigationController4]
+        let navigationController5 = UINavigationController(rootViewController: savedVerseViewController)
+        savedVerseViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "settings"), tag: 3)
+        savedVerseViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+        navigationController5.navigationBar.barTintColor = .white
+        navigationController5.navigationBar.isTranslucent = false
+        navigationController5.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController5.navigationBar.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
+        rootViewController.viewControllers = [navigationController1, navigationController2, navigationController3, navigationController4, navigationController5]
     }
     
     func start() {

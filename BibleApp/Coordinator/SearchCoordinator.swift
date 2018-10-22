@@ -11,7 +11,7 @@ import Foundation
 final class SearchCoordinator: Coordinator {
     
     weak var bibleVerseDelegate: BibleVerseDelegate?
-    let searchViewController: SearchViewController!
+    var searchViewController: SearchViewController!
 
     init(searchViewController: SearchViewController) {
         self.searchViewController = searchViewController

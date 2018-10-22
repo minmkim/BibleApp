@@ -16,19 +16,32 @@ class SettingsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDominantHand()
+        setupTableView()
+        setupViews()
+    }
+    
+    func setupDominantHand() {
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
         if dominantHand == nil {
             UserDefaults.standard.set("Left", forKey: "DominantHand")
             dominantHand = "Left"
             tableView.reloadData()
         }
+    }
+    
+    func setupTableView() {
         tableView = UITableView(frame: .zero, style: .grouped)
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "Settings"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(SettingsColorTableViewCell.self, forCellReuseIdentifier: "color")
         tableView.rowHeight = UITableViewAutomaticDimension
     }
+    
+    func setupViews() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Settings"
+    }
+        
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

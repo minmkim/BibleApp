@@ -15,13 +15,21 @@ class SearchViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Search"
-        navigationController?.navigationBar.prefersLargeTitles = true
         setupSearchController()
         searchViewModel.searchWordDelegate = self
+        setupViews()
+        setupTableView()
+    }
+    
+    func setupViews() {
+        navigationItem.title = "Search"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)], for: .normal)
+    }
+    
+    func setupTableView() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(SearchWordTableViewCell.self, forCellReuseIdentifier: "searchCell")
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)], for: .normal)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
@@ -133,76 +141,4 @@ class SearchViewController: UITableViewController {
     }
 }
 
-extension SearchViewController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate{
-    func updateSearchResults(for searchController: UISearchController) {
-        searchBarIsEmpty()
-        if searchController.searchBar.selectedScopeButtonIndex == 0 {
-            filterContentForSearchText(searchController.searchBar.text!)
-            switch searchViewModel.searchParameter {
-            case .empty:
-                searchController.searchBar.keyboardType = .default
-            case .book:
-                searchController.searchBar.keyboardType = .default
-            default:
-                searchController.searchBar.keyboardType = .numbersAndPunctuation
-            }
-            searchController.searchBar.reloadInputViews()
-        }
-        
-    }
-    
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        searchViewModel.filterContentForSearchText(searchText)
-        tableView.reloadData()
-    }
-    
-    func presentSearchController(_ searchController: UISearchController) {
-        self.searchController.searchBar.becomeFirstResponder()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchController.searchBar.text else {return}
-        let array = searchViewModel.searchPressed(for: text)
-        if array.count == 0 {
-            searchController.searchBar.becomeFirstResponder()
-            return
-        } else {
-            tableView.reloadData()
-        }
-        searchController.searchBar.resignFirstResponder()
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        if selectedScope == 0 { //verse
-            searchViewModel.searchState = .verse
-            searchController.searchBar.text = ""
-            tableView.reloadData()
-        } else { //word
-            searchViewModel.searchState = .word
-            searchController.searchBar.text = ""
-            tableView.reloadData()
-        }
-    }
-    
-}
 
-extension SearchViewController: SearchWordDelegate {
-    func didFinishLoadingMoreVerses(for indexPaths: [IndexPath]) {
-        print(tableView.numberOfRows(inSection: 0))
-        DispatchQueue.main.async {
-            self.tableView.beginUpdates()
-            self.tableView.insertRows(at: indexPaths, with: .automatic)
-            self.tableView.endUpdates()
-        }
-    }
-    
-    func didFinishSearching() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            if self.tableView.numberOfRows(inSection: 0) > 0 {
-                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-            }
-        }
-    }
-    
-}

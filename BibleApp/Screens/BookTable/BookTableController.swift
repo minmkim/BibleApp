@@ -56,6 +56,16 @@ class BookTableController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? "Left"
+        setupViews()
+        setupDelegates()
+    }
+    
+    func setupDelegates() {
+        indexList.delegate = self
+        bottomContainerView.chapterPressDelegate = self
+    }
+    
+    func setupViews() {
         bottomContainerView.updateProgressBar()
         view.addSubview(bookTableView)
         view.addSubview(indexList)
@@ -64,8 +74,6 @@ class BookTableController: UIViewController {
         let rightButton = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didPressSelect))
         navigationItem.rightBarButtonItem = rightButton
         layoutViews()
-        indexList.delegate = self
-        bottomContainerView.chapterPressDelegate = self
         setupTableView()
     }
     
@@ -117,23 +125,6 @@ class BookTableController: UIViewController {
     var indexListLeadingAnchor: NSLayoutConstraint?
     var indexListTrailingAnchor: NSLayoutConstraint?
     
-    func layoutViews() {
-        bottomContainerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        bottomContainerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        bottomContainerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        bottomContainerView.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        indexList.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 12).isActive = true
-        indexList.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor, constant: -12).isActive = true
-        indexList.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        setDominantHandIndexLayout()
-        
-        bookTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        bookTableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        bookTableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        bookTableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor).isActive = true
-    }
-    
     func setDominantHandIndexLayout() {
         if dominantHand == "Left" {
             indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
@@ -152,97 +143,6 @@ class BookTableController: UIViewController {
         let verse = indexPath.row + 1
         word += "\n\(book) \(chapter):\(verse)"
         return word
-    }
-    
-}
-
-extension BookTableController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return verseArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as!BookTableViewCell
-        cell.dominantHand = dominantHand
-        cell.bibleVerse = verseArray[indexPath.row]
-        cell.numberLabel.text = String(indexPath.row + 1)
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let save = UITableViewRowAction(style: .default, title: "Save") { [weak self] (action, indexPath) in
-            let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            guard let book = self?.navigationItem.title else {return}
-            guard let chapter = self?.currentChapter else {return}
-            let verse = indexPath.row + 1
-            guard let text = cell.verseText.text else {return}
-            let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text)
-            self?.versesDataManager.saveToCoreData(bibleVerse: bibleVerse)
-        }
-        
-        let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in
-            let verseText = self.formatedVerse(for: indexPath)
-            UIPasteboard.general.string = verseText
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-                self.bookTableView.deselectRow(at: indexPath, animated: true)
-            }
-        }
-        
-        let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
-            let verseText = self.formatedVerse(for: indexPath)
-            let activityVC = UIActivityViewController(activityItems: [verseText], applicationActivities: nil)
-            self.present(activityVC, animated: true, completion: nil)
-        }
-        share.backgroundColor = .lightGray
-        copy.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
-        save.backgroundColor = UIColor(red: 0, green: 122/255, blue: 255/255, alpha: 1)
-        return [share, copy, save]
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if isSelecting {
-            if selectedVerses.contains(indexPath) {
-                selectedVerses.removeAll { (index) -> Bool in
-                    index == indexPath
-                }
-            }
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isSelecting {
-            selectedVerses.append(indexPath)
-        } else {
-            let verseText = self.formatedVerse(for: indexPath)
-            UIPasteboard.general.string = verseText
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-                self.bookTableView.deselectRow(at: indexPath, animated: true)
-            }
-        }
-        
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if indexList.indexState == .scrollingTable {
-            guard let firstCell = bookTableView.visibleCells.first else {return}
-            guard let index = bookTableView.indexPath(for: firstCell) else {return}
-            indexList.updatePositionOfBookMarker(index: index.row)
-        }
-    }
-    
-    func newChapter() {
-        bookTableView.reloadData()
-        indexList.newChapter(for: Array(1...verseArray.count).map({String($0)}))
-        self.view.layoutIfNeeded()
     }
     
 }

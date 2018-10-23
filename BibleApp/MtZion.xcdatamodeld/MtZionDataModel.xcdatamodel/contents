@@ -10,12 +10,26 @@
         <attribute name="book" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chapter" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isMultipleVerses" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="noteName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sectionName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="upToVerse" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="verse" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="verses" inverseEntity="Note" syncable="YES"/>
+    </entity>
+    <entity name="Note" representedClassName="Note" syncable="YES" codeGenerationType="class">
+        <attribute name="noteName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="notes" inverseEntity="Section" syncable="YES"/>
+        <relationship name="verses" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="CDBibleVerse" inverseName="note" inverseEntity="CDBibleVerse" syncable="YES"/>
+    </entity>
+    <entity name="Section" representedClassName="Section" syncable="YES" codeGenerationType="class">
+        <attribute name="sectionName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Note" inverseName="section" inverseEntity="Note" syncable="YES"/>
     </entity>
     <elements>
         <element name="CDBible" positionX="-444.1328125" positionY="18.26171875" width="128" height="105"/>
-        <element name="CDBibleVerse" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="CDBibleVerse" positionX="-63" positionY="-18" width="128" height="178"/>
+        <element name="Note" positionX="-252" positionY="45" width="128" height="90"/>
+        <element name="Section" positionX="-247.60546875" positionY="220.45703125" width="128" height="73"/>
     </elements>
 </model>

@@ -44,12 +44,58 @@ final class VersesDataManager {
             newVerse.setValue(bibleVerse.text, forKeyPath: CoreDataVerse.text)
             newVerse.setValue(bibleVerse.isMultipleVerses, forKey: CoreDataVerse.isMultipleVerses)
             newVerse.setValue(bibleVerse.upToVerse, forKey: CoreDataVerse.upToVerse)
+            newVerse.setValue(bibleVerse.sectionName, forKey: CoreDataVerse.sectionName)
+            newVerse.setValue(bibleVerse.noteName, forKey: CoreDataVerse.noteName)
             
+            if let sectionName = bibleVerse.sectionName, let noteName = bibleVerse.noteName {
+                let section = Section(context: managedContext)
+                section.sectionName = sectionName
+                let note = Note(context: managedContext)
+                note.noteName = noteName
+                
+                section.addToNotes(note)
+            }
             do {
                 try managedContext.save()
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
             }
+        }
+    }
+    
+    func saveNewSection(for section: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: CoreDataSection.entity, in: managedContext)!
+        
+        let newSection = NSManagedObject(entity: entity, insertInto: managedContext)
+        newSection.setValue(section, forKeyPath: CoreDataSection.sectionName)
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func saveNewNote(for note: String, section: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: CoreDataNote.entity, in: managedContext)!
+        
+        let newNote = NSManagedObject(entity: entity, insertInto: managedContext)
+        newNote.setValue(note, forKeyPath: CoreDataNote.noteName)
+        let managedSection = Section(context: managedContext)
+        managedSection.sectionName = section
+        let managedNote = Note(context: managedContext)
+        managedNote.noteName = note
+        managedSection.addToNotes(managedNote)
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
         }
     }
     
@@ -91,7 +137,7 @@ final class VersesDataManager {
     
     func loadBible(completion: ([BibleVerse]) -> Void) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
+    
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
         var savedVerses = [BibleVerse]()
@@ -107,8 +153,48 @@ final class VersesDataManager {
         }
     }
     
-    func searchForWord(searchWord: String, fetchOffset: Int) -> [BibleVerse] {
+    func loadSections(completion: ([String]) -> Void) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataSection.entity)
+        var sections = [String]()
+        do {
+            let fetchedSections = try managedContext.fetch(fetchRequest)
+            fetchedSections.forEach { (section) in
+                
+                let sectionString = section.value(forKey: CoreDataSection.sectionName) as! String
+                sections.append(sectionString)
+            }
+            completion(sections)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func loadNotes(for section: String, completion: ([String]) -> Void) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataNote.entity)
+        let managedSection = Section(context: managedContext)
+        managedSection.sectionName = section
+        let predicate = NSPredicate(format:"ANY section.sectionName == %@", section)
+        fetchRequest.predicate = predicate
+        var sections = [String]()
+        do {
+            let fetchedSections = try managedContext.fetch(fetchRequest)
+            fetchedSections.forEach { (section) in
+                let sectionString = section.value(forKey: CoreDataNote.noteName) as! String
+                sections.append(sectionString)
+            }
+            completion(sections)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func searchForWord(searchWord: String, fetchOffset: Int) -> [BibleVerse] {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return []}
         let context = appDelegate.persistentContainer.viewContext
         var savedVerses = [BibleVerse]()

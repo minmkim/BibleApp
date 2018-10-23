@@ -42,13 +42,13 @@ class VerseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        savedVerses.removeAll()
-        dataManager?.loadVerses(completion: { [weak self] (savedVerses) in
-            self?.savedVerses = savedVerses
-            DispatchQueue.main.async {
-                self?.verseCollectionView.reloadData()
-            }
-        })
+//        savedVerses.removeAll()
+//        dataManager?.loadVerses(completion: { [weak self] (savedVerses) in
+//            self?.savedVerses = savedVerses
+//            DispatchQueue.main.async {
+//                self?.verseCollectionView.reloadData()
+//            }
+//        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {

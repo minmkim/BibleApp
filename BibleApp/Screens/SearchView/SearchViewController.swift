@@ -15,6 +15,7 @@ class SearchViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupSearchController()
         searchViewModel.searchWordDelegate = self
         setupViews()

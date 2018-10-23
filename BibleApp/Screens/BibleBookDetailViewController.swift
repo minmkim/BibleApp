@@ -19,14 +19,14 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     }
     
     func loadWiki() {
-        let search = returnBookNameForWikipedia()
+        let search = getBookNameForWikipedia()
         let url = URL(string: "https://en.wikipedia.org/wiki/\(search)")!
         webKitView.load(URLRequest(url: url))
     }
     
-    func returnBookNameForWikipedia() -> String {
+    func getBookNameForWikipedia() -> String {
         guard let book = self.book else {return ""}
-        guard let bookDict = dictOfBookWikiYouTube[book] else {return ""}
+        guard let bookDict = Constants.dictOfBookWikiYouTube[book] else {return ""}
         return bookDict[0]
     }
     
@@ -82,14 +82,14 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     }
     
     func loadYoutube() {
-        let embedCode = returnEmbedCodeForYouTube()
+        let embedCode = getEmbedCodeForYouTube()
         let url = URL(string: "https://www.youtube.com/embed/\(embedCode)")!
         webKitView.load(URLRequest(url: url))
     }
     
-    func returnEmbedCodeForYouTube() -> String {
+    func getEmbedCodeForYouTube() -> String {
         guard let book = self.book else {return ""}
-        guard let bookDict = dictOfBookWikiYouTube[book] else {return ""}
+        guard let bookDict = Constants.dictOfBookWikiYouTube[book] else {return ""}
         return bookDict[1]
     }
     

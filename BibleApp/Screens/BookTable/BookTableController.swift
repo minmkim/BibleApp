@@ -23,6 +23,7 @@ class BookTableController: UIViewController {
     var selectedVerses = [IndexPath]()
     var dominantHand = "Left"
     var verseArray = [String]()
+    var indexPathToSave: IndexPath?
     var numberOfChapters: Int? {
         didSet {
             bottomContainerView.numberOfChapters = numberOfChapters
@@ -47,6 +48,8 @@ class BookTableController: UIViewController {
         bc.backgroundColor = .white
         return bc
     }()
+    
+    var saveVerseView: SaveVerseView?
     
     deinit {
         verseArray = []
@@ -92,7 +95,7 @@ class BookTableController: UIViewController {
                     bibleVerses.append(bibleVerse)
                     bookTableView.deselectRow(at: indexPath, animated: true)
                 }
-                guard let savedVerses = SavedVerse(bibleVerses: bibleVerses) else {return}
+                guard let savedVerses = SavedVerse(bibleVerses: bibleVerses, noteName: "God", sectionName: "BB") else {return}
                 var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
                 versesDataManager.saveToCoreData(bibleVerse: savedVerses)
                 selectedVerses.removeAll()
@@ -190,6 +193,36 @@ extension BookTableController: ChapterPressDelegate {
         bookTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         changeChapterDelegate?.goToChapter(chapter)
     }
+    
+}
+
+extension BookTableController: DidSelectNoteDelegate {
+    func selectedNoteSection(note: String, section: String) {
+        guard let book = navigationItem.title else {return}
+        guard let indexPath = indexPathToSave else {return}
+        let text = verseArray[indexPath.row]
+        let verse = indexPath.row + 1
+        let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: verse, text: text)
+        guard let savedVerses = SavedVerse(bibleVerses: [bibleVerse], noteName: note, sectionName: section) else {return}
+//        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
+        versesDataManager.saveToCoreData(bibleVerse: savedVerses)
+    }
+    
+    
+}
+
+extension BookTableController: CreateNewNoteDelegate {
+    func newNote(for text: String, section: String) {
+        guard let book = navigationItem.title else {return}
+        guard let indexPath = indexPathToSave else {return}
+        let verseText = verseArray[indexPath.row]
+        let verse = indexPath.row + 1
+        let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: verse, text: verseText)
+        guard let savedVerses = SavedVerse(bibleVerses: [bibleVerse], noteName: text, sectionName: section) else {return}
+        //        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
+        versesDataManager.saveToCoreData(bibleVerse: savedVerses)
+    }
+    
     
 }
 

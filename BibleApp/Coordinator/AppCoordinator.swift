@@ -40,7 +40,7 @@ final class AppCoordinator: Coordinator {
         return controller
     }()
     
-    lazy var savedVerseViewController = SavedVerseViewController()
+    lazy var savedVerseViewController = SavedVerseViewController(state: .note)
     lazy var searchViewController: SearchViewController = {
         let controller = SearchViewController()
         controller.searchViewModel = SearchViewModel(bible: bible, verseDataManager: verseDataManager)
@@ -50,7 +50,6 @@ final class AppCoordinator: Coordinator {
     
     init(window: UIWindow?) {
         self.window = window
-        
         let navigationController1 = UINavigationController(rootViewController: bibleViewController)
         navigationController1.navigationBar.barTintColor = .white
         navigationController1.navigationBar.isTranslucent = false
@@ -83,7 +82,7 @@ final class AppCoordinator: Coordinator {
         navigationController5.navigationBar.isTranslucent = false
         navigationController5.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController5.navigationBar.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
-        rootViewController.viewControllers = [navigationController1, navigationController2, navigationController3, navigationController4]
+        rootViewController.viewControllers = [navigationController1, navigationController2, navigationController3, navigationController4, navigationController5]
     }
     
     func start() {

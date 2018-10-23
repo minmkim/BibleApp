@@ -17,10 +17,22 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
         return cv
     }()
     
+    let noteLabel: UILabel = {
+       let nl = UILabel()
+        nl.translatesAutoresizingMaskIntoConstraints = false
+        nl.font = .preferredFont(forTextStyle: .headline)
+        nl.adjustsFontForContentSizeCategory = true
+        nl.textColor = .white
+        return nl
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(containerView)
+        containerView.addSubview(noteLabel)
+        
         layoutViews()
+        containerView.bringSubview(toFront: noteLabel)
     }
     
     func layoutViews() {
@@ -34,6 +46,11 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
         containerView.clipsToBounds = true
         containerView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        noteLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        noteLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        noteLabel.heightAnchor.constraint(equalToConstant: 26).isActive = true
+        noteLabel.widthAnchor.constraint(equalToConstant: frame.width - 16)
     }
     
     required init?(coder aDecoder: NSCoder) {

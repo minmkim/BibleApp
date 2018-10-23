@@ -21,6 +21,7 @@
 		8C070B18215DC10500833BE5 /* ChapterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C070B17215DC10500833BE5 /* ChapterCollectionViewCell.swift */; };
 		8C070B1A215DDB6000833BE5 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C070B19215DDB6000833BE5 /* ChapterView.swift */; };
 		8C09F1B4213B29AF00BF0EEE /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C09F1B3213B29AF00BF0EEE /* View.swift */; };
+		8C110AEF217EA5AF005A180B /* SavedVerses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C110AEE217EA5AF005A180B /* SavedVerses.swift */; };
 		8C14613A215B315C00FDF339 /* SearchBibleIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075A8215B0C8400827675 /* SearchBibleIntentHandler.swift */; };
 		8C14613B215B31A800FDF339 /* acts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075C7215B23D300827675 /* acts.swift */; };
 		8C14613C215B31A800FDF339 /* colossians.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD075B6215B23D100827675 /* colossians.swift */; };
@@ -106,6 +107,9 @@
 		8C635A86217D5CB90086499C /* SearchViewController + SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A85217D5CB90086499C /* SearchViewController + SearchDelegate.swift */; };
 		8C635A89217D5CF80086499C /* VerseViewController + CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A88217D5CF80086499C /* VerseViewController + CollectionView.swift */; };
 		8C635A8B217D5E340086499C /* VerseViewController + ActionBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A8A217D5E340086499C /* VerseViewController + ActionBarDelegate.swift */; };
+		8C635A8E217E69180086499C /* SearchContextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A8D217E69180086499C /* SearchContextController.swift */; };
+		8C635A90217E6B850086499C /* SaveVerseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A8F217E6B850086499C /* SaveVerseController.swift */; };
+		8C635A92217E7C8D0086499C /* SaveVerseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A91217E7C8D0086499C /* SaveVerseView.swift */; };
 		8C66D90B212F442B00EE6503 /* MtZion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8C66D908212F442B00EE6503 /* MtZion.xcdatamodeld */; };
 		8C66D910212F489100EE6503 /* CoreDataEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C66D90F212F489100EE6503 /* CoreDataEnum.swift */; };
 		8C66D92121305ECA00EE6503 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
@@ -274,6 +278,7 @@
 		8C070B17215DC10500833BE5 /* ChapterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C070B19215DDB6000833BE5 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
 		8C09F1B3213B29AF00BF0EEE /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		8C110AEE217EA5AF005A180B /* SavedVerses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerses.swift; sourceTree = "<group>"; };
 		8C1C89B8215C4E9900DC43FF /* TextParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextParser.swift; sourceTree = "<group>"; };
 		8C1C89BA215C4EB700DC43FF /* IntentBible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentBible.swift; sourceTree = "<group>"; };
 		8C266064214DDE7C00EFAE42 /* VerseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCoordinator.swift; sourceTree = "<group>"; };
@@ -289,6 +294,9 @@
 		8C635A85217D5CB90086499C /* SearchViewController + SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController + SearchDelegate.swift"; sourceTree = "<group>"; };
 		8C635A88217D5CF80086499C /* VerseViewController + CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerseViewController + CollectionView.swift"; sourceTree = "<group>"; };
 		8C635A8A217D5E340086499C /* VerseViewController + ActionBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerseViewController + ActionBarDelegate.swift"; sourceTree = "<group>"; };
+		8C635A8D217E69180086499C /* SearchContextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContextController.swift; sourceTree = "<group>"; };
+		8C635A8F217E6B850086499C /* SaveVerseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveVerseController.swift; sourceTree = "<group>"; };
+		8C635A91217E7C8D0086499C /* SaveVerseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveVerseView.swift; sourceTree = "<group>"; };
 		8C66D909212F442B00EE6503 /* MtZionDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MtZionDataModel.xcdatamodel; sourceTree = "<group>"; };
 		8C66D90A212F442B00EE6503 /* MtZion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MtZion.xcdatamodel; sourceTree = "<group>"; };
 		8C66D90F212F489100EE6503 /* CoreDataEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataEnum.swift; sourceTree = "<group>"; };
@@ -568,6 +576,15 @@
 			path = VerseView;
 			sourceTree = "<group>";
 		};
+		8C635A8C217E68E00086499C /* SaveVerse */ = {
+			isa = PBXGroup;
+			children = (
+				8C635A8F217E6B850086499C /* SaveVerseController.swift */,
+				8C635A8D217E69180086499C /* SearchContextController.swift */,
+			);
+			path = SaveVerse;
+			sourceTree = "<group>";
+		};
 		8C66D93621306DD100EE6503 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -730,6 +747,7 @@
 				8C328201215F221E00B79A90 /* LabelChapterView.swift */,
 				8CE3DBD3216025F20069692C /* SearchHeader.swift */,
 				8C7FED572162FD1A00267299 /* SavedVerseActionBar.swift */,
+				8C635A91217E7C8D0086499C /* SaveVerseView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -783,6 +801,7 @@
 				A4FD29682118B284008E0A69 /* Bible.swift */,
 				8C79AC30212DA5E300FCD313 /* BibleVerse.swift */,
 				8C95869D21608E5200825D21 /* SavedVerse.swift */,
+				8C110AEE217EA5AF005A180B /* SavedVerses.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -794,6 +813,7 @@
 				A43E1D1021195A3C008235D6 /* MainViewController.swift */,
 				8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */,
 				8C635A7F217D5C040086499C /* BookTable */,
+				8C635A8C217E68E00086499C /* SaveVerse */,
 				8C635A84217D5C680086499C /* SearchView */,
 				8C635A87217D5CEB0086499C /* VerseView */,
 				8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */,
@@ -1173,6 +1193,7 @@
 				8C14615F215B31B100FDF339 /* firstKings.swift in Sources */,
 				A43E1D0F21190ABA008235D6 /* BookTableViewCell.swift in Sources */,
 				8C146163215B31B100FDF339 /* haggai.swift in Sources */,
+				8C110AEF217EA5AF005A180B /* SavedVerses.swift in Sources */,
 				8C146164215B31B100FDF339 /* hosea.swift in Sources */,
 				8C14616A215B31B100FDF339 /* joshua.swift in Sources */,
 				8C146161215B31B100FDF339 /* genesis.swift in Sources */,
@@ -1250,6 +1271,7 @@
 				8C146142215B31A800FDF339 /* firstTimothy.swift in Sources */,
 				8C14613D215B31A800FDF339 /* ephesians.swift in Sources */,
 				8C146172215B31B100FDF339 /* numbers.swift in Sources */,
+				8C635A90217E6B850086499C /* SaveVerseController.swift in Sources */,
 				8C05BD74217D563C00AE964B /* Constants.swift in Sources */,
 				8C66D910212F489100EE6503 /* CoreDataEnum.swift in Sources */,
 				8CD1F1E021378A57006FAAD4 /* Theme.swift in Sources */,
@@ -1257,11 +1279,13 @@
 				8C146152215B31A800FDF339 /* secondThessalonians.swift in Sources */,
 				8C146156215B31B100FDF339 /* amos.swift in Sources */,
 				8C80FEE32131E60B006BF071 /* IndexTracker.swift in Sources */,
+				8C635A8E217E69180086499C /* SearchContextController.swift in Sources */,
 				8C79AC35212E083E00FCD313 /* VerseCollectionViewCell.swift in Sources */,
 				8CF05635214E10EC00CD7AE5 /* AppCoordinator.swift in Sources */,
 				8C146168215B31B100FDF339 /* joel.swift in Sources */,
 				8C146153215B31A800FDF339 /* secondTimothy.swift in Sources */,
 				A43E1D0D21190903008235D6 /* BookTableController.swift in Sources */,
+				8C635A92217E7C8D0086499C /* SaveVerseView.swift in Sources */,
 				8C266067214E05C600EFAE42 /* SearchCoordinator.swift in Sources */,
 				8C14616F215B31B100FDF339 /* micah.swift in Sources */,
 				8C146151215B31A800FDF339 /* secondPeter.swift in Sources */,

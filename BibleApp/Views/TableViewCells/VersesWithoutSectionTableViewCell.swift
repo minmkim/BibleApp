@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class VersesWithoutSectionTableViewCell: SavedVerseTableViewCell {
 
     var savedVerses = [SavedVerse]()
-    
+    var draggedIndexPath: IndexPath?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,11 +26,18 @@ class VersesWithoutSectionTableViewCell: SavedVerseTableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        let dataManager = VersesDataManager()
-        dataManager.loadVerses(completion: { [weak self] (savedVerses) in
-            self?.savedVerses = savedVerses
-        })
+//        loadData()
+        savedVerseCollectionView.dragInteractionEnabled = true
+        savedVerseCollectionView.dragDelegate = self
     }
+    
+//    func loadData() {
+//        let dataManager = VersesDataManager()
+//        dataManager.loadSavedVersesWithoutSection(completion: { [weak self] (savedVerses) in
+//            self?.savedVerses = savedVerses
+//            self?.savedVerseCollectionView.reloadData()
+//        })
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -52,7 +60,10 @@ extension VersesWithoutSectionTableViewCell {
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height: CGFloat = 80 //Arbitrary number
         let verse = savedVerses[indexPath.item]
-        height = estimatedFrameForText(text: verse.text).height + 44
+        height = estimatedFrameForText(text: verse.text).height + 38
+        if height > 150 {
+            height = 120
+        }
         return CGSize(width: self.frame.width, height: height)
     }
     
@@ -60,6 +71,20 @@ extension VersesWithoutSectionTableViewCell {
         let size = CGSize(width: (self.frame.width - 56), height: 500)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline)], context: nil)
+    }
+
+}
+
+extension VersesWithoutSectionTableViewCell: UICollectionViewDragDelegate {
+    
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let cell = savedVerseCollectionView.cellForItem(at: indexPath) as! VerseCollectionViewCell
+        guard let verse = cell.verse else {return []}
+        draggedIndexPath = indexPath
+        let itemProvider = NSItemProvider(object: verse)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        return [dragItem]
     }
     
     

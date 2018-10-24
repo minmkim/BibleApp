@@ -8,56 +8,83 @@
 
 import Foundation
 
-class SavedVerses {
+final class SavedVerses {
     
-    var savedVerses = [String: [String:[SavedVerse]]]()
-    var headerLabels = [String]()
-    var notesLabels = [String : [String]]()
+    private var headerLabels = [String]()
+    private var notesLabels = [String : [String]]()
+    private var dataManager: VersesDataManager!
     
-    init() {
-        let dataManager = VersesDataManager()
-        
+    init(dataManager: VersesDataManager) {
+        self.dataManager = dataManager
+        loadHeadersAndNotes()
+    }
+    
+    func loadHeadersAndNotes() {
         dataManager.loadSections { (sections) in
             headerLabels = sections
         }
-        print(headerLabels)
         headerLabels = Array(Set(headerLabels)).sorted()
         headerLabels.forEach { (header) in
             dataManager.loadNotes(for: header) { (fetchedNotes) in
                 notesLabels[header] = Array(Set(fetchedNotes)).sorted()
             }
         }
-        
-        
-        dataManager.loadVerses(completion: { [weak self] (verses) in
-            verses.forEach({ (savedVerse) in
-                
-                if let section = savedVerse.sectionName {
-                    if self?.savedVerses[section] == nil {
-                        self?.savedVerses[section] = [savedVerse.noteName! : [savedVerse]]
-                    } else {
-                        var dict = self?.savedVerses[section]!
-                        if var array = dict?[savedVerse.noteName!] {
-                            array.append(savedVerse)
-                            dict?[savedVerse.noteName!] = array
-                            self?.savedVerses[section] = dict
-                        } else {
-                            dict?[savedVerse.noteName!] = [savedVerse]
-                            self?.savedVerses[section] = dict
-                        }
-                    }
-                } else {
-                    if var dict = self?.savedVerses["none"] {
-                        var array = dict["none"]!
-                        array.append(savedVerse)
-                        dict["none"] = array
-                        self?.savedVerses["none"] = dict
-                    } else {
-                        self?.savedVerses["none"] = ["none":[savedVerse]]
-                    }
-                }
-            })
+    }
+    
+    func getNotes(for index: Int) -> [String] {
+        let section = headerLabels[index]
+        return notesLabels[section] ?? []
+    }
+    
+    func getSection(for index: Int) -> String {
+        return headerLabels[index]
+    }
+    
+    func getNumberOfSections() -> Int {
+        return headerLabels.count
+    }
+    
+    func loadVerses(for note: String) -> [SavedVerse] {
+        var savedVerses = [SavedVerse]()
+        dataManager.loadSavedVerses(for: note) { (loadedVerses) in
+            savedVerses = loadedVerses
+        }
+        return savedVerses
+    }
+    
+    func loadVersesWithoutSection(completion: ([SavedVerse]) -> Void) {
+        dataManager.loadSavedVersesWithoutSection(completion: { (loadedVerses) in
+           completion(loadedVerses)
         })
+    }
+    
+    func saveNewSection(for section: String) {
+        dataManager.saveNewSection(for: section)
+        headerLabels.append(section)
+        notesLabels[section] = []
+    }
+    
+    func saveNewNote(newNote: String, index: Int) {
+        let section = headerLabels[index]
+        var array = notesLabels[section] ?? []
+        array.append(newNote)
+        notesLabels[section] = array
+        dataManager.saveNewNote(for: newNote, section: section)
+    }
+    
+    func updateVerseToNote(verse: SavedVerse, note: String, section: String) {
+        DispatchQueue.main.async {
+            self.dataManager.updateVerseAfterDrag(verse: verse, newSection: section, newNote: note)
+        }
+        
+    }
+    
+    func removeNote(note: String, section: String) {
+        
+    }
+    
+    func removeSection(for section: String) {
+        
     }
     
     

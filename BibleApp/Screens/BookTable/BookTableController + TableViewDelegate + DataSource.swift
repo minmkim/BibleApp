@@ -44,11 +44,12 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let saveTo = UITableViewRowAction(style: .default, title: "Save To:") { [weak self] (action, indexPath) in
-            let controller = SavedVerseViewController(state: .search)
-            controller.didSelectNoteDelegate = self
-            controller.createNewNoteDelegate = self
+            self?.saveVerseDelegate?.presentSaveVerses()
+//            let controller = SavedVerseViewController(state: .search)
+//            controller.didSelectNoteDelegate = self
+//            controller.createNewNoteDelegate = self
             self?.indexPathToSave = indexPath
-            self?.present(controller, animated: true, completion: nil)
+//            self?.present(controller, animated: true, completion: nil)
         }
         
         let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in

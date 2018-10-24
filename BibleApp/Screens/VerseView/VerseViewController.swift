@@ -12,6 +12,7 @@ import CoreData
 class VerseViewController: UIViewController {
     
     weak var savedVerseDelegate: SavedVerseDelegate?
+    weak var savedVersesModel: SavedVerses?
     var savedVerses = [SavedVerse]()
     var dataManager: VersesDataManager?
     var isEditingVerses = false
@@ -42,13 +43,9 @@ class VerseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        savedVerses.removeAll()
-//        dataManager?.loadVerses(completion: { [weak self] (savedVerses) in
-//            self?.savedVerses = savedVerses
-//            DispatchQueue.main.async {
-//                self?.verseCollectionView.reloadData()
-//            }
-//        })
+        guard let note = navigationItem.title else {return}
+        savedVerses = savedVersesModel?.loadVerses(for: note) ?? []
+        verseCollectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,7 +63,6 @@ class VerseViewController: UIViewController {
     }
     
     func setupViews() {
-        navigationItem.title = "Saved Verses"
         view.backgroundColor = .white
         view.addSubview(containerView)
         view.addSubview(verseCollectionView)

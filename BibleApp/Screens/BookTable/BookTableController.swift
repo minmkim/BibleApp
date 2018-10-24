@@ -14,6 +14,7 @@ class BookTableController: UIViewController {
     
     lazy var versesDataManager = VersesDataManager()
     weak var changeChapterDelegate: ChangeChapterDelegate?
+    weak var saveVerseDelegate: SaveVerseDelegate?
     var currentChapter = 0 {
         didSet {
             bottomContainerView.currentChapter = currentChapter
@@ -95,7 +96,7 @@ class BookTableController: UIViewController {
                     bibleVerses.append(bibleVerse)
                     bookTableView.deselectRow(at: indexPath, animated: true)
                 }
-                guard let savedVerses = SavedVerse(bibleVerses: bibleVerses, noteName: "God", sectionName: "BB") else {return}
+                guard let savedVerses = SavedVerse(bibleVerses: bibleVerses, noteName: nil, sectionName: nil) else {return}
                 var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
                 versesDataManager.saveToCoreData(bibleVerse: savedVerses)
                 selectedVerses.removeAll()
@@ -231,4 +232,8 @@ protocol ChangeChapterDelegate: class {
     func nextChapter()
     func goToChapter(_ chapter: Int)
     func closeController()
+}
+
+protocol SaveVerseDelegate: class {
+    func presentSaveVerses()
 }

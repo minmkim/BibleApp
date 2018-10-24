@@ -8,8 +8,9 @@
 
 import Foundation
 import CoreData
+import MobileCoreServices
 
-class SavedVerse {
+final class SavedVerse: NSObject, NSItemProviderWriting, Codable {
     
     var book: String
     var chapter: Int
@@ -86,5 +87,35 @@ class SavedVerse {
         return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(text)\n\(book) \(chapter):\(verse)"
     }
     
+    static var readableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
     
+    
+    static var writableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
+    
+    func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
+        let progress = Progress(totalUnitCount: 100)
+        do {
+            //Here the object is encoded to a JSON data object and sent to the completion handler
+            let data = try JSONEncoder().encode(self)
+            progress.completedUnitCount = 100
+            completionHandler(data, nil)
+        } catch {
+            completionHandler(nil, error)
+        }
+        return progress
+    }
+    
+}
+
+extension SavedVerse: NSItemProviderReading {
+    static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> SavedVerse {
+        let decoder = JSONDecoder()
+        do {
+            let savedVerse = try decoder.decode(SavedVerse.self, from: data)
+            return savedVerse
+        } catch {
+            fatalError("error decoding")
+        }
+    }
+
 }

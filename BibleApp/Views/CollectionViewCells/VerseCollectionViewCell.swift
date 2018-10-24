@@ -37,6 +37,7 @@ final class VerseCollectionViewCell: UICollectionViewCell {
     let bibleVerseText: UITextView = {
         let tv = UITextView()
         tv.isEditable = false
+        tv.textContainerInset = .zero
         tv.isUserInteractionEnabled = false
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.font = .preferredFont(forTextStyle: .subheadline)
@@ -62,6 +63,7 @@ final class VerseCollectionViewCell: UICollectionViewCell {
         addSubview(bibleVerseLabel)
         addSubview(bibleVerseText)
         addSubview(deleteImage)
+        bringSubview(toFront: bibleVerseLabel)
         layer.cornerRadius = 16
         layer.masksToBounds = true
         layoutViews()
@@ -72,9 +74,9 @@ final class VerseCollectionViewCell: UICollectionViewCell {
         containerView.layer.cornerRadius = 8
         containerView.layer.masksToBounds = true
         
-        bibleVerseLabel.addSpecificAnchors(topContainer: containerView, leadingContainer: containerView, trailingContainer: containerView, bottomContainer: nil, heightConstant: 16, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 12, bottom: 0, right: -12))
+        bibleVerseLabel.addSpecificAnchors(topContainer: containerView, leadingContainer: containerView, trailingContainer: containerView, bottomContainer: nil, heightConstant: 20, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 4, left: 12, bottom: 0, right: -12))
         bibleVerseText.addSpecificAnchors(topContainer: nil, leadingContainer: bibleVerseLabel, trailingContainer: bibleVerseLabel, bottomContainer: containerView, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil)
-        bibleVerseText.topAnchor.constraint(equalTo: bibleVerseLabel.bottomAnchor).isActive = true
+        bibleVerseText.topAnchor.constraint(equalTo: bibleVerseLabel.bottomAnchor, constant: 4).isActive = true
         
         deleteImage.addSpecificAnchors(topContainer: containerView, leadingContainer: nil, trailingContainer: containerView, bottomContainer: nil, heightConstant: 25, widthConstant: nil, heightContainer: nil, widthContainer: nil)
         deleteImage.widthAnchor.constraint(equalTo: deleteImage.heightAnchor).isActive = true

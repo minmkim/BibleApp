@@ -32,7 +32,8 @@ class SavedVerseTableViewCell: UITableViewCell {
         return sv
     }()
     
-    var didPressNoteDelegate: DidPressNoteDelegate?
+    weak var didPressNoteDelegate: DidPressNoteDelegate?
+    weak var didDragVerseDelegate: DidDragVerseDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,6 +50,7 @@ class SavedVerseTableViewCell: UITableViewCell {
         addSubview(savedVerseCollectionView)
         savedVerseCollectionView.delegate = self
         savedVerseCollectionView.dataSource = self
+        savedVerseCollectionView.dropDelegate = self
         layoutViews()
     }
     
@@ -99,6 +101,26 @@ extension SavedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
 }
 
+extension SavedVerseTableViewCell: UICollectionViewDropDelegate {
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        for item in coordinator.items {
+            item.dragItem.itemProvider.loadObject(ofClass: SavedVerse.self, completionHandler: { (verse, error) in
+                if let verse = verse as? SavedVerse {
+                    guard let indexPath = coordinator.destinationIndexPath else {return}
+                    let note = self.notes[indexPath.item]
+                    self.didDragVerseDelegate?.didDragVerse(for: verse, note: note, row: self.row ?? 0)
+                }
+            })
+        }
+    }
+    
+    
+}
+
 protocol DidPressNoteDelegate: class {
     func didPressNote(at indexPath: IndexPath, row: Int, note: String)
+}
+
+protocol DidDragVerseDelegate: class {
+    func didDragVerse(for verse: SavedVerse, note: String, row: Int)
 }

@@ -35,6 +35,7 @@ final class BibleCoordinator: Coordinator {
         currentBook = book
         controller.verseArray = verses
         controller.changeChapterDelegate = self
+        controller.saveVerseDelegate = self
         controller.currentChapter = chapter
         controller.navigationItem.title = book
         guard let numberOfChapters = bible.numberOfChaptersInBook(for: book) else {return controller}
@@ -106,6 +107,17 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
         currentBookController?.currentChapter = currentChapter
         currentBookController?.newChapter()
     }
+    
+}
+
+extension BibleCoordinator: SaveVerseDelegate {
+    func presentSaveVerses() {
+        let controller = SavedVerseViewController(state: .search, savedVersesModel: SavedVerses(dataManager: (currentBookController?.versesDataManager)!))
+        currentBookController?.present(controller, animated: true, completion: nil)
+        controller.didSelectNoteDelegate = currentBookController
+        controller.createNewNoteDelegate = currentBookController
+    }
+    
     
 }
 

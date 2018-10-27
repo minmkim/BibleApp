@@ -11,19 +11,18 @@ import Foundation
 extension BookTableController {
     
     func layoutViews() {
-        bottomContainerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        bottomContainerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        bottomContainerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        bottomContainerView.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        bottomContainerView.bottomAnchor.constrain(to: view.safeAreaLayoutGuide.bottomAnchor)
+        bottomContainerView.leadingAnchor.constrain(to: view.safeAreaLayoutGuide.leadingAnchor)
+        bottomContainerView.trailingAnchor.constrain(to: view.safeAreaLayoutGuide.trailingAnchor)
+        bottomContainerView.heightAnchor.constrain(to: 36)
         
-        indexList.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 12).isActive = true
-        indexList.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor, constant: -12).isActive = true
-        indexList.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        setDominantHandIndexLayout()
+        indexList.topAnchor.constrain(to: view.safeAreaLayoutGuide.topAnchor, with: 12)
+        indexList.bottomAnchor.constrain(to: bottomContainerView.topAnchor, with: -12)
+        indexList.widthAnchor.constrain(to: 25)
         
-        bookTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        bookTableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        bookTableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        bookTableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor).isActive = true
+        bookTableView.topAnchor.constrain(to: view.safeAreaLayoutGuide.topAnchor)
+        bookTableView.leadingAnchor.constrain(to: view.safeAreaLayoutGuide.leadingAnchor)
+        bookTableView.trailingAnchor.constrain(to: view.safeAreaLayoutGuide.trailingAnchor)
+        bookTableView.bottomAnchor.constrain(to: bottomContainerView.topAnchor)
     }
 }

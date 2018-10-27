@@ -26,14 +26,12 @@ class BibleViewController: UIViewController {
     let containerView: UIView = {
         let cv = UIView()
         cv.backgroundColor = .white
-        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
     let topView: UIView = {
         let cv = UIView()
         cv.backgroundColor = .white
-        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
@@ -69,10 +67,8 @@ class BibleViewController: UIViewController {
     func setupViews() {
         navigationItem.title = "Mt. Zion"
         view.backgroundColor = .white
-        view.addSubview(topView)
-        view.addSubview(containerView)
-        containerView.addSubview(bibleTableView)
-        containerView.addSubview(indexList)
+        view.addSubviewsUsingAutoLayout(topView, containerView)
+        containerView.addSubviewsUsingAutoLayout(bibleTableView, indexList)
         bibleTableView.register(BibleTableViewCell.self, forCellReuseIdentifier: "cell")
         bibleTableView.register(ChapterTableViewCell.self, forCellReuseIdentifier: "chapterCell")
         layoutViews()

@@ -21,13 +21,11 @@ final class VerseCollectionViewCell: UICollectionViewCell {
     
     let containerView: UIView = {
        let cv = UIView()
-        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
     let bibleVerseLabel: UILabel = {
        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .preferredFont(forTextStyle: .headline)
         label.adjustsFontForContentSizeCategory = true
         label.textColor = .white
@@ -38,7 +36,6 @@ final class VerseCollectionViewCell: UICollectionViewCell {
         let tv = UITextView()
         tv.isEditable = false
         tv.isUserInteractionEnabled = false
-        tv.translatesAutoresizingMaskIntoConstraints = false
         tv.font = .preferredFont(forTextStyle: .subheadline)
         tv.adjustsFontForContentSizeCategory = true
         tv.backgroundColor = .clear
@@ -50,7 +47,6 @@ final class VerseCollectionViewCell: UICollectionViewCell {
     
     let deleteImage: UIImageView = {
        let di = UIImageView(image: UIImage(named: "delete"))
-        di.translatesAutoresizingMaskIntoConstraints = false
         di.isHidden = true
         return di
     }()
@@ -59,26 +55,32 @@ final class VerseCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(containerView)
-        addSubview(bibleVerseLabel)
-        addSubview(bibleVerseText)
-        addSubview(deleteImage)
+        addSubviewsUsingAutoLayout(containerView)
+        containerView.addSubviewsUsingAutoLayout(bibleVerseLabel, bibleVerseText, deleteImage)
         layer.cornerRadius = 16
         layer.masksToBounds = true
         layoutViews()
     }
     
     func layoutViews() {
-        containerView.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: -8))
+        containerView.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8))
         containerView.layer.cornerRadius = 8
         containerView.layer.masksToBounds = true
         
-        bibleVerseLabel.addSpecificAnchors(topContainer: containerView, leadingContainer: containerView, trailingContainer: containerView, bottomContainer: nil, heightConstant: 19, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 12, bottom: 0, right: -12))
-        bibleVerseText.addSpecificAnchors(topContainer: nil, leadingContainer: bibleVerseLabel, trailingContainer: bibleVerseLabel, bottomContainer: containerView, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil)
-        bibleVerseText.topAnchor.constraint(equalTo: bibleVerseLabel.bottomAnchor, constant: 4).isActive = true
+        bibleVerseLabel.topAnchor.constrain(to: containerView.topAnchor, with: 8)
+        bibleVerseLabel.leadingAnchor.constrain(to: containerView.leadingAnchor, with: 12)
+        bibleVerseLabel.trailingAnchor.constrain(to: containerView.trailingAnchor, with: -12)
+        bibleVerseLabel.heightAnchor.constrain(to: 19)
         
-        deleteImage.addSpecificAnchors(topContainer: containerView, leadingContainer: nil, trailingContainer: containerView, bottomContainer: nil, heightConstant: 25, widthConstant: nil, heightContainer: nil, widthContainer: nil)
-        deleteImage.widthAnchor.constraint(equalTo: deleteImage.heightAnchor).isActive = true
+        bibleVerseText.leadingAnchor.constrain(to: bibleVerseLabel.leadingAnchor)
+        bibleVerseText.trailingAnchor.constrain(to: bibleVerseLabel.trailingAnchor)
+        bibleVerseText.topAnchor.constrain(to: bibleVerseLabel.bottomAnchor, with: 4)
+        bibleVerseText.bottomAnchor.constrain(to: containerView.bottomAnchor)
+        
+        deleteImage.topAnchor.constrain(to: containerView.topAnchor)
+        deleteImage.trailingAnchor.constrain(to: containerView.trailingAnchor)
+        deleteImage.heightAnchor.constrain(to: 25)
+        deleteImage.widthAnchor.constrain(to: deleteImage.heightAnchor)
     }
     
     override func layoutSubviews() {

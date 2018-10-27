@@ -14,32 +14,32 @@ extension BibleViewController {
     func layoutViews() {
         topView.frame = CGRect(x: 0, y: -80, width: self.view.frame.width, height: 80)
         containerView.fillContainer(for: self.view)
-        indexList.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8).isActive = true
-        indexList.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8).isActive = true
-        indexList.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        bibleTableView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        bibleTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+        indexList.topAnchor.constrain(to: containerView.topAnchor, with: 8)
+        indexList.bottomAnchor.constrain(to: containerView.bottomAnchor, with: -8)
+        indexList.widthAnchor.constrain(to: 25)
+        bibleTableView.topAnchor.constrain(to: containerView.topAnchor)
+        bibleTableView.bottomAnchor.constrain(to: containerView.bottomAnchor)
         setLayoutForDominantHand()
     }
     
     func setLayoutForDominantHand() {
         if dominantHand == "Left" {
-            indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: containerView.leadingAnchor)
+            indexListLeadingAnchor = indexList.leadingAnchor.constrain(to: containerView.leadingAnchor)
             indexListLeadingAnchor?.isActive = true
-            indexListTrailingAnchor = indexList.trailingAnchor.constraint(equalTo: bibleTableView.leadingAnchor)
+            indexListTrailingAnchor = indexList.trailingAnchor.constrain(to: bibleTableView.leadingAnchor)
             indexListTrailingAnchor?.isActive = true
-            bibleTableViewLeadingAnchor = bibleTableView.leadingAnchor.constraint(equalTo: indexList.trailingAnchor)
+            bibleTableViewLeadingAnchor = bibleTableView.leadingAnchor.constrain(to: indexList.trailingAnchor)
             bibleTableViewLeadingAnchor?.isActive = true
-            bibleTableViewTrailingAnchor = bibleTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+            bibleTableViewTrailingAnchor = bibleTableView.trailingAnchor.constrain(to: containerView.trailingAnchor)
             bibleTableViewTrailingAnchor?.isActive = true
         } else {
-            indexListTrailingAnchor = indexList.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+            indexListTrailingAnchor = indexList.trailingAnchor.constrain(to: containerView.trailingAnchor)
             indexListTrailingAnchor?.isActive = true
-            indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: bibleTableView.trailingAnchor)
+            indexListLeadingAnchor = indexList.leadingAnchor.constrain(to: bibleTableView.trailingAnchor)
             indexListLeadingAnchor?.isActive = true
-            bibleTableViewTrailingAnchor = bibleTableView.trailingAnchor.constraint(equalTo: indexList.leadingAnchor)
+            bibleTableViewTrailingAnchor = bibleTableView.trailingAnchor.constrain(to: indexList.leadingAnchor)
             bibleTableViewTrailingAnchor?.isActive = true
-            bibleTableViewLeadingAnchor = bibleTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor)
+            bibleTableViewLeadingAnchor = bibleTableView.leadingAnchor.constrain(to: containerView.leadingAnchor)
             bibleTableViewLeadingAnchor?.isActive = true
         }
     }

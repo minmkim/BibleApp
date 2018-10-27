@@ -34,13 +34,11 @@ final class BookTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = .italicSystemFont(ofSize: 8)
         label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override func layoutSubviews() {
-        addSubview(verseText)
-        addSubview(numberLabel)
+        addSubviewsUsingAutoLayout(verseText, numberLabel)
         layoutViews()
     }
 
@@ -53,11 +51,17 @@ final class BookTableViewCell: UITableViewCell {
     
     func layoutViews() {
         if dominantHand == "Left" {
-            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 32, bottom: 0, right: -12))
-            numberLabel.addSpecificAnchors(topContainer: verseText, leadingContainer: self, trailingContainer: nil, bottomContainer: nil, heightConstant: 8, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0))
+            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 12))
+            
+            numberLabel.topAnchor.constrain(to: verseText.topAnchor)
+            numberLabel.leadingAnchor.constrain(to: leadingAnchor, with: 24)
+            numberLabel.heightAnchor.constrain(to: 8)
+            
         } else {
-            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: -18))
-            numberLabel.addSpecificAnchors(topContainer: verseText, leadingContainer: self, trailingContainer: nil, bottomContainer: nil, heightConstant: 8, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
+            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 18))
+            numberLabel.topAnchor.constrain(to: verseText.topAnchor)
+            numberLabel.leadingAnchor.constrain(to: leadingAnchor, with: 8)
+            numberLabel.heightAnchor.constrain(to: 8)
         }
     }
 

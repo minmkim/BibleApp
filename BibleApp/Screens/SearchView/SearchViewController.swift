@@ -48,10 +48,6 @@ class SearchViewController: UITableViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-//    func searchBarIsEmpty() {
-//        searchViewModel.searchParameter = (searchController.searchBar.text?.isEmpty ?? true) ? .empty : .book
-//    }
-    
     override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.main.async {
             self.searchController.isActive = true

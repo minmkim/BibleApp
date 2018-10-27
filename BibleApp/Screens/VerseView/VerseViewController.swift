@@ -16,9 +16,9 @@ class VerseViewController: UIViewController {
     var dataManager: VersesDataManager?
     var isEditingVerses = false
     var indexPathToDelete = [IndexPath]()
+    
     let verseCollectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(VerseCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         cv.backgroundColor = .white
         cv.alwaysBounceVertical = true
@@ -28,14 +28,12 @@ class VerseViewController: UIViewController {
     
     let containerView: UIView = {
         let cv = UIView()
-        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.backgroundColor = .white
         return cv
     }()
     
     lazy var actionBar: SavedVerseActionBar = {
        let ab = SavedVerseActionBar()
-        ab.translatesAutoresizingMaskIntoConstraints = false
         ab.savedVerseActionBarDelegate = self
         return ab
     }()
@@ -68,9 +66,7 @@ class VerseViewController: UIViewController {
     func setupViews() {
         navigationItem.title = "Saved Verses"
         view.backgroundColor = .white
-        view.addSubview(containerView)
-        view.addSubview(verseCollectionView)
-        view.addSubview(actionBar)
+        view.addSubviewsUsingAutoLayout(containerView, verseCollectionView, actionBar)
         verseCollectionView.delegate = self
         verseCollectionView.dataSource = self
         layoutViews()
@@ -124,10 +120,10 @@ class VerseViewController: UIViewController {
     func layoutViews() {
         containerView.fillContainer(for: self.view)
         verseCollectionView.fillContainer(for: containerView)
-        actionBar.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        actionBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        actionBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        actionBarTopAnchor = actionBar.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
+        actionBar.widthAnchor.constrain(to: view.widthAnchor)
+        actionBar.heightAnchor.constrain(to: 40)
+        actionBar.leadingAnchor.constrain(to: view.leadingAnchor).isActive = true
+        actionBarTopAnchor = actionBar.topAnchor.constrain(to: view.bottomAnchor, with: -40)
         actionBarTopAnchor?.isActive = true
     }
 

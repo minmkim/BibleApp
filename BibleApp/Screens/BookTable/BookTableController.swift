@@ -31,19 +31,16 @@ class BookTableController: UIViewController {
     let bookTableView: UITableView = {
        let bt = UITableView()
         bt.showsVerticalScrollIndicator = false
-        bt.translatesAutoresizingMaskIntoConstraints = false
         return bt
     }()
     
     lazy var indexList: IndexTracker = {
         let il = IndexTracker(frame: .zero, indexList: Array(1...verseArray.count).map({String($0)}), height: view.frame.height - 250)
-        il.translatesAutoresizingMaskIntoConstraints = false
         return il
     }()
     
     lazy var bottomContainerView: ChapterView = {
        let bc = ChapterView()
-        bc.translatesAutoresizingMaskIntoConstraints = false
         bc.backgroundColor = .white
         return bc
     }()
@@ -67,9 +64,7 @@ class BookTableController: UIViewController {
     
     func setupViews() {
         bottomContainerView.updateProgressBar()
-        view.addSubview(bookTableView)
-        view.addSubview(indexList)
-        view.addSubview(bottomContainerView)
+        view.addSubviewsUsingAutoLayout(bookTableView, indexList, bottomContainerView)
         view.backgroundColor = .white
         let rightButton = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didPressSelect))
         navigationItem.rightBarButtonItem = rightButton

@@ -32,21 +32,18 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     
     let containerView: UIView = {
       let cv = UIView()
-        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.backgroundColor = .white
         return cv
     }()
     
     let webKitView: WKWebView = {
         let webView = WKWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
         webView.allowsBackForwardNavigationGestures = true
         return webView
     }()
     
     var spinner: UIActivityIndicatorView = {
         let spin = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        spin.translatesAutoresizingMaskIntoConstraints = false
         return spin
     }()
 
@@ -57,9 +54,7 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     
     func setupViews() {
         view.backgroundColor = .white
-        view.addSubview(containerView)
-        view.addSubview(webKitView)
-        view.addSubview(spinner)
+        view.addSubviewsUsingAutoLayout(containerView, webKitView, spinner)
         webKitView.navigationDelegate = self
         layoutViews()
         spinner.startAnimating()
@@ -102,13 +97,12 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     }
     
     func layoutViews() {
-        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        containerView.topAnchor.constrain(to: view.safeAreaLayoutGuide.topAnchor)
+        containerView.leadingAnchor.constrain(to: view.safeAreaLayoutGuide.leadingAnchor)
+        containerView.trailingAnchor.constrain(to: view.safeAreaLayoutGuide.trailingAnchor)
+        containerView.bottomAnchor.constrain(to: view.bottomAnchor)
         
         spinner.fillContainer(for: containerView)
-        
         webKitView.fillContainer(for: containerView)
     }
 

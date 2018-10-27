@@ -13,7 +13,6 @@ final class HeaderView: UITableViewHeaderFooterView {
     let containerView: UIView = {
         let cv = UIView()
         cv.backgroundColor = .white
-        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
@@ -25,7 +24,6 @@ final class HeaderView: UITableViewHeaderFooterView {
     
     let progressBar: UIView = {
        let pb = UIView()
-        pb.translatesAutoresizingMaskIntoConstraints = false
         pb.backgroundColor = MainColor.redOrange
         pb.alpha = 0.1
         return pb
@@ -36,15 +34,13 @@ final class HeaderView: UITableViewHeaderFooterView {
         cl.font = .preferredFont(forTextStyle: .headline)
         cl.adjustsFontForContentSizeCategory = true
         cl.textColor = .black
-        cl.translatesAutoresizingMaskIntoConstraints = false
         return cl
     }()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        addSubview(containerView)
-        containerView.addSubview(chapterLabel)
-        containerView.addSubview(progressBar)
+        addSubviewsUsingAutoLayout(containerView)
+        containerView.addSubviewsUsingAutoLayout(chapterLabel, progressBar)
         layoutHeader()
     }
     
@@ -61,7 +57,7 @@ final class HeaderView: UITableViewHeaderFooterView {
             let frame = self.frame.width
             let constant = Double(frame) * multipler
             progressBarTrailingAnchor?.isActive = false
-            progressBarTrailingAnchor = progressBar.trailingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(constant))
+            progressBarTrailingAnchor = progressBar.trailingAnchor.constrain(to: leadingAnchor, with: CGFloat(constant))
             progressBarTrailingAnchor?.isActive = true
             if indexState == .scrollingTable {
                 UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -82,15 +78,15 @@ final class HeaderView: UITableViewHeaderFooterView {
     func layoutHeader() {
         containerView.fillContainer(for: self)
         
-        progressBar.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
-        progressBar.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
-        progressBar.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        progressBarTrailingAnchor = progressBar.trailingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: -20)
+        progressBar.heightAnchor.constrain(to: containerView.heightAnchor)
+        progressBar.widthAnchor.constrain(to: containerView.widthAnchor)
+        progressBar.centerYAnchor.constrain(to: containerView.centerYAnchor)
+        progressBarTrailingAnchor = progressBar.trailingAnchor.constrain(to: containerView.leadingAnchor, with: -20)
         progressBarTrailingAnchor?.isActive = true
         
-        chapterLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        chapterLabel.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        chapterLabel.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
+        chapterLabel.centerXAnchor.constrain(to: containerView.centerXAnchor)
+        chapterLabel.topAnchor.constrain(to: containerView.topAnchor)
+        chapterLabel.heightAnchor.constrain(to: containerView.heightAnchor)
     }
     
     enum IndexState {

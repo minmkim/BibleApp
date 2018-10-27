@@ -130,6 +130,7 @@
 		8CC80CF62183E87F009C1606 /* VerseSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF52183E87F009C1606 /* VerseSearchController.swift */; };
 		8CC80CF82183E89D009C1606 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF72183E89D009C1606 /* String.swift */; };
 		8CC80CFA21842653009C1606 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF921842653009C1606 /* Protocols.swift */; };
+		8CC80CFC2184C787009C1606 /* Anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CFB2184C787009C1606 /* Anchors.swift */; };
 		8CD0758F215B025800827675 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
 		8CD07592215B025800827675 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07591215B025800827675 /* IntentViewController.swift */; };
 		8CD07595215B025800827675 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CD07593215B025800827675 /* MainInterface.storyboard */; };
@@ -322,6 +323,7 @@
 		8CC80CF52183E87F009C1606 /* VerseSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseSearchController.swift; sourceTree = "<group>"; };
 		8CC80CF72183E89D009C1606 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		8CC80CF921842653009C1606 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		8CC80CFB2184C787009C1606 /* Anchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anchors.swift; sourceTree = "<group>"; };
 		8CD07585215B025700827675 /* SearchBible.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SearchBible.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD07587215B025700827675 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		8CD07589215B025700827675 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -720,6 +722,7 @@
 			isa = PBXGroup;
 			children = (
 				8C66D90F212F489100EE6503 /* CoreDataEnum.swift */,
+				8CC80CFB2184C787009C1606 /* Anchors.swift */,
 				8CC80CF72183E89D009C1606 /* String.swift */,
 				8C80FEDE2131B51B006BF071 /* Array.swift */,
 				8C5D869721323B42000F994E /* Colors.swift */,
@@ -1228,6 +1231,7 @@
 				8C14614B215B31A800FDF339 /* philemon.swift in Sources */,
 				8C80FEDF2131B51B006BF071 /* Array.swift in Sources */,
 				8C09F1B4213B29AF00BF0EEE /* View.swift in Sources */,
+				8CC80CFC2184C787009C1606 /* Anchors.swift in Sources */,
 				8C5D869821323B42000F994E /* Colors.swift in Sources */,
 				8C66D90B212F442B00EE6503 /* MtZion.xcdatamodeld in Sources */,
 				8C146145215B31A800FDF339 /* james.swift in Sources */,

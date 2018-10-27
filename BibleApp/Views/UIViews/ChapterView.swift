@@ -24,7 +24,6 @@ class ChapterView: UIView {
     
     let chapterLabel: UILabel = {
        let cl = UILabel()
-        cl.translatesAutoresizingMaskIntoConstraints = false
         cl.font = UIFont.boldSystemFont(ofSize: 14)
         cl.isUserInteractionEnabled = true
         return cl
@@ -34,7 +33,6 @@ class ChapterView: UIView {
        let lb = chapterButton()
         lb.setImage(UIImage(named: "leftArrow"), for: .normal)
         lb.tag = 0
-        lb.translatesAutoresizingMaskIntoConstraints = false
         lb.addTarget(self, action: #selector(didPressButton), for: .touchUpInside)
         return lb
     }()
@@ -43,7 +41,6 @@ class ChapterView: UIView {
         let rb = chapterButton()
         rb.setImage(UIImage(named: "rightArrow"), for: .normal)
         rb.tag = 1
-        rb.translatesAutoresizingMaskIntoConstraints = false
         rb.addTarget(self, action: #selector(didPressButton), for: .touchUpInside)
         return rb
     }()
@@ -51,13 +48,11 @@ class ChapterView: UIView {
     lazy var labelChapterView: LabelChapterView = {
         let lc = LabelChapterView(frame: .zero)
         lc.didSelectChapterLabelViewDelegate = self
-        lc.translatesAutoresizingMaskIntoConstraints = false
         return lc
     }()
     
     let progressBar: UIView = {
         let pb = UIView()
-        pb.translatesAutoresizingMaskIntoConstraints = false
         pb.backgroundColor = MainColor.redOrange
         pb.alpha = 0.1
         pb.isUserInteractionEnabled = false
@@ -89,20 +84,20 @@ class ChapterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(progressBar)
-        addSubview(chapterLabel)
-        addSubview(leftButton)
-        addSubview(rightButton)
-        addSubview(labelChapterView)
+        addSubviewsUsingAutoLayout(progressBar, chapterLabel, leftButton, rightButton, labelChapterView)
+        addGestureRecognizers()
+        layoutViews()
+    }
+    
+    func addGestureRecognizers() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didPressLabel))
         chapterLabel.addGestureRecognizer(tapRecognizer)
         let rightSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
         rightSwipeRecognizer.direction = .right
         let leftSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
         leftSwipeRecognizer.direction = .left
-        self.addGestureRecognizer(rightSwipeRecognizer)
-        self.addGestureRecognizer(leftSwipeRecognizer)
-        layoutViews()
+        addGestureRecognizer(rightSwipeRecognizer)
+        addGestureRecognizer(leftSwipeRecognizer)
     }
     
     @objc func didSwipe(_ gesture: UISwipeGestureRecognizer) {
@@ -120,30 +115,30 @@ class ChapterView: UIView {
     var progressBarTrailingAnchor: NSLayoutConstraint?
     
     func layoutViews() {
-        progressBar.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        progressBar.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
-        progressBar.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        progressBar.centerYAnchor.constrain(to: centerYAnchor)
+        progressBar.heightAnchor.constrain(to: heightAnchor)
+        progressBar.leadingAnchor.constrain(to: leadingAnchor)
         
-        chapterLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        chapterLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        chapterLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
-        chapterLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 30).isActive = true
+        chapterLabel.centerXAnchor.constrain(to: centerXAnchor)
+        chapterLabel.centerYAnchor.constrain(to: centerYAnchor)
+        chapterLabel.heightAnchor.constrain(to: heightAnchor, multiplyBy: 2/3)
+        chapterLabel.widthAnchor.constrain(.greaterThanOrEqual, to: 30)
         
-        leftButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        leftButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
-        leftButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
-        leftButton.widthAnchor.constraint(equalTo: leftButton.heightAnchor).isActive = true
-
-        rightButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        rightButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
-        rightButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
-        rightButton.widthAnchor.constraint(equalTo: rightButton.heightAnchor).isActive = true
-
-        labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: bottomAnchor, constant: 10)
+        leftButton.centerYAnchor.constrain(to: centerYAnchor)
+        leftButton.leadingAnchor.constrain(to: leadingAnchor, with: 8)
+        leftButton.heightAnchor.constrain(to: heightAnchor, multiplyBy: 2/3)
+        leftButton.widthAnchor.constrain(to: leftButton.heightAnchor)
+        
+        rightButton.centerYAnchor.constrain(to: centerYAnchor)
+        rightButton.trailingAnchor.constrain(to: trailingAnchor, with: -8)
+        rightButton.heightAnchor.constrain(to: heightAnchor, multiplyBy: 2/3)
+        rightButton.widthAnchor.constrain(to: rightButton.heightAnchor)
+        
+        labelChapterViewTopAnchor = labelChapterView.topAnchor.constrain(to: bottomAnchor, with: 10)
         labelChapterViewTopAnchor?.isActive = true
-        labelChapterView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        labelChapterView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        labelChapterView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        labelChapterView.centerXAnchor.constrain(to: centerXAnchor)
+        labelChapterView.widthAnchor.constrain(to: widthAnchor)
+        labelChapterView.heightAnchor.constrain(to: heightAnchor)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -172,6 +167,7 @@ class ChapterView: UIView {
 }
 
 extension ChapterView: DidSelectChapterLabelViewDelegate {
+    
     func didSelectChapter(at chapter: Int) {
         labelChapterViewTopAnchor?.isActive = false
         labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: bottomAnchor, constant: 0)

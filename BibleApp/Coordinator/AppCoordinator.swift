@@ -46,8 +46,6 @@ final class AppCoordinator: Coordinator {
         let searchController = VerseSearchController(bible: bible)
         controller.searchControllers = searchController
         searchController.updateSearchBarDelegate = controller
-        
-//        controller.searchViewModel = SearchViewModel(bible: bible, verseDataManager: verseDataManager)
         return controller
     }()
     lazy var settingsViewController = SettingsTableViewController()

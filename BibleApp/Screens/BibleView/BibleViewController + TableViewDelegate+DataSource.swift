@@ -28,7 +28,7 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "chapterCell", for: indexPath) as! ChapterTableViewCell
             if selectedBookIndexPath == indexPath {
                 cell.chapterCollectionView.isHidden = false
-                cell.numberOfChapters = numberOfChaptersInBibleBooks[indexPath.section]
+                cell.numberOfChapters = Constants.numberOfChaptersInBibleBooks[indexPath.section]
                 cell.chapterCollectionView.reloadData()
             } else {
                 cell.numberOfChapters = 0
@@ -49,7 +49,7 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource {
             selectedBookIndexPath = IndexPath(row: 1, section: indexPath.section)
             guard let cell = bibleTableView.cellForRow(at: IndexPath(row: 1, section: indexPath.section)) as? ChapterTableViewCell else {return}
             cell.chapterCollectionView.isHidden = false
-            cell.numberOfChapters = numberOfChaptersInBibleBooks[indexPath.section]
+            cell.numberOfChapters = Constants.numberOfChaptersInBibleBooks[indexPath.section]
             cell.chapterCollectionView.reloadData()
         }
     }

@@ -26,7 +26,7 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     
     func returnBookNameForWikipedia() -> String {
         guard let book = self.book else {return ""}
-        guard let bookDict = dictOfBookWikiYouTube[book] else {return ""}
+        guard let bookDict = Constants.dictOfBookWikiYouTube[book] else {return ""}
         return bookDict[0]
     }
     
@@ -89,7 +89,7 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     
     func returnEmbedCodeForYouTube() -> String {
         guard let book = self.book else {return ""}
-        guard let bookDict = dictOfBookWikiYouTube[book] else {return ""}
+        guard let bookDict = Constants.dictOfBookWikiYouTube[book] else {return ""}
         return bookDict[1]
     }
     

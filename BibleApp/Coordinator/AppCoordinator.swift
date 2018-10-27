@@ -43,7 +43,11 @@ final class AppCoordinator: Coordinator {
     lazy var savedVerseViewController = SavedVerseViewController()
     lazy var searchViewController: SearchViewController = {
         let controller = SearchViewController()
-        controller.searchViewModel = SearchViewModel(bible: bible, verseDataManager: verseDataManager)
+        let searchController = VerseSearchController(bible: bible)
+        controller.searchControllers = searchController
+        searchController.updateSearchBarDelegate = controller
+        
+//        controller.searchViewModel = SearchViewModel(bible: bible, verseDataManager: verseDataManager)
         return controller
     }()
     lazy var settingsViewController = SettingsTableViewController()
@@ -128,7 +132,7 @@ extension AppCoordinator: TabSelectedDelegate {
             if coordinatorDict[coordinatorType.search] == nil {
                 if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
                     if coordinator.currentBookController != nil {
-                        let searchCoordinator = SearchCoordinator(searchViewController: searchViewController)
+                        let searchCoordinator = SearchCoordinator(searchViewController: searchViewController, bible: bible)
                         searchCoordinator.bibleVerseDelegate = self
                         coordinatorDict[coordinatorType.search] = searchCoordinator
                         return
@@ -136,7 +140,7 @@ extension AppCoordinator: TabSelectedDelegate {
                 }
 
                 coordinatorDict = [:]
-                let searchCoordinator = SearchCoordinator(searchViewController: searchViewController)
+                let searchCoordinator = SearchCoordinator(searchViewController: searchViewController, bible: bible)
                 searchCoordinator.bibleVerseDelegate = self
                 coordinatorDict[coordinatorType.search] = searchCoordinator
             }

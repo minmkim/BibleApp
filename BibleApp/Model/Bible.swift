@@ -20,23 +20,24 @@ final class Bible {
     private let booksOfNewTestament = ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]
     
     private var bible = [Book: [Chapter:[VerseText]]](minimumCapacity: 66)
+    private let verseDataManager: VersesDataManager!
     
     private let countOfOldTestament = 39
     private let countOfNewTestament = 27
     
     init(verseDataManager: VersesDataManager) {
+        self.verseDataManager = verseDataManager
         let didCreateCoreDataBible = UserDefaults.standard.bool(forKey: "didCreateCoreDataBible")
         if !didCreateCoreDataBible {
             verseDataManager.preloadDBData()
             UserDefaults.standard.set(true, forKey: "didCreateCoreDataBible")
-            loadBible(verseDataManager: verseDataManager)
+            loadBible()
         } else {
-            loadBible(verseDataManager: verseDataManager)
+            loadBible()
         }
-        
     }
     
-    private func loadBible(verseDataManager: VersesDataManager) {
+    private func loadBible() {
         verseDataManager.loadBible { (bibleVerses) in
             bibleVerses.forEach { (bibleVerse) in
                 if var chapterVerseArray = bible[bibleVerse.book] {
@@ -68,6 +69,10 @@ final class Bible {
     
     func numberOfChaptersInBook(for book: Book) -> Int? {
         return bible[book]?.count
+    }
+    
+    func numberOfVersesInBookChapterFor(book: Book, chapter: Chapter) -> Int? {
+        return bible[book]?[chapter]?.count
     }
     
     func returnBook(for index: Int) -> String {
@@ -117,6 +122,10 @@ final class Bible {
         default:
             return nil
         }
+    }
+    
+    func searchBibleForWords(_ searchWord: String, withOffset: Int, completion: ([BibleVerse]) -> Void) {
+        verseDataManager.searchForWord(searchWord: searchWord, fetchOffset: withOffset, completion: {completion($0)})
     }
     
 }

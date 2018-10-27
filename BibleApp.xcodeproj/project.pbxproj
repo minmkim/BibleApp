@@ -126,6 +126,10 @@
 		8C912A822169C98200BF9433 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C912A842169C98200BF9433 /* AppIntentVocabulary.plist */; };
 		8C95869C216055A800825D21 /* SearchWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */; };
 		8C95869E21608E5200825D21 /* SavedVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C95869D21608E5200825D21 /* SavedVerse.swift */; };
+		8CC80CF42183E859009C1606 /* WordSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF32183E859009C1606 /* WordSearchController.swift */; };
+		8CC80CF62183E87F009C1606 /* VerseSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF52183E87F009C1606 /* VerseSearchController.swift */; };
+		8CC80CF82183E89D009C1606 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF72183E89D009C1606 /* String.swift */; };
+		8CC80CFA21842653009C1606 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF921842653009C1606 /* Protocols.swift */; };
 		8CD0758F215B025800827675 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
 		8CD07592215B025800827675 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07591215B025800827675 /* IntentViewController.swift */; };
 		8CD07595215B025800827675 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CD07593215B025800827675 /* MainInterface.storyboard */; };
@@ -208,7 +212,6 @@
 		A43E1D0F21190ABA008235D6 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E1D0E21190ABA008235D6 /* BookTableViewCell.swift */; };
 		A43E1D1121195A3C008235D6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E1D1021195A3C008235D6 /* MainViewController.swift */; };
 		A45C4DD42125DA00002C9561 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45C4DD32125DA00002C9561 /* SearchViewController.swift */; };
-		A4B6C57921287F2D003C9414 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B6C57821287F2D003C9414 /* SearchViewModel.swift */; };
 		A4FD28E82118922B008E0A69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD28E72118922B008E0A69 /* AppDelegate.swift */; };
 		A4FD28F22118922F008E0A69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4FD28F02118922F008E0A69 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -315,6 +318,10 @@
 		8C912A852169C98400BF9433 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordTableViewCell.swift; sourceTree = "<group>"; };
 		8C95869D21608E5200825D21 /* SavedVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerse.swift; sourceTree = "<group>"; };
+		8CC80CF32183E859009C1606 /* WordSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSearchController.swift; sourceTree = "<group>"; };
+		8CC80CF52183E87F009C1606 /* VerseSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseSearchController.swift; sourceTree = "<group>"; };
+		8CC80CF72183E89D009C1606 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		8CC80CF921842653009C1606 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		8CD07585215B025700827675 /* SearchBible.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SearchBible.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD07587215B025700827675 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		8CD07589215B025700827675 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -397,7 +404,6 @@
 		A43E1D0E21190ABA008235D6 /* BookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 		A43E1D1021195A3C008235D6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A45C4DD32125DA00002C9561 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		A4B6C57821287F2D003C9414 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		A4FD28E42118922B008E0A69 /* BibleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4FD28E72118922B008E0A69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4FD28F12118922F008E0A69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -553,7 +559,8 @@
 			children = (
 				A45C4DD32125DA00002C9561 /* SearchViewController.swift */,
 				8C635A85217D5CB90086499C /* SearchViewController + SearchDelegate.swift */,
-				A4B6C57821287F2D003C9414 /* SearchViewModel.swift */,
+				8CC80CF32183E859009C1606 /* WordSearchController.swift */,
+				8CC80CF52183E87F009C1606 /* VerseSearchController.swift */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -713,11 +720,13 @@
 			isa = PBXGroup;
 			children = (
 				8C66D90F212F489100EE6503 /* CoreDataEnum.swift */,
+				8CC80CF72183E89D009C1606 /* String.swift */,
 				8C80FEDE2131B51B006BF071 /* Array.swift */,
 				8C5D869721323B42000F994E /* Colors.swift */,
 				8CD1F1DF21378A57006FAAD4 /* Theme.swift */,
 				8C09F1B3213B29AF00BF0EEE /* View.swift */,
 				8C05BD73217D563C00AE964B /* Constants.swift */,
+				8CC80CF921842653009C1606 /* Protocols.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1170,7 +1179,9 @@
 				8C79DBF2212E4EA000A428C8 /* iCloudVerses.swift in Sources */,
 				8C05BD76217D565200AE964B /* BibleViewController + UI.swift in Sources */,
 				A45C4DD42125DA00002C9561 /* SearchViewController.swift in Sources */,
+				8CC80CF42183E859009C1606 /* WordSearchController.swift in Sources */,
 				8C14615F215B31B100FDF339 /* firstKings.swift in Sources */,
+				8CC80CFA21842653009C1606 /* Protocols.swift in Sources */,
 				A43E1D0F21190ABA008235D6 /* BookTableViewCell.swift in Sources */,
 				8C146163215B31B100FDF339 /* haggai.swift in Sources */,
 				8C146164215B31B100FDF339 /* hosea.swift in Sources */,
@@ -1232,13 +1243,13 @@
 				8C146173215B31B100FDF339 /* obadiah.swift in Sources */,
 				8C14614D215B31A800FDF339 /* revelation.swift in Sources */,
 				A4FD28E82118922B008E0A69 /* AppDelegate.swift in Sources */,
+				8CC80CF82183E89D009C1606 /* String.swift in Sources */,
 				8C7FED582162FD1A00267299 /* SavedVerseActionBar.swift in Sources */,
 				8C14615B215B31B100FDF339 /* exodus.swift in Sources */,
 				8C146171215B31B100FDF339 /* nehemiah.swift in Sources */,
 				8C635A83217D5C450086499C /* BookTableController + TableViewDelegate + DataSource.swift in Sources */,
 				8C05BD69217BF3D600AE964B /* SavedVerseUICCollectionViewCell.swift in Sources */,
 				8C070B18215DC10500833BE5 /* ChapterCollectionViewCell.swift in Sources */,
-				A4B6C57921287F2D003C9414 /* SearchViewModel.swift in Sources */,
 				8C14613E215B31A800FDF339 /* firstCorinthians.swift in Sources */,
 				8C146178215B31B100FDF339 /* secondKings.swift in Sources */,
 				8C95869E21608E5200825D21 /* SavedVerse.swift in Sources */,
@@ -1281,6 +1292,7 @@
 				8C146143215B31A800FDF339 /* galatians.swift in Sources */,
 				8C146157215B31B100FDF339 /* daniel.swift in Sources */,
 				8C14614F215B31A800FDF339 /* secondCorinthians.swift in Sources */,
+				8CC80CF62183E87F009C1606 /* VerseSearchController.swift in Sources */,
 				8C14614A215B31A800FDF339 /* matthew.swift in Sources */,
 				8C635A8B217D5E340086499C /* VerseViewController + ActionBarDelegate.swift in Sources */,
 				8C5D869C213363E5000F994E /* HeaderView.swift in Sources */,

@@ -44,6 +44,7 @@ final class VerseCollectionViewCell: UICollectionViewCell {
         tv.backgroundColor = .clear
         tv.textColor = .white
         tv.isScrollEnabled = false
+        tv.textContainerInset = UIEdgeInsets.zero
         return tv
     }()
     
@@ -72,9 +73,9 @@ final class VerseCollectionViewCell: UICollectionViewCell {
         containerView.layer.cornerRadius = 8
         containerView.layer.masksToBounds = true
         
-        bibleVerseLabel.addSpecificAnchors(topContainer: containerView, leadingContainer: containerView, trailingContainer: containerView, bottomContainer: nil, heightConstant: 16, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 12, bottom: 0, right: -12))
+        bibleVerseLabel.addSpecificAnchors(topContainer: containerView, leadingContainer: containerView, trailingContainer: containerView, bottomContainer: nil, heightConstant: 19, widthConstant: nil, heightContainer: nil, widthContainer: nil, inset: UIEdgeInsets(top: 8, left: 12, bottom: 0, right: -12))
         bibleVerseText.addSpecificAnchors(topContainer: nil, leadingContainer: bibleVerseLabel, trailingContainer: bibleVerseLabel, bottomContainer: containerView, heightConstant: nil, widthConstant: nil, heightContainer: nil, widthContainer: nil)
-        bibleVerseText.topAnchor.constraint(equalTo: bibleVerseLabel.bottomAnchor).isActive = true
+        bibleVerseText.topAnchor.constraint(equalTo: bibleVerseLabel.bottomAnchor, constant: 4).isActive = true
         
         deleteImage.addSpecificAnchors(topContainer: containerView, leadingContainer: nil, trailingContainer: containerView, bottomContainer: nil, heightConstant: 25, widthConstant: nil, heightContainer: nil, widthContainer: nil)
         deleteImage.widthAnchor.constraint(equalTo: deleteImage.heightAnchor).isActive = true

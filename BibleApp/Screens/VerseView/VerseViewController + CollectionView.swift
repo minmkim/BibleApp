@@ -25,7 +25,13 @@ extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height: CGFloat = 80 //Arbitrary number
         let verse = savedVerses[indexPath.item]
-        height = estimatedFrameForText(text: verse.text).height + 44
+        height = estimatedFrameForText(text: verse.text).height
+        if height > 450 {
+            height += 150
+        } else {
+            height += 44
+        }
+        print(height)
         return CGSize(width: verseCollectionView.frame.width, height: height)
     }
     

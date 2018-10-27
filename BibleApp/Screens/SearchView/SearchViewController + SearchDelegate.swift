@@ -12,24 +12,22 @@ import UIKit
 extension SearchViewController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
     
     func updateSearchResults(for searchController: UISearchController) {
-        searchBarIsEmpty()
+        filterContentForSearchText(searchController.searchBar.text!)
+        searchController.searchBar.reloadInputViews()
         if searchController.searchBar.selectedScopeButtonIndex == 0 {
-            filterContentForSearchText(searchController.searchBar.text!)
-            switch searchViewModel.searchParameter {
-            case .empty:
+            guard let controller = searchControllers as? VerseSearchController else {return}
+            switch controller.searchState {
+            case .empty, .searchingBook:
                 searchController.searchBar.keyboardType = .default
-            case .book:
-                searchController.searchBar.keyboardType = .default
-            default:
+            case .searchingChapter, .searchingVerse:
                 searchController.searchBar.keyboardType = .numbersAndPunctuation
             }
-            searchController.searchBar.reloadInputViews()
         }
         
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        searchViewModel.filterContentForSearchText(searchText)
+        searchControllers?.filterContentForSearchText(searchText)
         tableView.reloadData()
     }
     
@@ -39,26 +37,13 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchController.searchBar.text else {return}
-        let array = searchViewModel.searchPressed(for: text)
-        if array.count == 0 {
-            searchController.searchBar.becomeFirstResponder()
-            return
-        } else {
-            tableView.reloadData()
-        }
+        searchControllers?.didPressSearch(for: text)
         searchController.searchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        if selectedScope == 0 { //verse
-            searchViewModel.searchState = .verse
-            searchController.searchBar.text = ""
-            tableView.reloadData()
-        } else { //word
-            searchViewModel.searchState = .word
-            searchController.searchBar.text = ""
-            tableView.reloadData()
-        }
+        changeSearchControllerDelegate?.didChangeSearch(for: selectedScope)
+        searchBar.text = ""
     }
     
 }

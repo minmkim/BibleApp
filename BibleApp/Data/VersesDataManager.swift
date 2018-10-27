@@ -107,9 +107,9 @@ final class VersesDataManager {
         }
     }
     
-    func searchForWord(searchWord: String, fetchOffset: Int) -> [BibleVerse] {
+    func searchForWord(searchWord: String, fetchOffset: Int, completion: ([BibleVerse]) -> Void) {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return []}
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
         var savedVerses = [BibleVerse]()
         do {
@@ -122,11 +122,10 @@ final class VersesDataManager {
                 let newVerse = BibleVerse(fetchedVerse: verse)
                 savedVerses.append(newVerse)
             }
-            return savedVerses
+            completion(savedVerses)
         }
         catch {
             print ("fetch task failed", error)
-            return []
         }
     }
     

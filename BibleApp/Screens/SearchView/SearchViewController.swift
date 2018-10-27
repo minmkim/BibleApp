@@ -10,13 +10,13 @@ import UIKit
 
 class SearchViewController: UITableViewController {
     
+    weak var changeSearchControllerDelegate: ChangeSearchControllerDelegate?
     let searchController = UISearchController(searchResultsController: nil)
-    var searchViewModel: SearchViewModel!
+    var searchControllers: SearchController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        searchViewModel.searchWordDelegate = self
         setupViews()
         setupTableView()
     }
@@ -48,9 +48,9 @@ class SearchViewController: UITableViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    func searchBarIsEmpty() {
-        searchViewModel.searchParameter = (searchController.searchBar.text?.isEmpty ?? true) ? .empty : .book
-    }
+//    func searchBarIsEmpty() {
+//        searchViewModel.searchParameter = (searchController.searchBar.text?.isEmpty ?? true) ? .empty : .book
+//    }
     
     override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.main.async {
@@ -69,24 +69,24 @@ class SearchViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchViewModel.getNumberOfRowsInSection()
+        guard let searchControllers = searchControllers else {return 0}
+        return searchControllers.getNumberOfRowsInSection()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if searchViewModel.searchState == .verse {
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
+        if searchController.searchBar.selectedScopeButtonIndex == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            let text = searchViewModel.getTextLabel(for: indexPath.row)
+            let text = searchControllers?.getTextLabelForRow(for: indexPath.row)
             cell.textLabel?.text = text
-            let backgroundView = UIView()
-            backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
             cell.selectedBackgroundView = backgroundView
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchWordTableViewCell
-            cell.bibleVerse = searchViewModel.searchedVerses[indexPath.item]
+            guard let controller = searchControllers as? WordSearchController else {return cell}
+            cell.bibleVerse = controller.searchedVerses[indexPath.item]
             cell.layoutIfNeeded()
-            let backgroundView = UIView()
-            backgroundView.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 0.1)
             cell.selectedBackgroundView = backgroundView
             return cell
         }
@@ -98,19 +98,7 @@ class SearchViewController: UITableViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
             self.tableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
         }
-        if searchViewModel.searchParameter == .verse {
-            let _ = searchViewModel.didSelectItem(at: indexPath.row, number: indexPath.row)
-            searchController.searchBar.text? = ""
-        } else {
-            guard let cell = tableView.cellForRow(at: indexPath) else {return}
-            if let text = cell.textLabel?.text {
-                let number = Int(text)
-                let newString = searchViewModel.didSelectItem(at: indexPath.row, number: number)
-                searchController.searchBar.text? = newString
-                return
-            }
-            let _ = searchViewModel.didSelectItem(at: indexPath.row, number: nil)
-        }
+        searchControllers?.didSelectItem(at: indexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -124,7 +112,7 @@ class SearchViewController: UITableViewController {
     
     func layoutHeader(chapter: Int) -> UIView {
         let headerView = SearchHeader()
-        headerView.headerLabel.text = searchViewModel.getHeaderLabel()
+        headerView.headerLabel.text = searchControllers?.getHeaderLabel()
         return headerView
     }
     
@@ -135,10 +123,21 @@ class SearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if searchController.searchBar.selectedScopeButtonIndex == 1 {
             searchController.searchBar.resignFirstResponder()
-            searchViewModel.observeTableViewToLoadMoreVerses(for: indexPath.row, text: searchController.searchBar.text ?? "")
+            let controller = searchControllers as? WordSearchController
+            controller?.observeTableViewToLoadMoreVerses(for: indexPath.row, searchText: searchController.searchBar.text ?? "")
         }
         
     }
 }
 
+extension SearchViewController: UpdateSearchBarDelegate {
+    func updateSearchBar(_ text: String) {
+        searchController.searchBar.text = text
+    }
+    
+    
+}
 
+protocol ChangeSearchControllerDelegate: class {
+    func didChangeSearch(for index: Int)
+}

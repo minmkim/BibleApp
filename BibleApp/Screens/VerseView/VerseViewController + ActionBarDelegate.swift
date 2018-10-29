@@ -13,8 +13,8 @@ extension VerseViewController: SavedVerseActionBarDelegate {
     func didPressTrash() {
         if !indexPathToDelete.isEmpty {
             indexPathToDelete.forEach { (indexPath) in
-                let cell = self.verseCollectionView.cellForItem(at: indexPath) as! VerseCollectionViewCell
-                cell.deleteImage.isHidden = true
+                let cell = self.verseCollectionView.cellForItem(at: indexPath) as? VerseCollectionViewCell
+                cell?.deleteImage.isHidden = true
                 dataManager?.deleteVerse(for: savedVerses[indexPath.row])
             }
             savedVerses.removeIndexPaths(at: indexPathToDelete)

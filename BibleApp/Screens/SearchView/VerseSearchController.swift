@@ -134,7 +134,7 @@ final class VerseSearchController: SearchController {
 
 struct VerseContainer {
     
-    var filteredBooks = [String]()
+    var filteredBooks = Constants.bookStrings
     var filteredChapters = [Int]()
     var filteredVerses = [Int]()
     var searchedBook: String?

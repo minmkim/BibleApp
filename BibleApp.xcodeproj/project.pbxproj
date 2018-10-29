@@ -131,6 +131,9 @@
 		8CC80CF82183E89D009C1606 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF72183E89D009C1606 /* String.swift */; };
 		8CC80CFA21842653009C1606 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF921842653009C1606 /* Protocols.swift */; };
 		8CC80CFC2184C787009C1606 /* Anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CFB2184C787009C1606 /* Anchors.swift */; };
+		8CC80D40218556C3009C1606 /* NotesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80D3F218556C3009C1606 /* NotesController.swift */; };
+		8CC80D42218556EF009C1606 /* NotesSearchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80D41218556EF009C1606 /* NotesSearchCard.swift */; };
+		8CC80D452187A22B009C1606 /* NotesSearchCard + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80D442187A22B009C1606 /* NotesSearchCard + UI.swift */; };
 		8CD0758F215B025800827675 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
 		8CD07592215B025800827675 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07591215B025800827675 /* IntentViewController.swift */; };
 		8CD07595215B025800827675 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CD07593215B025800827675 /* MainInterface.storyboard */; };
@@ -324,6 +327,9 @@
 		8CC80CF72183E89D009C1606 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		8CC80CF921842653009C1606 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		8CC80CFB2184C787009C1606 /* Anchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anchors.swift; sourceTree = "<group>"; };
+		8CC80D3F218556C3009C1606 /* NotesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesController.swift; sourceTree = "<group>"; };
+		8CC80D41218556EF009C1606 /* NotesSearchCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesSearchCard.swift; sourceTree = "<group>"; };
+		8CC80D442187A22B009C1606 /* NotesSearchCard + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotesSearchCard + UI.swift"; sourceTree = "<group>"; };
 		8CD07585215B025700827675 /* SearchBible.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SearchBible.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD07587215B025700827675 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		8CD07589215B025700827675 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -604,6 +610,16 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		8CC80D43218556F2009C1606 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				8CC80D3F218556C3009C1606 /* NotesController.swift */,
+				8CC80D41218556EF009C1606 /* NotesSearchCard.swift */,
+				8CC80D442187A22B009C1606 /* NotesSearchCard + UI.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
 		8CD07586215B025700827675 /* SearchBible */ = {
 			isa = PBXGroup;
 			children = (
@@ -810,6 +826,7 @@
 				8C635A87217D5CEB0086499C /* VerseView */,
 				8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */,
 				8C05BD64217BDAB400AE964B /* SavedVerseViewController.swift */,
+				8CC80D43218556F2009C1606 /* Notes */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -1245,6 +1262,7 @@
 				8C14615A215B31B100FDF339 /* esther.swift in Sources */,
 				8C66D93821306DDA00EE6503 /* VersesDataManager.swift in Sources */,
 				8C146173215B31B100FDF339 /* obadiah.swift in Sources */,
+				8CC80D42218556EF009C1606 /* NotesSearchCard.swift in Sources */,
 				8C14614D215B31A800FDF339 /* revelation.swift in Sources */,
 				A4FD28E82118922B008E0A69 /* AppDelegate.swift in Sources */,
 				8CC80CF82183E89D009C1606 /* String.swift in Sources */,
@@ -1265,6 +1283,7 @@
 				8C146142215B31A800FDF339 /* firstTimothy.swift in Sources */,
 				8C14613D215B31A800FDF339 /* ephesians.swift in Sources */,
 				8C146172215B31B100FDF339 /* numbers.swift in Sources */,
+				8CC80D452187A22B009C1606 /* NotesSearchCard + UI.swift in Sources */,
 				8C05BD74217D563C00AE964B /* Constants.swift in Sources */,
 				8C66D910212F489100EE6503 /* CoreDataEnum.swift in Sources */,
 				8CD1F1E021378A57006FAAD4 /* Theme.swift in Sources */,
@@ -1276,6 +1295,7 @@
 				8CF05635214E10EC00CD7AE5 /* AppCoordinator.swift in Sources */,
 				8C146168215B31B100FDF339 /* joel.swift in Sources */,
 				8C146153215B31A800FDF339 /* secondTimothy.swift in Sources */,
+				8CC80D40218556C3009C1606 /* NotesController.swift in Sources */,
 				A43E1D0D21190903008235D6 /* BookTableController.swift in Sources */,
 				8C266067214E05C600EFAE42 /* SearchCoordinator.swift in Sources */,
 				8C14616F215B31B100FDF339 /* micah.swift in Sources */,

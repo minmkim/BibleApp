@@ -53,6 +53,7 @@ class BookTableController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? "Left"
+        print(dominantHand)
         setupViews()
         setupDelegates()
     }

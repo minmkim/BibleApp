@@ -36,6 +36,7 @@ class SearchViewController: UITableViewController {
     }
     
     func setupSearchController() {
+//        tableView.tableHeaderView = searchController.searchBar
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Verse"

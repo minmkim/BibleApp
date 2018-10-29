@@ -24,5 +24,7 @@ extension BookTableController {
         bookTableView.leadingAnchor.constrain(to: view.safeAreaLayoutGuide.leadingAnchor)
         bookTableView.trailingAnchor.constrain(to: view.safeAreaLayoutGuide.trailingAnchor)
         bookTableView.bottomAnchor.constrain(to: bottomContainerView.topAnchor)
+        
+        setDominantHandIndexLayout()
     }
 }

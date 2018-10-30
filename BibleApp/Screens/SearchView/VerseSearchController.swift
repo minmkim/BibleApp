@@ -104,15 +104,18 @@ final class VerseSearchController: SearchController {
         case .empty, .searchingBook:
             searchState = .searchingChapter
             guard let book = verseContainer.searchedBook else {return}
+            verseContainer.filteredChapters = Array(1...bible.numberOfChaptersInBook(for: book)!)
             updateSearchBarDelegate?.updateSearchBar("\(book) ")
         case .searchingChapter:
             searchState = .searchingVerse
             guard let book = verseContainer.searchedBook, let chapter = verseContainer.searchedChapter else {return}
+            verseContainer.filteredVerses = Array(1...(bible.numberOfVersesInBookChapterFor(book: book, chapter: chapter)!))
             updateSearchBarDelegate?.updateSearchBar("\(book) \(chapter):")
-            
         case .searchingVerse:
             if let book = verseContainer.searchedBook {
                 searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1)
+                verseContainer.resetContainer()
+                searchState = .empty
                 updateSearchBarDelegate?.updateSearchBar("")
             }
         }

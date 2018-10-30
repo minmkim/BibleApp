@@ -16,21 +16,13 @@ enum CardState {
 
 class NotesSearchCard: UIViewController {
     
-    let searchController = UISearchController(searchResultsController: nil)
+//    let searchController = UISearchController(searchResultsController: nil)
     var searchControllers: SearchController?
-    weak var cardPanDelegate: CardPanDelegate?
-    
-    var cardState: CardState = .compressed {
-        didSet {
-            if cardState != oldValue {
-                print("new state")
-                configure(forCardState: cardState)
-            }
-        }
-    }
-    
-    let cardSearchBar: UISearchBar = {
-        let sb = UISearchBar()
+    weak var cardSearchBarDelegate: CardSearchBarDelegate?
+//
+    lazy var cardSearchBar: UISearchBar = {
+        var sb = UISearchBar()
+        sb.delegate = self
         return sb
     }()
     
@@ -39,9 +31,8 @@ class NotesSearchCard: UIViewController {
         st.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         st.register(SearchWordTableViewCell.self, forCellReuseIdentifier: "searchCell")
         st.rowHeight = UITableViewAutomaticDimension
-        st.keyboardDismissMode = .onDrag
+//        st.keyboardDismissMode = .onDrag
         st.estimatedRowHeight = 100
-//        st.isUserInteractionEnabled = false
         return st
     }()
     
@@ -57,35 +48,17 @@ class NotesSearchCard: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        layoutViews()
         setupSearchController()
         setupTableView()
-        layoutViews()
-        addPanGesture()
-        configure(forCardState: cardState)
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
-    
-    private func configure(forCardState cardState: CardState) {
-        switch cardState {
-        case .compressed:
-            searchTableView.panGestureRecognizer.isEnabled = false
-            break
-        case .expanded:
-            searchTableView.panGestureRecognizer.isEnabled = false
-            break
-        case .fullHeight:
-            if searchTableView.contentOffset.y > 0.0 {
-                panGestureRecognizer?.isEnabled = false
-            } else {
-                panGestureRecognizer?.isEnabled = true
-            }
-            searchTableView.panGestureRecognizer.isEnabled = true
-            break
-        }
-    }
+
     
     func setupViews() {
-        searchControllers = VerseSearchController(bible: Bible(verseDataManager: VersesDataManager()))
+        let controller = VerseSearchController(bible: Bible(verseDataManager: VersesDataManager()))
+        searchControllers = controller
+        controller.updateSearchBarDelegate = self
         view.backgroundColor = .white
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true
@@ -93,15 +66,17 @@ class NotesSearchCard: UIViewController {
     }
     
     func setupSearchController() {
-        self.searchController.hidesNavigationBarDuringPresentation = false
+//        cardSearchBar = searchController.searchBar
+//        self.searchController.hidesNavigationBarDuringPresentation = false
         self.definesPresentationContext = true
-        //        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Verse"
-        //        searchController.delegate = self
-        //        searchController.searchBar.delegate = self
-        searchController.searchBar.scopeButtonTitles = ["Verse", "Word"]
-        searchController.searchBar.tintColor = MainColor.redOrange
+        
+//        searchController.searchResultsUpdater = self
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search Verse"
+//        searchController.delegate = self
+//        searchController.searchBar.delegate = self
+        cardSearchBar.scopeButtonTitles = ["Verse", "Word"]
+        cardSearchBar.tintColor = MainColor.redOrange
     }
     
     func setupTableView() {
@@ -109,64 +84,9 @@ class NotesSearchCard: UIViewController {
         searchTableView.dataSource = self
         searchTableView.bounces = false
     }
-    
-//    @objc func keyboardWillDisappear() {
-//        searchController.isActive = false
-//        searchTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//    }
-//
-    
-    var panGestureRecognizer: UIPanGestureRecognizer?
-    var shouldHandleTableGesture = true
-    
-    func addPanGesture() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        panGesture.delegate = self
-        panGestureRecognizer = panGesture
-        view.addGestureRecognizer(panGesture)
-    }
-    
-    @objc func handlePanGesture(_ panGesture: UIPanGestureRecognizer) {
-        if !shouldHandleTableGesture {
-            return
-        }
-        let translationPoint = panGesture.translation(in: view.superview)
-        let velocity = panGesture.velocity(in: view.superview).y
-        
-        switch panGesture.state {
-        case .began:
-            cardPanDelegate?.cardBeganPan(withVelocity: velocity)
-        case .changed:
-            cardPanDelegate?.cardDidPan(didChangeTranslationPoint: translationPoint, withVelocity: velocity)
-        case .ended:
-            cardPanDelegate?.cardFinishedPan(didEndTranslationPoint: translationPoint, withVelocity: velocity)
-        default:
-            return
-        }
-    }
-    
-    
-    
-    
-    
 }
 
 extension NotesSearchCard: UITableViewDelegate, UITableViewDataSource {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let panGestureRecognizer = panGestureRecognizer else {
-            print("here")
-            return }
-        
-        let contentOffset = scrollView.contentOffset.y
-        if contentOffset <= 0.0 &&
-            cardState == .fullHeight &&
-            panGestureRecognizer.velocity(in: panGestureRecognizer.view?.superview).y != 0.0 {
-            shouldHandleTableGesture = true
-            scrollView.isScrollEnabled = false
-            scrollView.isScrollEnabled = true
-        }
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -187,17 +107,29 @@ extension NotesSearchCard: UITableViewDelegate, UITableViewDataSource {
         return header
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        searchControllers?.didSelectItem(at: indexPath.row)
+    }
+    
     func layoutHeader(chapter: Int) -> UIView {
         let headerView = SearchHeader()
         headerView.headerLabel.text = searchControllers?.getHeaderLabel()
         return headerView
     }
     
-    
-    
 }
 
-//extension NotesSearchCard: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+extension NotesSearchCard: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchControllers?.filterContentForSearchText(searchText)
+        searchTableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("im here")
+        cardSearchBarDelegate?.didPressSearchBar()
+    }
 //
 //    func updateSearchResults(for searchController: UISearchController) {
 //        filterContentForSearchText(searchController.searchBar.text!)
@@ -241,50 +173,25 @@ extension NotesSearchCard: UITableViewDelegate, UITableViewDataSource {
 //        }
 //
 //    }
-//
-//    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-////        changeSearchControllerDelegate?.didChangeSearch(for: selectedScope)
-//        searchBar.text = ""
-//    }
-//
-//
-//
-//}
 
-extension NotesSearchCard: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else { return true }
-        let velocity = panGestureRecognizer.velocity(in: view.superview)
-        searchTableView.panGestureRecognizer.isEnabled = true
-        
-        if otherGestureRecognizer == searchTableView.panGestureRecognizer {
-            switch cardState {
-            case .compressed:
-                return false
-            case .expanded:
-                return false
-            case .fullHeight:
-                if velocity.y > 0.0 {
-                    // Panned Down
-                    if searchTableView.contentOffset.y > 0.0 {
-                        return true
-                    }
-                    shouldHandleTableGesture = true
-                    searchTableView.panGestureRecognizer.isEnabled = false
-                    return false
-                } else {
-                    // Panned Up
-                    shouldHandleTableGesture = false
-                    return true
-                }
-            }
-        }
-        return false
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+//        changeSearchControllerDelegate?.didChangeSearch(for: selectedScope)
+        cardSearchBar.text = ""
     }
+
+
+
 }
 
-protocol CardPanDelegate: class {
-    func cardBeganPan(withVelocity: CGFloat)
-    func cardDidPan(didChangeTranslationPoint: CGPoint, withVelocity: CGFloat)
-    func cardFinishedPan(didEndTranslationPoint: CGPoint, withVelocity: CGFloat)
+extension NotesSearchCard: UpdateSearchBarDelegate {
+    func updateSearchBar(_ text: String) {
+        cardSearchBar.text = text
+        searchTableView.reloadData()
+    }
+    
+    
+}
+
+protocol CardSearchBarDelegate: class {
+    func didPressSearchBar()
 }

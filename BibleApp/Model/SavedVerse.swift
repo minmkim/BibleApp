@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class SavedVerse {
+final class SavedVerse {
     
     var book: String
     var chapter: Int

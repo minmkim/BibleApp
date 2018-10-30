@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C0328BE2188F33500483B17 /* SavedVerseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0328BD2188F33500483B17 /* SavedVerseController.swift */; };
+		8C0328C02188F47B00483B17 /* VerseViewController + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0328BF2188F47B00483B17 /* VerseViewController + UI.swift */; };
 		8C05BD65217BDAB400AE964B /* SavedVerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C05BD64217BDAB400AE964B /* SavedVerseViewController.swift */; };
 		8C05BD67217BDEE300AE964B /* SavedVerseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C05BD66217BDEE300AE964B /* SavedVerseTableViewCell.swift */; };
 		8C05BD69217BF3D600AE964B /* SavedVerseUICCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C05BD68217BF3D600AE964B /* SavedVerseUICCollectionViewCell.swift */; };
@@ -262,6 +264,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8C0328BD2188F33500483B17 /* SavedVerseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseController.swift; sourceTree = "<group>"; };
+		8C0328BF2188F47B00483B17 /* VerseViewController + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerseViewController + UI.swift"; sourceTree = "<group>"; };
 		8C05BD64217BDAB400AE964B /* SavedVerseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseViewController.swift; sourceTree = "<group>"; };
 		8C05BD66217BDEE300AE964B /* SavedVerseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseTableViewCell.swift; sourceTree = "<group>"; };
 		8C05BD68217BF3D600AE964B /* SavedVerseUICCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseUICCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -566,6 +570,7 @@
 			isa = PBXGroup;
 			children = (
 				8C79AC32212DA6B500FCD313 /* VerseViewController.swift */,
+				8C0328BF2188F47B00483B17 /* VerseViewController + UI.swift */,
 				8C635A8A217D5E340086499C /* VerseViewController + ActionBarDelegate.swift */,
 				8C635A88217D5CF80086499C /* VerseViewController + CollectionView.swift */,
 			);
@@ -789,6 +794,7 @@
 				A4FD29682118B284008E0A69 /* Bible.swift */,
 				8C79AC30212DA5E300FCD313 /* BibleVerse.swift */,
 				8C95869D21608E5200825D21 /* SavedVerse.swift */,
+				8C0328BD2188F33500483B17 /* SavedVerseController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1200,6 +1206,7 @@
 				8C05BD6F217D30B100AE964B /* VersesWithoutSectionTableViewCell.swift in Sources */,
 				8C070B1A215DDB6000833BE5 /* ChapterView.swift in Sources */,
 				8C05BD82217D58F500AE964B /* BibleViewController.swift in Sources */,
+				8C0328C02188F47B00483B17 /* VerseViewController + UI.swift in Sources */,
 				8C79AC31212DA5E300FCD313 /* BibleVerse.swift in Sources */,
 				8C146146215B31A800FDF339 /* john.swift in Sources */,
 				8CD07637215B2EE800827675 /* Bible.swift in Sources */,
@@ -1266,6 +1273,7 @@
 				8C146156215B31B100FDF339 /* amos.swift in Sources */,
 				8C80FEE32131E60B006BF071 /* IndexTracker.swift in Sources */,
 				8C79AC35212E083E00FCD313 /* VerseCollectionViewCell.swift in Sources */,
+				8C0328BE2188F33500483B17 /* SavedVerseController.swift in Sources */,
 				8CF05635214E10EC00CD7AE5 /* AppCoordinator.swift in Sources */,
 				8C146168215B31B100FDF339 /* joel.swift in Sources */,
 				8C146153215B31A800FDF339 /* secondTimothy.swift in Sources */,

@@ -36,7 +36,7 @@ final class AppCoordinator: Coordinator {
     lazy var bibleViewController = BibleViewController()
     lazy var verseViewController: VerseViewController = {
         let controller = VerseViewController()
-        controller.dataManager = verseDataManager
+        controller.savedVerseController = SavedVerseController(dataManager: verseDataManager)
         return controller
     }()
     

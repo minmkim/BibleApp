@@ -9,11 +9,11 @@
 import Foundation
 
 protocol SearchController {
+    
     func didPressSearch(for searchText: String)
     func getNumberOfRowsInSection() -> Int
     func getTextLabelForRow(for index: Int) -> String
     func getHeaderLabel() -> String
-    func removeBeginningWhiteSpace(_ text: String) -> String
     func filterContentForSearchText(_ searchText: String)
     func didSelectItem(at index: Int)
 }
@@ -43,4 +43,8 @@ protocol UpdateSearchBarDelegate: class {
 
 protocol IndexVerseDelegate: class {
     func moveToVerse(multiplier: Double)
+}
+
+protocol SavedVerseDelegate: class {
+    func requestToOpenVerse(for verse: SavedVerse)
 }

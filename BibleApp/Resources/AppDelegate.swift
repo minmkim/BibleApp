@@ -25,10 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         window = UIWindow()
-        window?.rootViewController = NotesController()
-        window?.makeKeyAndVisible()
-//        appCoordinator = AppCoordinator(window: window)
-//        appCoordinator.start()
+        appCoordinator = AppCoordinator(window: window)
+        appCoordinator.start()
         return true
     }
 

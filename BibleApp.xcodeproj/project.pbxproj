@@ -100,7 +100,6 @@
 		8C46EF3B212F245300390BB0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */; };
 		8C5D869821323B42000F994E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869721323B42000F994E /* Colors.swift */; };
 		8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */; };
-		8C5D869C213363E5000F994E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869B213363E5000F994E /* HeaderView.swift */; };
 		8C635A81217D5C160086499C /* BookTableController + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A80217D5C160086499C /* BookTableController + UI.swift */; };
 		8C635A83217D5C450086499C /* BookTableController + TableViewDelegate + DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A82217D5C450086499C /* BookTableController + TableViewDelegate + DataSource.swift */; };
 		8C635A86217D5CB90086499C /* SearchViewController + SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A85217D5CB90086499C /* SearchViewController + SearchDelegate.swift */; };
@@ -205,7 +204,6 @@
 		8CD07630215B23E400827675 /* hosea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07609215B23E400827675 /* hosea.swift */; };
 		8CD07633215B260E00827675 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07587215B025700827675 /* IntentHandler.swift */; };
 		8CD07637215B2EE800827675 /* Bible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD29682118B284008E0A69 /* Bible.swift */; };
-		8CD1F1E021378A57006FAAD4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD1F1DF21378A57006FAAD4 /* Theme.swift */; };
 		8CE3DBD4216025F20069692C /* SearchHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE3DBD3216025F20069692C /* SearchHeader.swift */; };
 		8CF05635214E10EC00CD7AE5 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF05633214E10EC00CD7AE5 /* AppCoordinator.swift */; };
 		8CF05636214E10EC00CD7AE5 /* BibleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF05634214E10EC00CD7AE5 /* BibleCoordinator.swift */; };
@@ -287,7 +285,6 @@
 		8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8C5D869721323B42000F994E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsColorTableViewCell.swift; sourceTree = "<group>"; };
-		8C5D869B213363E5000F994E /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		8C635A80217D5C160086499C /* BookTableController + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookTableController + UI.swift"; sourceTree = "<group>"; };
 		8C635A82217D5C450086499C /* BookTableController + TableViewDelegate + DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookTableController + TableViewDelegate + DataSource.swift"; sourceTree = "<group>"; };
 		8C635A85217D5CB90086499C /* SearchViewController + SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController + SearchDelegate.swift"; sourceTree = "<group>"; };
@@ -398,7 +395,6 @@
 		8CD07607215B23E400827675 /* firstKings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firstKings.swift; sourceTree = "<group>"; };
 		8CD07608215B23E400827675 /* deuteronomy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deuteronomy.swift; sourceTree = "<group>"; };
 		8CD07609215B23E400827675 /* hosea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = hosea.swift; sourceTree = "<group>"; };
-		8CD1F1DF21378A57006FAAD4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8CE3DBD3216025F20069692C /* SearchHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeader.swift; sourceTree = "<group>"; };
 		8CF05633214E10EC00CD7AE5 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		8CF05634214E10EC00CD7AE5 /* BibleCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibleCoordinator.swift; sourceTree = "<group>"; };
@@ -500,7 +496,6 @@
 			children = (
 				A400F03F2118EBFE00F9F9C5 /* UIViews */,
 				8C05BD79217D574A00AE964B /* TableViews */,
-				8C80FEE22131E60B006BF071 /* IndexTracker.swift */,
 				8C05BD70217D558E00AE964B /* TableViewCells */,
 				8C05BD71217D55B700AE964B /* CollectionViewCells */,
 			);
@@ -726,7 +721,6 @@
 				8CC80CF72183E89D009C1606 /* String.swift */,
 				8C80FEDE2131B51B006BF071 /* Array.swift */,
 				8C5D869721323B42000F994E /* Colors.swift */,
-				8CD1F1DF21378A57006FAAD4 /* Theme.swift */,
 				8C09F1B3213B29AF00BF0EEE /* View.swift */,
 				8C05BD73217D563C00AE964B /* Constants.swift */,
 				8CC80CF921842653009C1606 /* Protocols.swift */,
@@ -737,11 +731,11 @@
 		A400F03F2118EBFE00F9F9C5 /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
-				8C5D869B213363E5000F994E /* HeaderView.swift */,
 				8C070B19215DDB6000833BE5 /* ChapterView.swift */,
 				8C328201215F221E00B79A90 /* LabelChapterView.swift */,
 				8CE3DBD3216025F20069692C /* SearchHeader.swift */,
 				8C7FED572162FD1A00267299 /* SavedVerseActionBar.swift */,
+				8C80FEE22131E60B006BF071 /* IndexTracker.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -1267,7 +1261,6 @@
 				8C146172215B31B100FDF339 /* numbers.swift in Sources */,
 				8C05BD74217D563C00AE964B /* Constants.swift in Sources */,
 				8C66D910212F489100EE6503 /* CoreDataEnum.swift in Sources */,
-				8CD1F1E021378A57006FAAD4 /* Theme.swift in Sources */,
 				8C14617C215B31B100FDF339 /* zephaniah.swift in Sources */,
 				8C146152215B31A800FDF339 /* secondThessalonians.swift in Sources */,
 				8C146156215B31B100FDF339 /* amos.swift in Sources */,
@@ -1299,7 +1292,6 @@
 				8CC80CF62183E87F009C1606 /* VerseSearchController.swift in Sources */,
 				8C14614A215B31A800FDF339 /* matthew.swift in Sources */,
 				8C635A8B217D5E340086499C /* VerseViewController + ActionBarDelegate.swift in Sources */,
-				8C5D869C213363E5000F994E /* HeaderView.swift in Sources */,
 				8C14614C215B31A800FDF339 /* philippians.swift in Sources */,
 				8C95869C216055A800825D21 /* SearchWordTableViewCell.swift in Sources */,
 				8C14613A215B315C00FDF339 /* SearchBibleIntentHandler.swift in Sources */,

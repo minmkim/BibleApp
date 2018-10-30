@@ -40,3 +40,7 @@ protocol SearchWordDelegate: class {
 protocol UpdateSearchBarDelegate: class {
     func updateSearchBar(_ text: String)
 }
+
+protocol IndexVerseDelegate: class {
+    func moveToVerse(multiplier: Double)
+}

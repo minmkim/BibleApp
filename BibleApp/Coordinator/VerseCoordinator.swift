@@ -12,27 +12,27 @@ import UIKit
 final class VerseCoordinator: Coordinator {
     
     weak var bibleVerseDelegate: BibleVerseDelegate?
-    let verseViewController: VerseViewController
+    let savedVerseController: SavedVerseViewController
     
     
     deinit {
         print("deinit verse")
     }
     
-    init(verseViewController: VerseViewController) {
-        self.verseViewController = verseViewController
-        verseViewController.savedVerseDelegate = self
-        print("init verse")
+    init(savedVerseController: SavedVerseViewController) {
+        self.savedVerseController = savedVerseController
     }
     
 }
 
+
+//need to include this into new controller
 extension VerseCoordinator: SavedVerseDelegate {
     func requestToOpenVerse(for verse: SavedVerse) {
         bibleVerseDelegate?.openBibleVerse(book: verse.book, chapter: verse.chapter, verse: verse.verse)
     }
     
-
+    
 }
 
 protocol BibleVerseDelegate: class {

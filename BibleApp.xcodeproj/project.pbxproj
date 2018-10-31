@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8C0328BE2188F33500483B17 /* SavedVerseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0328BD2188F33500483B17 /* SavedVerseController.swift */; };
 		8C0328C02188F47B00483B17 /* VerseViewController + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0328BF2188F47B00483B17 /* VerseViewController + UI.swift */; };
-		8C05BD65217BDAB400AE964B /* SavedVerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C05BD64217BDAB400AE964B /* SavedVerseViewController.swift */; };
 		8C05BD67217BDEE300AE964B /* SavedVerseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C05BD66217BDEE300AE964B /* SavedVerseTableViewCell.swift */; };
 		8C05BD69217BF3D600AE964B /* SavedVerseUICCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C05BD68217BF3D600AE964B /* SavedVerseUICCollectionViewCell.swift */; };
 		8C05BD6B217BF93300AE964B /* SavedVerseHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C05BD6A217BF93300AE964B /* SavedVerseHeaderTableViewCell.swift */; };
@@ -119,6 +118,9 @@
 		8C80FEDF2131B51B006BF071 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEDE2131B51B006BF071 /* Array.swift */; };
 		8C80FEE32131E60B006BF071 /* IndexTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE22131E60B006BF071 /* IndexTracker.swift */; };
 		8C80FEE52131E839006BF071 /* BibleBookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */; };
+		8C86D3A9218930D900C5C53F /* SavedVerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C86D3A8218930D900C5C53F /* SavedVerseViewController.swift */; };
+		8C86D3AB2189311A00C5C53F /* SavedVerses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C86D3AA2189311A00C5C53F /* SavedVerses.swift */; };
+		8C86D3AD2189346800C5C53F /* SavedVerseBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C86D3AC2189346800C5C53F /* SavedVerseBar.swift */; };
 		8C88B2B02166F429000EAFA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C88B2AF2166F429000EAFA7 /* Assets.xcassets */; };
 		8C8920A5216B082D0035A516 /* BibleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8920A4216B082D0035A516 /* BibleTableViewCell.swift */; };
 		8C8D5901215C831600316CFE /* MtZion.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */; };
@@ -266,7 +268,6 @@
 /* Begin PBXFileReference section */
 		8C0328BD2188F33500483B17 /* SavedVerseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseController.swift; sourceTree = "<group>"; };
 		8C0328BF2188F47B00483B17 /* VerseViewController + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerseViewController + UI.swift"; sourceTree = "<group>"; };
-		8C05BD64217BDAB400AE964B /* SavedVerseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseViewController.swift; sourceTree = "<group>"; };
 		8C05BD66217BDEE300AE964B /* SavedVerseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseTableViewCell.swift; sourceTree = "<group>"; };
 		8C05BD68217BF3D600AE964B /* SavedVerseUICCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseUICCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C05BD6A217BF93300AE964B /* SavedVerseHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseHeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -311,6 +312,9 @@
 		8C80FEDE2131B51B006BF071 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		8C80FEE22131E60B006BF071 /* IndexTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexTracker.swift; sourceTree = "<group>"; };
 		8C80FEE42131E839006BF071 /* BibleBookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookDetailViewController.swift; sourceTree = "<group>"; };
+		8C86D3A8218930D900C5C53F /* SavedVerseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseViewController.swift; sourceTree = "<group>"; };
+		8C86D3AA2189311A00C5C53F /* SavedVerses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerses.swift; sourceTree = "<group>"; };
+		8C86D3AC2189346800C5C53F /* SavedVerseBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseBar.swift; sourceTree = "<group>"; };
 		8C88B2AF2166F429000EAFA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C8920A4216B082D0035A516 /* BibleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleTableViewCell.swift; sourceTree = "<group>"; };
 		8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MtZion.sqlite-shm"; sourceTree = "<group>"; };
@@ -604,6 +608,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		8C86D3A7218930C000C5C53F /* SavedVerse */ = {
+			isa = PBXGroup;
+			children = (
+				8C86D3A8218930D900C5C53F /* SavedVerseViewController.swift */,
+			);
+			path = SavedVerse;
+			sourceTree = "<group>";
+		};
 		8CD07586215B025700827675 /* SearchBible */ = {
 			isa = PBXGroup;
 			children = (
@@ -738,6 +750,7 @@
 			children = (
 				8C070B19215DDB6000833BE5 /* ChapterView.swift */,
 				8C328201215F221E00B79A90 /* LabelChapterView.swift */,
+				8C86D3AC2189346800C5C53F /* SavedVerseBar.swift */,
 				8CE3DBD3216025F20069692C /* SearchHeader.swift */,
 				8C7FED572162FD1A00267299 /* SavedVerseActionBar.swift */,
 				8C80FEE22131E60B006BF071 /* IndexTracker.swift */,
@@ -795,6 +808,7 @@
 				8C79AC30212DA5E300FCD313 /* BibleVerse.swift */,
 				8C95869D21608E5200825D21 /* SavedVerse.swift */,
 				8C0328BD2188F33500483B17 /* SavedVerseController.swift */,
+				8C86D3AA2189311A00C5C53F /* SavedVerses.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -809,7 +823,7 @@
 				8C635A84217D5C680086499C /* SearchView */,
 				8C635A87217D5CEB0086499C /* VerseView */,
 				8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */,
-				8C05BD64217BDAB400AE964B /* SavedVerseViewController.swift */,
+				8C86D3A7218930C000C5C53F /* SavedVerse */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -1213,7 +1227,6 @@
 				8C14615E215B31B100FDF339 /* firstChronicles.swift in Sources */,
 				8C146149215B31A800FDF339 /* mark.swift in Sources */,
 				8C14613C215B31A800FDF339 /* colossians.swift in Sources */,
-				8C05BD65217BDAB400AE964B /* SavedVerseViewController.swift in Sources */,
 				8C146147215B31A800FDF339 /* jude.swift in Sources */,
 				8C146175215B31B100FDF339 /* psalms.swift in Sources */,
 				8C146169215B31B100FDF339 /* jonah.swift in Sources */,
@@ -1242,6 +1255,7 @@
 				8C14613F215B31A800FDF339 /* firstJohn.swift in Sources */,
 				8C1C89BE215C4EE200DC43FF /* TextParser.swift in Sources */,
 				8C1C89BD215C4EE000DC43FF /* IntentBible.swift in Sources */,
+				8C86D3AD2189346800C5C53F /* SavedVerseBar.swift in Sources */,
 				8C14616D215B31B100FDF339 /* leviticus.swift in Sources */,
 				8C14615A215B31B100FDF339 /* esther.swift in Sources */,
 				8C66D93821306DDA00EE6503 /* VersesDataManager.swift in Sources */,
@@ -1261,6 +1275,7 @@
 				8C14615D215B31B100FDF339 /* ezra.swift in Sources */,
 				8C146158215B31B100FDF339 /* deuteronomy.swift in Sources */,
 				8C2AE7E22167B38E00365C26 /* Intents.intentdefinition in Sources */,
+				8C86D3A9218930D900C5C53F /* SavedVerseViewController.swift in Sources */,
 				8C266065214DDE7C00EFAE42 /* VerseCoordinator.swift in Sources */,
 				8C14614E215B31A800FDF339 /* romans.swift in Sources */,
 				8C146142215B31A800FDF339 /* firstTimothy.swift in Sources */,
@@ -1270,6 +1285,7 @@
 				8C66D910212F489100EE6503 /* CoreDataEnum.swift in Sources */,
 				8C14617C215B31B100FDF339 /* zephaniah.swift in Sources */,
 				8C146152215B31A800FDF339 /* secondThessalonians.swift in Sources */,
+				8C86D3AB2189311A00C5C53F /* SavedVerses.swift in Sources */,
 				8C146156215B31B100FDF339 /* amos.swift in Sources */,
 				8C80FEE32131E60B006BF071 /* IndexTracker.swift in Sources */,
 				8C79AC35212E083E00FCD313 /* VerseCollectionViewCell.swift in Sources */,

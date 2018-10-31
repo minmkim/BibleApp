@@ -43,6 +43,15 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             self?.versesDataManager.saveToCoreData(bibleVerse: bibleVerse)
         }
         
+        let saveTo = UITableViewRowAction(style: .default, title: "Save To:") { [weak self] (action, indexPath) in
+            self?.saveVerseDelegate?.presentSaveVerses()
+            //            let controller = SavedVerseViewController(state: .search)
+            //            controller.didSelectNoteDelegate = self
+            //            controller.createNewNoteDelegate = self
+            self?.indexPathToSave = indexPath
+            //            self?.present(controller, animated: true, completion: nil)
+        }
+        
         let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in
             let verseText = self.formatedVerse(for: indexPath)
             UIPasteboard.general.string = verseText
@@ -59,7 +68,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         share.backgroundColor = .lightGray
         copy.backgroundColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
         save.backgroundColor = UIColor(red: 0, green: 122/255, blue: 255/255, alpha: 1)
-        return [share, copy, save]
+        return [share, copy, save, saveTo]
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

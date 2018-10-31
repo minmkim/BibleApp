@@ -12,6 +12,13 @@ import UIKit
 
 class SavedVerseTableViewCell: UITableViewCell {
     
+    var row: Int?
+    var notes = [String]() {
+        didSet {
+            savedVerseCollectionView.reloadData()
+        }
+    }
+    
     let savedVerseCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -24,12 +31,15 @@ class SavedVerseTableViewCell: UITableViewCell {
         sv.contentInset = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 4)
         return sv
     }()
-
+    
+    weak var didPressNoteDelegate: DidPressNoteDelegate?
+    weak var didDragVerseDelegate: DidDragVerseDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -40,6 +50,7 @@ class SavedVerseTableViewCell: UITableViewCell {
         addSubview(savedVerseCollectionView)
         savedVerseCollectionView.delegate = self
         savedVerseCollectionView.dataSource = self
+        savedVerseCollectionView.dropDelegate = self
         layoutViews()
     }
     
@@ -63,16 +74,18 @@ extension SavedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return notes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = savedVerseCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SavedVerseUICCollectionViewCell
+        cell.noteLabel.text = notes[indexPath.item]
+        cell.deleteImage.isHidden = true
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.frame.width - 40, height: self.frame.height / 2 - 8)
+        return CGSize(width: self.frame.width - 40, height: 70)
         
     }
     
@@ -82,5 +95,33 @@ extension SavedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath)
+        if let row = row {
+            didPressNoteDelegate?.didPressNote(at: indexPath, row: row, note: notes[indexPath.item])
+        }
+        
     }
+}
+
+extension SavedVerseTableViewCell: UICollectionViewDropDelegate {
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        for item in coordinator.items {
+            item.dragItem.itemProvider.loadObject(ofClass: SavedVerse.self, completionHandler: { (verse, error) in
+                if let verse = verse as? SavedVerse {
+                    guard let indexPath = coordinator.destinationIndexPath else {return}
+                    let note = self.notes[indexPath.item]
+                    self.didDragVerseDelegate?.didDragVerse(for: verse, note: note, row: self.row ?? 0)
+                }
+            })
+        }
+    }
+    
+    
+}
+
+protocol DidPressNoteDelegate: class {
+    func didPressNote(at indexPath: IndexPath, row: Int, note: String)
+}
+
+protocol DidDragVerseDelegate: class {
+    func didDragVerse(for verse: SavedVerse, note: String, row: Int)
 }

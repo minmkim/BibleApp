@@ -17,10 +17,30 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
         return cv
     }()
     
+    let noteLabel: UILabel = {
+        let nl = UILabel()
+        nl.translatesAutoresizingMaskIntoConstraints = false
+        nl.font = .preferredFont(forTextStyle: .headline)
+        nl.adjustsFontForContentSizeCategory = true
+        nl.textColor = .white
+        return nl
+    }()
+    
+    let deleteImage: UIImageView = {
+        let di = UIImageView(image: UIImage(named: "delete"))
+        di.translatesAutoresizingMaskIntoConstraints = false
+        di.isHidden = true
+        return di
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(containerView)
+        addSubview(deleteImage)
+        containerView.addSubview(noteLabel)
+        
         layoutViews()
+        containerView.bringSubview(toFront: noteLabel)
     }
     
     func layoutViews() {
@@ -34,6 +54,16 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
         containerView.clipsToBounds = true
         containerView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        noteLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        noteLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        noteLabel.heightAnchor.constraint(equalToConstant: 26).isActive = true
+        noteLabel.widthAnchor.constraint(equalToConstant: frame.width - 16)
+        
+        deleteImage.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
+        deleteImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        deleteImage.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        deleteImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

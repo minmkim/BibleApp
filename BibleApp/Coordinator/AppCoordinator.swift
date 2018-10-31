@@ -36,23 +36,20 @@ final class AppCoordinator: Coordinator {
     lazy var bibleViewController = BibleViewController()
     lazy var verseViewController: VerseViewController = {
         let controller = VerseViewController()
-        controller.savedVerseController = SavedVerseController(dataManager: verseDataManager)
+        controller.dataManager = verseDataManager
         return controller
     }()
     
-    lazy var savedVerseViewController = SavedVerseViewController()
+    lazy var savedVerseViewController = SavedVerseViewController(state: .note, savedVersesModel: SavedVerses(dataManager: verseDataManager))
     lazy var searchViewController: SearchViewController = {
         let controller = SearchViewController()
-        let searchController = VerseSearchController(bible: bible)
-        controller.searchControllers = searchController
-        searchController.updateSearchBarDelegate = controller
+        controller.searchControllers = VerseSearchController(bible: bible)
         return controller
     }()
     lazy var settingsViewController = SettingsTableViewController()
     
     init(window: UIWindow?) {
         self.window = window
-        
         let navigationController1 = UINavigationController(rootViewController: bibleViewController)
         navigationController1.navigationBar.barTintColor = .white
         navigationController1.navigationBar.isTranslucent = false
@@ -62,13 +59,14 @@ final class AppCoordinator: Coordinator {
         bibleViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "literature"), tag: 0)
         bibleViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         
-        let navigationController2 = UINavigationController(rootViewController: verseViewController)
-        navigationController2.navigationBar.prefersLargeTitles = true
+        let navigationController2 = UINavigationController(rootViewController: savedVerseViewController)
+        //        navigationController2.navigationBar.prefersLargeTitles = true
         navigationController2.navigationBar.barTintColor = .white
         navigationController2.navigationBar.isTranslucent = false
         navigationController2.navigationBar.setValue(true, forKey: "hidesShadow")
-        verseViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "for_you"), tag: 1)
-        verseViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+        savedVerseViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "for_you"), tag: 1)
+        savedVerseViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+        navigationController2.navigationBar.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
         
         let navigationController3 = UINavigationController(rootViewController: searchViewController)
         searchViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "search"), tag: 2)
@@ -77,7 +75,7 @@ final class AppCoordinator: Coordinator {
         let navigationController4 = UINavigationController(rootViewController: settingsViewController)
         settingsViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "settings"), tag: 3)
         settingsViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-
+        
         rootViewController.viewControllers = [navigationController1, navigationController2, navigationController3, navigationController4]
     }
     
@@ -108,15 +106,15 @@ extension AppCoordinator: TabSelectedDelegate {
             if coordinatorDict[coordinatorType.savedVerses] == nil {
                 if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
                     if coordinator.currentBookController != nil {
-                        let verseCoordinator = VerseCoordinator(verseViewController: verseViewController)
-                        verseCoordinator.bibleVerseDelegate = self
+                        let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController)
+                        //                        verseCoordinator.bibleVerseDelegate = self
                         coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
                         return
                     }
                 }
                 coordinatorDict = [:]
-                let verseCoordinator = VerseCoordinator(verseViewController: verseViewController)
-                verseCoordinator.bibleVerseDelegate = self
+                let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController)
+                //                verseCoordinator.bibleVerseDelegate = self
                 coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
             }
         case 2:
@@ -129,7 +127,7 @@ extension AppCoordinator: TabSelectedDelegate {
                         return
                     }
                 }
-
+                
                 coordinatorDict = [:]
                 let searchCoordinator = SearchCoordinator(searchViewController: searchViewController, bible: bible)
                 searchCoordinator.bibleVerseDelegate = self

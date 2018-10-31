@@ -16,6 +16,8 @@ enum CoreDataVerse {
     static let text = "text"
     static let isMultipleVerses = "isMultipleVerses"
     static let upToVerse = "upToVerse"
+    static let noteName = "noteName"
+    static let sectionName = "sectionName"
 }
 
 enum CoreDataBible {
@@ -26,6 +28,13 @@ enum CoreDataBible {
     static let text = "text"
 }
 
+enum CoreDataSection {
+    static let entity = "Section"
+    static let sectionName = "sectionName"
+}
 
-
+enum CoreDataNote {
+    static let entity = "Note"
+    static let noteName = "noteName"
+}
 

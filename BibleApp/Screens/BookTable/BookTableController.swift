@@ -14,6 +14,7 @@ class BookTableController: UIViewController {
     
     lazy var versesDataManager = VersesDataManager()
     weak var changeChapterDelegate: ChangeChapterDelegate?
+    weak var saveVerseDelegate: SaveVerseDelegate?
     var currentChapter = 0 {
         didSet {
             bottomContainerView.currentChapter = currentChapter
@@ -23,6 +24,7 @@ class BookTableController: UIViewController {
     var selectedVerses = [IndexPath]()
     var dominantHand = "Left"
     var verseArray = [String]()
+    var indexPathToSave: IndexPath?
     var numberOfChapters: Int? {
         didSet {
             bottomContainerView.numberOfChapters = numberOfChapters
@@ -189,9 +191,44 @@ extension BookTableController: ChapterPressDelegate {
     
 }
 
+extension BookTableController: DidSelectNoteDelegate {
+    func selectedNoteSection(note: String, section: String) {
+        guard let book = navigationItem.title else {return}
+        guard let indexPath = indexPathToSave else {return}
+        let text = verseArray[indexPath.row]
+        let verse = indexPath.row + 1
+        let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: verse, text: text)
+        guard let savedVerses = SavedVerse(bibleVerses: [bibleVerse], noteName: note, sectionName: section) else {return}
+        //        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
+        versesDataManager.saveToCoreData(bibleVerse: savedVerses)
+    }
+    
+    
+}
+
+extension BookTableController: CreateNewNoteDelegate {
+    func newNote(for text: String, section: String) {
+        guard let book = navigationItem.title else {return}
+        guard let indexPath = indexPathToSave else {return}
+        let verseText = verseArray[indexPath.row]
+        let verse = indexPath.row + 1
+        let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: verse, text: verseText)
+        guard let savedVerses = SavedVerse(bibleVerses: [bibleVerse], noteName: text, sectionName: section) else {return}
+        //        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
+        versesDataManager.saveToCoreData(bibleVerse: savedVerses)
+    }
+    
+    
+}
+
 protocol ChangeChapterDelegate: class {
     func previousChapter()
     func nextChapter()
     func goToChapter(_ chapter: Int)
     func closeController()
 }
+
+protocol SaveVerseDelegate: class {
+    func presentSaveVerses()
+}
+

@@ -18,18 +18,6 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
-    func loadWiki() {
-        let search = returnBookNameForWikipedia()
-        let url = URL(string: "https://en.wikipedia.org/wiki/\(search)")!
-        webKitView.load(URLRequest(url: url))
-    }
-    
-    func returnBookNameForWikipedia() -> String {
-        guard let book = self.book else {return ""}
-        guard let bookDict = Constants.dictOfBookWikiYouTube[book] else {return ""}
-        return bookDict[0]
-    }
-    
     let containerView: UIView = {
       let cv = UIView()
         cv.backgroundColor = .white
@@ -60,6 +48,18 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
         spinner.startAnimating()
         webKitView.allowsBackForwardNavigationGestures = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Video", style: .plain, target: self, action: #selector(didPressVideo))
+    }
+    
+    func loadWiki() {
+        let search = returnBookNameForWikipedia()
+        let url = URL(string: "https://en.wikipedia.org/wiki/\(search)")!
+        webKitView.load(URLRequest(url: url))
+    }
+    
+    func returnBookNameForWikipedia() -> String {
+        guard let book = self.book else {return ""}
+        guard let bookDict = Constants.dictOfBookWikiYouTube[book] else {return ""}
+        return bookDict[0]
     }
     
     @objc func didPressVideo(sender: UIBarButtonItem) {

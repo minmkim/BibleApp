@@ -8,8 +8,9 @@
 
 import Foundation
 import CoreData
+import MobileCoreServices
 
-final class SavedVerse {
+final class SavedVerse: NSObject, NSItemProviderWriting, Codable {
     
     var book: String
     var chapter: Int
@@ -17,16 +18,20 @@ final class SavedVerse {
     var text: String
     var upToVerse: Int?
     var isMultipleVerses: Bool = false
+    var noteName: String?
+    var sectionName: String?
     
-    init(book: String, chapter: Int, verse: Int, text: String, upToVerse: Int? = nil, isMultipleVerses: Bool = false) {
+    init(book: String, chapter: Int, verse: Int, text: String, upToVerse: Int? = nil, isMultipleVerses: Bool = false, noteName: String? = nil, sectionName: String? = nil) {
         self.book = book
         self.chapter = chapter
         self.verse = verse
         self.text = text
         self.isMultipleVerses = isMultipleVerses
+        self.noteName = noteName
+        self.sectionName = sectionName
     }
     
-    init?(bibleVerses: [BibleVerse]) {
+    init?(bibleVerses: [BibleVerse], noteName: String? = nil, sectionName: String? = nil) {
         let sortedVerses = bibleVerses.sorted(by: {$0.verse < $1.verse})
         switch sortedVerses.count {
         case 0:
@@ -50,11 +55,13 @@ final class SavedVerse {
             sortedVerses.forEach { (verse) in
                 text += "\n\(verse.verse) \(verse.text)"
             }
-            text.removeFirst() 
+            text.removeFirst()
             self.text = text
         default:
             return nil
         }
+        self.noteName = noteName
+        self.sectionName = sectionName
     }
     
     init(fetchedVerse: NSManagedObject) {
@@ -64,16 +71,51 @@ final class SavedVerse {
         self.text = fetchedVerse.value(forKey: CoreDataVerse.text) as! String
         self.upToVerse = fetchedVerse.value(forKey: CoreDataVerse.upToVerse) as? Int
         self.isMultipleVerses = (fetchedVerse.value(forKey: CoreDataVerse.isMultipleVerses) as? Bool) ?? false
+        self.noteName = fetchedVerse.value(forKey: CoreDataVerse.noteName) as? String
+        self.sectionName = fetchedVerse.value(forKey: CoreDataVerse.sectionName) as? String
+    }
+    
+    func isPartOfNote() -> Bool {
+        return (noteName != nil)
     }
     
     func formattedVerse() -> String {
         return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(book) \(chapter):\(verse)"
-        
     }
     
     func formattedVerseAndText() -> String {
         return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(text)\n\(book) \(chapter):\(verse)"
     }
     
+    static var readableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
+    
+    
+    static var writableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
+    
+    func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
+        let progress = Progress(totalUnitCount: 100)
+        do {
+            //Here the object is encoded to a JSON data object and sent to the completion handler
+            let data = try JSONEncoder().encode(self)
+            progress.completedUnitCount = 100
+            completionHandler(data, nil)
+        } catch {
+            completionHandler(nil, error)
+        }
+        return progress
+    }
+    
+}
+
+extension SavedVerse: NSItemProviderReading {
+    static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> SavedVerse {
+        let decoder = JSONDecoder()
+        do {
+            let savedVerse = try decoder.decode(SavedVerse.self, from: data)
+            return savedVerse
+        } catch {
+            fatalError("error decoding")
+        }
+    }
     
 }

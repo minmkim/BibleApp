@@ -13,7 +13,10 @@ class VerseViewController: UIViewController {
     
     weak var savedVerseDelegate: SavedVerseDelegate?
     var savedVerses = [SavedVerse]()
+    weak var savedVersesModel: SavedVerses?
+    var dataManager: VersesDataManager?
     var savedVerseController: SavedVerseController!
+    var section = ""
     var isEditingVerses = false
     var indexPathToDelete = [IndexPath]()
     var actionBarTopAnchor: NSLayoutConstraint?
@@ -47,13 +50,10 @@ class VerseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        savedVerses.removeAll()
-        savedVerseController.getSavedVerses { [unowned self] (fetchedVerses) in
-            self.savedVerses = fetchedVerses
-            DispatchQueue.main.async {
-                self.verseCollectionView.reloadData()
-            }
-        }
+        guard let note = navigationItem.title else {return}
+        savedVerses = savedVersesModel?.loadVerses(for: note, section: section) ?? []
+        print(savedVerses.count)
+        verseCollectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,7 +66,6 @@ class VerseViewController: UIViewController {
     }
     
     func setupViews() {
-        navigationItem.title = "Saved Verses"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(didPressEdit))
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 236/255, green: 73/255, blue: 38/255, alpha: 1.0)
         view.backgroundColor = .white

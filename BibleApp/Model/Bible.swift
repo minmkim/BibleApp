@@ -21,7 +21,6 @@ final class Bible {
     
     private var bible = [Book: [Chapter:[VerseText]]](minimumCapacity: 66)
     private let verseDataManager: VersesDataManager!
-    
     private let countOfOldTestament = 39
     private let countOfNewTestament = 27
     

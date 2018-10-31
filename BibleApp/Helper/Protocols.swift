@@ -48,3 +48,11 @@ protocol IndexVerseDelegate: class {
 protocol SavedVerseDelegate: class {
     func requestToOpenVerse(for verse: SavedVerse)
 }
+
+protocol CreateNewNoteDelegate: class {
+    func newNote(for text: String, section: String)
+}
+
+protocol DidSelectNoteDelegate: class {
+    func selectedNoteSection(note: String, section: String)
+}

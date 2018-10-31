@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class SavedVerseTableViewCell: UITableViewCell {
     
     var row: Int?
@@ -90,7 +88,7 @@ extension SavedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

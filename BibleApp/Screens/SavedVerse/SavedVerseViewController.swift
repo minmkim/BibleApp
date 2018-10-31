@@ -10,28 +10,14 @@ import UIKit
 
 class SavedVerseViewController: UIViewController {
     
-    struct ItemToDelete {
-        let section: String
-        let note: String?
-    }
-    
-    enum ControllerState {
-        case note
-        case search
-    }
-    
-    func getSectionNumberOfCollectionViewRow(from index: Int) -> Int {
-        return (index - 3) / 2
-    }
-    
     var itemsToDelete = [ItemToDelete]()
-    var savedVersesModel: SavedVerses!
+    var savedVersesModel: SavedVersesController!
     var controllerState = ControllerState.note
     weak var createNewNoteDelegate: CreateNewNoteDelegate?
     weak var didSelectNoteDelegate: DidSelectNoteDelegate?
     var heightOfRows = [IndexPath:CGFloat]()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, state: ControllerState, savedVersesModel: SavedVerses) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, state: ControllerState, savedVersesModel: SavedVersesController) {
         controllerState = state
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.savedVersesModel = savedVersesModel
@@ -58,7 +44,6 @@ class SavedVerseViewController: UIViewController {
         sv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         sv.backgroundColor = .white
         sv.separatorStyle = .none
-        //        sv.allowsSelection = false
         return sv
     }()
     
@@ -79,8 +64,6 @@ class SavedVerseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         savedVersesModel?.loadHeadersAndNotes()
         savedVerseTableView.reloadData()
-        
-        //        savedVerseTableView.cellForRow(at: IndexPath(row: 1, section: 0))?.layoutIfNeeded()
     }
     
     func setupViews() {
@@ -118,7 +101,6 @@ class SavedVerseViewController: UIViewController {
     }
     
     @objc func didPressEdit() {
-        //        savedVerseTableView.reloadData()
         setupEditView()
     }
     
@@ -130,19 +112,6 @@ class SavedVerseViewController: UIViewController {
     var isEditingSections = false
     var actionBarTopAnchor: NSLayoutConstraint?
     
-    func layoutViews() {
-        containerView.fillContainer(for: view)
-        savedVerseTableView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        savedVerseTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        savedVerseTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        savedVerseTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        
-        actionBar.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        actionBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        actionBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        actionBarTopAnchor = actionBar.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
-        actionBarTopAnchor?.isActive = true
-    }
     
     @objc func textDidChange(_ sender: UITextField) {
         let alertController: UIAlertController = self.presentedViewController as! UIAlertController
@@ -195,226 +164,24 @@ class SavedVerseViewController: UIViewController {
         
     }
     
-}
-
-extension SavedVerseViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    func getSectionNumberOfCollectionViewRow(from index: Int) -> Int {
+        return (index - 3) / 2
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ((savedVersesModel?.getNumberOfSections() ?? 0) * 2) + 2
+    struct ItemToDelete {
+        let section: String
+        let note: String?
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch true {
-        case indexPath.row == 0:
-            let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "header", for: indexPath) as! SavedVerseHeaderTableViewCell
-            cell.headerLabel.text = "Saved Verses"
-            let customFont = UIFont.systemFont(ofSize: 34, weight: .bold)
-            cell.headerLabel.font = UIFontMetrics.default.scaledFont(for: customFont)
-            if controllerState == .search {
-                cell.addCancelButton()
-            }
-            cell.selectionStyle = .none
-            cell.addButton.removeFromSuperview()
-            return cell
-        case indexPath.row == 1:
-            print("load cell")
-            let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "noSectionVerse", for: indexPath) as! VersesWithoutSectionTableViewCell
-            cell.selectionStyle = .none
-            savedVersesModel?.loadVersesWithoutSection(completion: { (fetchedVerses) in
-                cell.savedVerses = fetchedVerses
-                print("cell: \(cell.savedVerses.count)")
-                DispatchQueue.main.async {
-                    cell.savedVerseCollectionView.reloadData()
-                }
-                print("reloaded data")
-            })
-            if cell.savedVerses.count > 0 {
-                heightOfRows[indexPath] = 150
-            } else {
-                heightOfRows[indexPath] = 0
-            }
-            return cell
-        case indexPath.row % 2 == 0:
-            let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "header", for: indexPath) as! SavedVerseHeaderTableViewCell
-            let index = (indexPath.row - 2)/2
-            
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: savedVersesModel?.getSection(for: index) ?? "")
-            cell.headerLabel.attributedText = attributeString
-            cell.row = indexPath.row
-            cell.didPressAddNoteDelegate = self
-            cell.selectionStyle = .none
-            return cell
-        default:
-            let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SavedVerseTableViewCell
-            cell.didPressNoteDelegate = self
-            cell.didDragVerseDelegate = self
-            cell.selectionStyle = .none
-            cell.row = indexPath.row
-            let index = getSectionNumberOfCollectionViewRow(from: indexPath.row)
-            let notes = savedVersesModel?.getNotes(for: index)
-            cell.notes = notes ?? []
-            setIndexPathHeightDictionary(for: notes?.count ?? 0, indexPath: indexPath)
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (0...1).contains(indexPath.row) {
-            return
-        }
-        
-        if (indexPath.row - 2) % 2 == 0 {
-            guard let cell = savedVerseTableView.cellForRow(at: indexPath) as? SavedVerseHeaderTableViewCell else {return}
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: cell.headerLabel.text!)
-            attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-            cell.headerLabel.attributedText = attributeString
-            
-            let index = (indexPath.row - 2)/2
-            let section = savedVersesModel?.getSection(for: index) ?? ""
-            itemsToDelete.append(ItemToDelete(section: section, note: nil))
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let height = heightOfRows[indexPath] {
-            return height
-        }
-        
-        if indexPath.row == 0 || indexPath.row % 2 == 0 {
-            return 50
-        } else {
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            navigationItem.title = ""
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            navigationItem.title = "Saved Verses"
-        }
+    enum ControllerState {
+        case note
+        case search
     }
     
 }
 
-extension SavedVerseViewController: DidPressNoteDelegate {
-    func didPressNote(at indexPath: IndexPath, row: Int, note: String) {
-        let index = getSectionNumberOfCollectionViewRow(from: row)
-        switch controllerState {
-        case .note:
-            if isEditingSections {
-                let cell = savedVerseTableView.cellForRow(at: IndexPath(row: row, section: 0)) as? SavedVerseTableViewCell
-                let insideCell = cell?.savedVerseCollectionView.cellForItem(at: indexPath) as? SavedVerseUICCollectionViewCell
-                if insideCell?.deleteImage.isHidden ?? true {
-                    insideCell?.deleteImage.isHidden = false
-                } else {
-                    insideCell?.deleteImage.isHidden = true
-                }
-                itemsToDelete.append(ItemToDelete(section: savedVersesModel.getSection(for: index), note: insideCell?.noteLabel.text))
-            } else {
-                let controller = VerseViewController()
-                controller.navigationItem.title = note
-                controller.savedVersesModel = savedVersesModel
-                let section = controller.savedVersesModel?.getSection(for: index) ?? ""
-                controller.savedVerses = savedVersesModel?.loadVerses(for: note, section: section) ?? []
-                controller.section = section
-                #warning("mneed to refactor this to give this controller this manager")
-                controller.dataManager = savedVersesModel.dataManager
-                navigationController?.pushViewController(controller, animated: true)
-            }
-            
-        case .search:
-            didSelectNoteDelegate?.selectedNoteSection(note: note, section: savedVersesModel?.getSection(for: index) ?? "")
-            dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    
-}
-
-extension SavedVerseViewController: DidPressAddNoteDelegate {
-    func didPressAddNote(at row: Int) {
-        addNewNote(for: row+1)
-    }
-}
-
-extension SavedVerseViewController: SaveVerseBarDelegate {
-    func didPressTrash() {
-        for item in itemsToDelete {
-            if let note = item.note {
-                savedVersesModel.removeNote(note: note, section: item.section)
-            } else {
-                savedVersesModel.removeSection(for: item.section)
-            }
-        }
-        setupEditView()
-        savedVerseTableView.reloadData()
-    }
-    
-    func didPressAdd() {
-        let alertController = UIAlertController(title: "New Section", message: nil, preferredStyle: .alert)
-        alertController.addTextField { (textField: UITextField!) -> Void in
-            textField.font = UIFont.preferredFont(forTextStyle: .subheadline)
-            textField.adjustsFontForContentSizeCategory = true
-            textField.autocapitalizationType = .words
-            textField.placeholder = "New Section Name"
-            textField.addTarget(self, action: #selector(self.textDidChange), for: .editingChanged)
-        }
-        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default) { (alertAction: UIAlertAction!) -> Void in
-            let textField = alertController.textFields![0] as UITextField
-            self.savedVersesModel?.saveNewSection(for: textField.text ?? "")
-            self.savedVerseTableView.reloadData()
-            self.setupEditView()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
-        alertController.view.tintColor = MainColor.redOrange
-        saveAction.isEnabled = false
-        alertController.addAction(saveAction)
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    
-}
-
-extension SavedVerseViewController: DidDragVerseDelegate {
-    func didDragVerse(for verse: SavedVerse, note: String, row: Int) {
-        let index = getSectionNumberOfCollectionViewRow(from: row)
-        guard let section = savedVersesModel?.getSection(for: index) else {return}
-        
-        DispatchQueue.main.async {
-            let cell = self.savedVerseTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! VersesWithoutSectionTableViewCell
-            if let indexPath = cell.draggedIndexPath {
-                cell.savedVerses.remove(at: indexPath.item)
-                cell.savedVerseCollectionView.deleteItems(at: [indexPath])
-            }
-            
-            if cell.savedVerses.isEmpty {
-                self.heightOfRows[IndexPath(row: 1, section: 0)] = 0
-                self.savedVerseTableView.beginUpdates()
-                self.savedVerseTableView.endUpdates()
-            }
-        }
-        
-        savedVersesModel?.updateVerseToNote(verse: verse, note: note, section: section)
-    }
-    
-    
-}
 
 
-protocol CreateNewNoteDelegate: class {
-    func newNote(for text: String, section: String)
-}
 
-protocol DidSelectNoteDelegate: class {
-    func selectedNoteSection(note: String, section: String)
-}
+
+

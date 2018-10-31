@@ -40,7 +40,7 @@ final class AppCoordinator: Coordinator {
         return controller
     }()
     
-    lazy var savedVerseViewController = SavedVerseViewController(state: .note, savedVersesModel: SavedVerses(dataManager: verseDataManager))
+    lazy var savedVerseViewController = SavedVerseViewController(state: .note, savedVersesModel: SavedVersesController(dataManager: verseDataManager))
     lazy var searchViewController: SearchViewController = {
         let controller = SearchViewController()
         controller.searchControllers = VerseSearchController(bible: bible)

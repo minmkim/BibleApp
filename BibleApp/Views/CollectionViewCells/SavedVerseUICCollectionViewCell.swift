@@ -61,7 +61,7 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
         noteLabel.widthAnchor.constraint(equalToConstant: frame.width - 16)
         
         deleteImage.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-        deleteImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        deleteImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 4).isActive = true
         deleteImage.widthAnchor.constraint(equalToConstant: 25).isActive = true
         deleteImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
     }

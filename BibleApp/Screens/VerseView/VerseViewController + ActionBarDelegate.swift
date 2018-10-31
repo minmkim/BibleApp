@@ -16,7 +16,7 @@ extension VerseViewController: SavedVerseActionBarDelegate {
                 guard let cell = self.verseCollectionView.cellForItem(at: indexPath) as? VerseCollectionViewCell else {return}
                 guard let verse = cell.verse else {return}
                 cell.deleteImage.isHidden = true
-                savedVerseController.deleteVerse(verse)
+                savedVersesModel?.deleteVerse(verse)
             }
             savedVerses.removeIndexPaths(at: indexPathToDelete)
             verseCollectionView.performBatchUpdates({

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SavedVerses {
+final class SavedVersesController {
     
     private var headerLabels = [String]()
     private var notesLabels = [String : [String]]()
@@ -77,6 +77,10 @@ final class SavedVerses {
             self.dataManager.updateVerseAfterDrag(verse: verse, newSection: section, newNote: note)
         }
         
+    }
+    
+    func deleteVerse(_ verse: SavedVerse) {
+        dataManager.deleteVerse(for: verse)
     }
     
     func removeNote(note: String, section: String) {

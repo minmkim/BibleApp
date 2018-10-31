@@ -21,6 +21,7 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
         nl.font = .preferredFont(forTextStyle: .headline)
         nl.adjustsFontForContentSizeCategory = true
         nl.textColor = .white
+        nl.textAlignment = .center
         return nl
     }()
     

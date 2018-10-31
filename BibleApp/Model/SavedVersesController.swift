@@ -12,7 +12,7 @@ final class SavedVersesController {
     
     private var headerLabels = [String]()
     private var notesLabels = [String : [String]]()
-    var dataManager: VersesDataManager!
+    private var dataManager: VersesDataManager!
     
     init(dataManager: VersesDataManager) {
         self.dataManager = dataManager
@@ -29,6 +29,10 @@ final class SavedVersesController {
                 notesLabels[header] = Array(Set(fetchedNotes)).sorted(by: >)
             }
         }
+    }
+    
+    func saveVerse(for verse: SavedVerse) {
+        dataManager.saveToCoreData(bibleVerse: verse)
     }
     
     func getNotes(for index: Int) -> [String] {
@@ -66,6 +70,13 @@ final class SavedVersesController {
     
     func saveNewNote(newNote: String, index: Int) {
         let section = headerLabels[index]
+        var array = notesLabels[section] ?? []
+        array.append(newNote)
+        notesLabels[section] = array
+        dataManager.saveNewNote(for: newNote, section: section)
+    }
+    
+    func saveNewNoteWithSection(newNote: String, section: String) {
         var array = notesLabels[section] ?? []
         array.append(newNote)
         notesLabels[section] = array

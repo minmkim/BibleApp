@@ -40,7 +40,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             let verse = indexPath.row + 1
             guard let text = cell.verseText.text else {return}
             let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text)
-            self?.versesDataManager.saveToCoreData(bibleVerse: bibleVerse)
+            self?.savedVersesController.saveVerse(for: bibleVerse)
         }
         
         let saveTo = UITableViewRowAction(style: .default, title: "Save To:") { [weak self] (action, indexPath) in
@@ -53,7 +53,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in
-            let verseText = self.formatedVerse(for: indexPath)
+            let verseText = self.formattedVerse(for: indexPath)
             UIPasteboard.general.string = verseText
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
                 self.bookTableView.deselectRow(at: indexPath, animated: true)
@@ -61,7 +61,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
-            let verseText = self.formatedVerse(for: indexPath)
+            let verseText = self.formattedVerse(for: indexPath)
             let activityVC = UIActivityViewController(activityItems: [verseText], applicationActivities: nil)
             self.present(activityVC, animated: true, completion: nil)
         }
@@ -85,7 +85,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
         if isSelecting {
             selectedVerses.append(indexPath)
         } else {
-            let verseText = self.formatedVerse(for: indexPath)
+            let verseText = formattedVerse(for: indexPath)
             UIPasteboard.general.string = verseText
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
                 self.bookTableView.deselectRow(at: indexPath, animated: true)

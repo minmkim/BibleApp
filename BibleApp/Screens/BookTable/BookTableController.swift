@@ -12,7 +12,7 @@ import CloudKit
 
 class BookTableController: UIViewController {
     
-    lazy var versesDataManager = VersesDataManager()
+    var savedVersesController: SavedVersesController!
     weak var changeChapterDelegate: ChangeChapterDelegate?
     weak var saveVerseDelegate: SaveVerseDelegate?
     var currentChapter = 0 {
@@ -89,9 +89,9 @@ class BookTableController: UIViewController {
                     bibleVerses.append(bibleVerse)
                     bookTableView.deselectRow(at: indexPath, animated: true)
                 }
-                guard let savedVerses = SavedVerse(bibleVerses: bibleVerses) else {return}
+                guard let savedVerse = SavedVerse(bibleVerses: bibleVerses) else {return}
                 var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
-                versesDataManager.saveToCoreData(bibleVerse: savedVerses)
+                savedVersesController.saveVerse(for: savedVerse)
                 selectedVerses.removeAll()
                 generator?.prepare()
                 generator?.selectionChanged()
@@ -132,7 +132,7 @@ class BookTableController: UIViewController {
         }
     }
     
-    func formatedVerse(for indexPath: IndexPath) -> String {
+    func formattedVerse(for indexPath: IndexPath) -> String {
         let cell = bookTableView.cellForRow(at: indexPath) as! BookTableViewCell
         guard var word = cell.bibleVerse else {return ""}
         guard let book = self.navigationItem.title else {return ""}
@@ -140,6 +140,14 @@ class BookTableController: UIViewController {
         let verse = indexPath.row + 1
         word += "\n\(book) \(chapter):\(verse)"
         return word
+    }
+    
+    func getVerse() -> BibleVerse? {
+        guard let book = navigationItem.title else {return nil}
+        guard let indexPath = indexPathToSave else {return nil}
+        let text = verseArray[indexPath.row]
+        let verse = indexPath.row + 1
+        return BibleVerse(book: book, chapter: currentChapter, verse: verse, text: text)
     }
     
 }
@@ -192,14 +200,10 @@ extension BookTableController: ChapterPressDelegate {
 
 extension BookTableController: DidSelectNoteDelegate {
     func selectedNoteSection(note: String, section: String) {
-        guard let book = navigationItem.title else {return}
-        guard let indexPath = indexPathToSave else {return}
-        let text = verseArray[indexPath.row]
-        let verse = indexPath.row + 1
-        let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: verse, text: text)
-        guard let savedVerses = SavedVerse(bibleVerses: [bibleVerse], noteName: note, sectionName: section) else {return}
-        //        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
-        versesDataManager.saveToCoreData(bibleVerse: savedVerses)
+        if let bibleVerse = getVerse() {
+            guard let savedVerse = SavedVerse(bibleVerses: [bibleVerse], noteName: note, sectionName: section) else {return}
+            savedVersesController.saveVerse(for: savedVerse)
+        }
     }
     
     
@@ -207,14 +211,12 @@ extension BookTableController: DidSelectNoteDelegate {
 
 extension BookTableController: CreateNewNoteDelegate {
     func newNote(for text: String, section: String) {
-        guard let book = navigationItem.title else {return}
-        guard let indexPath = indexPathToSave else {return}
-        let verseText = verseArray[indexPath.row]
-        let verse = indexPath.row + 1
-        let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: verse, text: verseText)
-        guard let savedVerses = SavedVerse(bibleVerses: [bibleVerse], noteName: text, sectionName: section) else {return}
-        versesDataManager.saveNewNote(for: text, section: section)
-        versesDataManager.saveToCoreData(bibleVerse: savedVerses)
+        if let bibleVerse = getVerse() {
+            guard let savedVerse = SavedVerse(bibleVerses: [bibleVerse], noteName: text, sectionName: section) else {return}
+            savedVersesController.saveNewNoteWithSection(newNote: text, section: section)
+            savedVersesController.saveVerse(for: savedVerse)
+        }
+        
     }
     
     

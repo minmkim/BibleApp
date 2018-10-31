@@ -30,8 +30,7 @@ extension SavedVerseViewController: DidPressNoteDelegate {
                 let section = controller.savedVersesModel?.getSection(for: index) ?? ""
                 controller.savedVerses = savedVersesModel?.loadVerses(for: note, section: section) ?? []
                 controller.section = section
-                #warning("mneed to refactor this to give this controller this manager")
-                controller.dataManager = savedVersesModel.dataManager
+                #warning("need to refactor this to give this controller this manager")
                 navigationController?.pushViewController(controller, animated: true)
             }
             

@@ -14,7 +14,6 @@ class VerseViewController: UIViewController {
     weak var savedVerseDelegate: SavedVerseDelegate?
     var savedVerses = [SavedVerse]()
     weak var savedVersesModel: SavedVersesController?
-    var dataManager: VersesDataManager?
     var section = ""
     var isEditingVerses = false
     var indexPathToDelete = [IndexPath]()

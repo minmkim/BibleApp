@@ -12,10 +12,15 @@ import CoreData
 
 final class VersesDataManager {
     
+    let persistentContainer: NSPersistentContainer!
+    
+    init(persistentContainer: NSPersistentContainer) {
+        self.persistentContainer = persistentContainer
+    }
+    
     func loadVerses(completion: ([SavedVerse]) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataVerse.entity)
         var savedVerses = [SavedVerse]()
         do {
@@ -31,10 +36,8 @@ final class VersesDataManager {
     }
     
     func saveToCoreData(bibleVerse: SavedVerse) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         
-        //        if !isDuplicateVerse(for: bibleVerse) {
         let entity = NSEntityDescription.entity(forEntityName: CoreDataVerse.entity, in: managedContext)!
         
         let newVerse = NSManagedObject(entity: entity, insertInto: managedContext)
@@ -47,34 +50,16 @@ final class VersesDataManager {
         newVerse.setValue(bibleVerse.sectionName, forKey: CoreDataVerse.sectionName)
         newVerse.setValue(bibleVerse.noteName, forKey: CoreDataVerse.noteName)
         
-        //            if let sectionName = bibleVerse.sectionName, let noteName = bibleVerse.noteName {
-        //                let section = Section(context: managedContext)
-        //                section.sectionName = sectionName
-        //                let note = Note(context: managedContext)
-        //                note.noteName = noteName
-        //                section.addToNotes(note)
-        //
-        //                let verse = CDBibleVerse(context: managedContext)
-        //                verse.book = bibleVerse.book
-        //                verse.chapter = Int16(bibleVerse.chapter)
-        //                verse.verse = Int16(bibleVerse.verse)
-        //                verse.text = bibleVerse.text
-        //                verse.isMultipleVerses = bibleVerse.isMultipleVerses
-        //                verse.sectionName = bibleVerse.sectionName
-        //                verse.noteName = bibleVerse.noteName
-        //                note.addToVerses(verse)
-        //            }
         do {
             try managedContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        //        }
     }
     
     func saveNewSection(for section: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let managedContext = persistentContainer.viewContext
         
         let entity = NSEntityDescription.entity(forEntityName: CoreDataSection.entity, in: managedContext)!
         
@@ -89,8 +74,8 @@ final class VersesDataManager {
     }
     
     func saveNewNote(for note: String, section: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let managedContext = persistentContainer.viewContext
         
         let entity = NSEntityDescription.entity(forEntityName: CoreDataNote.entity, in: managedContext)!
         
@@ -108,29 +93,8 @@ final class VersesDataManager {
         }
     }
     
-    //    func isDuplicateVerse(for bibleVerse: SavedVerse) -> Bool {
-    //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true }
-    //        let managedContext = appDelegate.persistentContainer.viewContext
-    //
-    //        let verseFetch = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataVerse.entity)
-    //        verseFetch.fetchLimit = 1
-    //        let p1 = NSPredicate(format: "book = %@", bibleVerse.book)
-    //        let p2 = NSPredicate(format: "chapter = %d", bibleVerse.chapter)
-    //        let p3 = NSPredicate(format: "verse = %d", bibleVerse.verse)
-    //        if let sectionName = bibleVerse.sectionName {
-    //            let p4 = NSPredicate(format: "sectionName = %d", sectionName)
-    //            let p5 = NSPredicate(format: "noteName = %d", bibleVerse.noteName!)
-    //            verseFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3, p4, p5])
-    //        } else {
-    //            verseFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3])
-    //        }
-    //        let verses = try! managedContext.fetch(verseFetch)
-    //        return verses.count == 0 ? false : true
-    //    }
-    
     func deleteVerse(for bibleVerse: SavedVerse) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let verseFetch = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataVerse.entity)
         let p1 = NSPredicate(format: "book = %@", bibleVerse.book)
         let p2 = NSPredicate(format: "chapter = %d", bibleVerse.chapter)
@@ -142,7 +106,6 @@ final class VersesDataManager {
         } else {
             verseFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3])
         }
-        //        verseFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3])
         let verses = try! managedContext.fetch(verseFetch)
         for verse in verses {
             managedContext.delete(verse as! NSManagedObject)
@@ -156,8 +119,7 @@ final class VersesDataManager {
     }
     
     func deleteSection(_ section: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let sectionFetch = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataSection.entity)
         let p1 = NSPredicate(format: "sectionName = %@", section)
         sectionFetch.predicate = p1
@@ -175,8 +137,7 @@ final class VersesDataManager {
     }
     
     func deleteNote(note: String, section: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let noteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataNote.entity)
         let p1 = NSPredicate(format: "section.sectionName = %@", section)
         let p2 = NSPredicate(format: "noteName = %@", note)
@@ -214,9 +175,8 @@ final class VersesDataManager {
     }
     
     func loadBible(completion: ([BibleVerse]) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
         var savedVerses = [BibleVerse]()
         do {
@@ -232,9 +192,7 @@ final class VersesDataManager {
     }
     
     func loadSections(completion: ([String]) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataSection.entity)
         var sections = [String]()
         do {
@@ -251,9 +209,8 @@ final class VersesDataManager {
     }
     
     func loadNotes(for section: String, completion: ([String]) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataNote.entity)
         let predicate = NSPredicate(format:"ANY section.sectionName == %@", section)
         fetchRequest.predicate = predicate
@@ -271,16 +228,12 @@ final class VersesDataManager {
     }
     
     func loadSavedVerses(for note: String, section: String, completion: ([SavedVerse]) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataVerse.entity)
         let p1 = NSPredicate(format: "sectionName = %@", section)
         let p2 = NSPredicate(format: "noteName = %@", note)
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2])
-        //        let predicate = NSPredicate(format:"ANY noteName == %@", note)
-        //        fetchRequest.predicate = predicate
-        
         var savedVerses = [SavedVerse]()
         do {
             let fetchedVerses = try managedContext.fetch(fetchRequest)
@@ -295,9 +248,8 @@ final class VersesDataManager {
     }
     
     func loadSavedVersesWithoutSection(completion: ([SavedVerse]) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataVerse.entity)
         let predicate = NSPredicate(format: "noteName = nil")
         fetchRequest.predicate = predicate
@@ -316,9 +268,8 @@ final class VersesDataManager {
     }
     
     func updateVerseAfterDrag(verse: SavedVerse, newSection: String, newNote: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataVerse.entity)
         let p1 = NSPredicate(format: "noteName = nil")
         let p2 = NSPredicate(format: "chapter = %d", verse.chapter)
@@ -349,8 +300,7 @@ final class VersesDataManager {
     
     func searchForWord(searchWord: String, fetchOffset: Int, completion: ([BibleVerse]) -> Void) {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
+        let context = persistentContainer.viewContext
         var savedVerses = [BibleVerse]()
         do {
             let managedContext = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)

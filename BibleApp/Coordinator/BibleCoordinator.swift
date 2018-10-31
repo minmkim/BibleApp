@@ -15,9 +15,11 @@ final class BibleCoordinator: Coordinator {
     let bible: Bible!
     var currentChapter = 1
     var currentBook = ""
-    weak var currentBookController: BookTableController?
+    var currentBookController: BookTableController?
+    var savedVersesController: SavedVersesController!
     
-    init(bibleViewController: BibleViewController, bible: Bible) {
+    init(bibleViewController: BibleViewController, bible: Bible, savedVersesController: SavedVersesController) {
+        self.savedVersesController = savedVersesController
         self.bibleViewController = bibleViewController
         self.bible = bible
         self.bibleViewController.bibleCoordinatorDelegate = self
@@ -30,6 +32,7 @@ final class BibleCoordinator: Coordinator {
     
     func loadBookTableController(verses: [String], book: String, chapter: Int) -> BookTableController {
         let controller = BookTableController()
+        controller.savedVersesController = savedVersesController
         currentBookController = controller
         currentChapter = chapter
         currentBook = book
@@ -112,7 +115,7 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
 
 extension BibleCoordinator: SaveVerseDelegate {
     func presentSaveVerses() {
-        let controller = SavedVerseViewController(state: .search, savedVersesModel: SavedVersesController(dataManager: (currentBookController?.versesDataManager)!))
+        let controller = SavedVerseViewController(state: .search, savedVersesModel: savedVersesController)
         currentBookController?.present(controller, animated: true, completion: nil)
         controller.didSelectNoteDelegate = currentBookController
         controller.createNewNoteDelegate = currentBookController

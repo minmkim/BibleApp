@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 protocol Coordinator {
 }
@@ -22,8 +23,8 @@ final class AppCoordinator: Coordinator {
     
     let window: UIWindow?
     var coordinatorDict = [coordinatorType: Coordinator]()
-    lazy var verseDataManager = VersesDataManager()
-    lazy var bible = Bible(verseDataManager: verseDataManager)
+    let bible: Bible!
+    let savedVersesController: SavedVersesController!
     
     lazy var rootViewController: MainViewController = {
         let controller = MainViewController()
@@ -34,13 +35,7 @@ final class AppCoordinator: Coordinator {
     }()
     
     lazy var bibleViewController = BibleViewController()
-    lazy var verseViewController: VerseViewController = {
-        let controller = VerseViewController()
-        controller.dataManager = verseDataManager
-        return controller
-    }()
-    
-    lazy var savedVerseViewController = SavedVerseViewController(state: .note, savedVersesModel: SavedVersesController(dataManager: verseDataManager))
+    lazy var savedVerseViewController = SavedVerseViewController(state: .note, savedVersesModel: savedVersesController)
     lazy var searchViewController: SearchViewController = {
         let controller = SearchViewController()
         controller.searchControllers = VerseSearchController(bible: bible)
@@ -48,8 +43,11 @@ final class AppCoordinator: Coordinator {
     }()
     lazy var settingsViewController = SettingsTableViewController()
     
-    init(window: UIWindow?) {
+    init(window: UIWindow?, persistentContainer: NSPersistentContainer) {
         self.window = window
+        let dataManager = VersesDataManager(persistentContainer: persistentContainer)
+        self.bible = Bible(verseDataManager: dataManager)
+        self.savedVersesController = SavedVersesController(dataManager: dataManager)
         let navigationController1 = UINavigationController(rootViewController: bibleViewController)
         navigationController1.navigationBar.barTintColor = .white
         navigationController1.navigationBar.isTranslucent = false
@@ -60,7 +58,6 @@ final class AppCoordinator: Coordinator {
         bibleViewController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         
         let navigationController2 = UINavigationController(rootViewController: savedVerseViewController)
-        //        navigationController2.navigationBar.prefersLargeTitles = true
         navigationController2.navigationBar.barTintColor = .white
         navigationController2.navigationBar.isTranslucent = false
         navigationController2.navigationBar.setValue(true, forKey: "hidesShadow")
@@ -82,7 +79,7 @@ final class AppCoordinator: Coordinator {
     func start() {
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
-        let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible)
+        let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible, savedVersesController: savedVersesController)
         coordinatorDict[coordinatorType.bible] = bibleCoordinator
     }
     
@@ -96,7 +93,7 @@ extension AppCoordinator: TabSelectedDelegate {
         case 0:
             if coordinatorDict[coordinatorType.bible] == nil {
                 coordinatorDict = [:]
-                let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible)
+                let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible, savedVersesController: savedVersesController)
                 coordinatorDict[coordinatorType.bible] = bibleCoordinator
             } else {
                 coordinatorDict[coordinatorType.savedVerses] = nil
@@ -152,7 +149,7 @@ extension AppCoordinator: TabSelectedDelegate {
 extension AppCoordinator: BibleVerseDelegate {
     func openBibleVerse(book: String, chapter: Int, verse: Int) {
         coordinatorDict = [:]
-        let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible)
+        let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible, savedVersesController: savedVersesController)
         coordinatorDict[coordinatorType.bible] = bibleCoordinator
         bibleViewController.navigationController?.popToRootViewController(animated: false)
         rootViewController.selectedIndex = 0

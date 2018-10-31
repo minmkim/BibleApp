@@ -14,9 +14,9 @@ final class VerseSearchController: SearchController {
     weak var searchVerseDelegate: SearchVerseDelegate?
     var searchState: SearchState = .empty
     
-    private var bible: Bible!
-    private var didPressSpace = false
-    private var verseContainer = VerseContainer()
+    var bible: Bible!
+    var didPressSpace = false
+    var verseContainer = VerseContainer()
     
     init(bible: Bible) {
         self.bible = bible
@@ -26,7 +26,7 @@ final class VerseSearchController: SearchController {
         print("deinit verse search")
     }
     
-    private func checkForNumberedBook(_ text: [String]) -> [String] {
+    func checkForNumberedBook(_ text: [String]) -> [String] {
         if let firstInt = Int(text[0]) {
             var returnStrings = text
             returnStrings.removeFirst()
@@ -37,11 +37,11 @@ final class VerseSearchController: SearchController {
         }
     }
     
-    private func isBookInBible(for book: String) -> Bool {
+    func isBookInBible(for book: String) -> Bool {
         return Constants.bookStrings.contains(book)
     }
     
-    private func checkIfUserPressedSpace(for text: String) {
+    func checkIfUserPressedSpace(for text: String) {
         if removeBeginningWhiteSpace(text).last == ":" {
             didPressSpace = true
             return
@@ -56,12 +56,23 @@ final class VerseSearchController: SearchController {
             tokenizedSearch = checkForNumberedBook(tokenizedSearch)
         }
         
-        switch tokenizedSearch.count {
+        for index in tokenizedSearch.indices {
+            if index+1 != tokenizedSearch.count {
+                setVerseContainerFromSearch(for: index+1, tokenizedSearch: tokenizedSearch, nextCount: true)
+            } else {
+                setVerseContainerFromSearch(for: index+1, tokenizedSearch: tokenizedSearch, nextCount: false)
+            }
+            
+        }
+    }
+    
+    func setVerseContainerFromSearch(for index: Int, tokenizedSearch: [String], nextCount: Bool) {
+        switch index {
         case 0:
             searchState = .empty
             verseContainer.resetContainer()
         case 1:
-            if isBookInBible(for: tokenizedSearch.first!) && didPressSpace {
+            if isBookInBible(for: tokenizedSearch.first!) && (didPressSpace || nextCount) {
                 searchState = .searchingChapter
                 verseContainer.searchedBook = tokenizedSearch.first!
                 verseContainer.filteredChapters = Array(1...bible.numberOfChaptersInBook(for: tokenizedSearch.first!)!)
@@ -70,7 +81,7 @@ final class VerseSearchController: SearchController {
                 verseContainer.setFilteredBooks(for: tokenizedSearch.first!)
             }
         case 2:
-            if verseContainer.isChapterInBook(for: tokenizedSearch[1]) && didPressSpace {
+            if verseContainer.isChapterInBook(for: tokenizedSearch[1]) && (didPressSpace || nextCount) {
                 searchState = .searchingVerse
                 guard let book = verseContainer.searchedBook else {return}
                 let chapterNumber = Int(tokenizedSearch[1])!
@@ -94,6 +105,7 @@ final class VerseSearchController: SearchController {
     func didPressSearch(for searchText: String) {
         if let book = verseContainer.searchedBook {
             searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1)
+            verseContainer.resetContainer()
             updateSearchBarDelegate?.updateSearchBar("")
         }
     }
@@ -114,6 +126,7 @@ final class VerseSearchController: SearchController {
             if let book = verseContainer.searchedBook {
                 searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1)
                 updateSearchBarDelegate?.updateSearchBar("")
+                verseContainer.resetContainer()
             }
         }
     }

@@ -89,7 +89,6 @@ final class SavedVerse: NSObject, NSItemProviderWriting, Codable {
     
     static var readableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
     
-    
     static var writableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
     
     func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {

@@ -32,14 +32,12 @@ final class IndexTracker: UIView {
         cv.axis = .vertical
         cv.distribution = .fillEqually
         cv.alignment = .center
-        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.spacing = 2
         return cv
     }()
     
     let bookMarker: UIView = {
         let bm = UIView()
-        bm.translatesAutoresizingMaskIntoConstraints = false
         bm.backgroundColor = .black
         bm.layer.cornerRadius = 1
         bm.layer.masksToBounds = true
@@ -52,8 +50,7 @@ final class IndexTracker: UIView {
         self.indexList = indexList
         countOfList = indexList.count
         backgroundColor = .clear
-        addSubview(containerStack)
-        addSubview(bookMarker)
+        addSubviewsUsingAutoLayout(containerStack, bookMarker)
         setUpViews()
     }
     
@@ -123,14 +120,14 @@ final class IndexTracker: UIView {
     var bookMarkerBottomAnchor: NSLayoutConstraint?
     
     func layoutViews() {
-        containerStack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        containerStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        containerStack.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        containerStack.leadingAnchor.constrain(to: leadingAnchor)
+        containerStack.trailingAnchor.constrain(to: trailingAnchor)
+        containerStack.centerYAnchor.constrain(to: centerYAnchor)
         
-        bookMarker.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        bookMarker.widthAnchor.constraint(equalTo: containerStack.widthAnchor, multiplier: 1/4).isActive = true
-        bookMarker.leadingAnchor.constraint(equalTo: containerStack.leadingAnchor).isActive = true
-        bookMarkerTopAnchor = bookMarker.topAnchor.constraint(equalTo: containerStack.topAnchor, constant: (34/3)/2)
+        bookMarker.heightAnchor.constrain(to: 2)
+        bookMarker.widthAnchor.constrain(to: containerStack.widthAnchor, multiplyBy: 1/4)
+        bookMarker.leadingAnchor.constrain(to: containerStack.leadingAnchor)
+        bookMarkerTopAnchor = bookMarker.topAnchor.constrain(to: containerStack.topAnchor, with: ((34/3)/2))
         bookMarkerTopAnchor?.isActive = true
     }
     

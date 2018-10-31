@@ -33,16 +33,13 @@ extension SavedVerseViewController: UITableViewDelegate, UITableViewDataSource {
             cell.addButton.removeFromSuperview()
             return cell
         case indexPath.row == 1:
-            print("load cell")
             let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "noSectionVerse", for: indexPath) as! VersesWithoutSectionTableViewCell
             cell.selectionStyle = .none
             savedVersesModel?.loadVersesWithoutSection(completion: { (fetchedVerses) in
                 cell.savedVerses = fetchedVerses
-                print("cell: \(cell.savedVerses.count)")
                 DispatchQueue.main.async {
                     cell.savedVerseCollectionView.reloadData()
                 }
-                print("reloaded data")
             })
             if cell.savedVerses.count > 0 {
                 heightOfRows[indexPath] = 150

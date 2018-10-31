@@ -26,7 +26,7 @@ class SavedVerseTableViewCell: UITableViewCell {
         sv.register(VerseCollectionViewCell.self, forCellWithReuseIdentifier: "verse")
         sv.backgroundColor = .white
         sv.showsHorizontalScrollIndicator = false
-        sv.contentInset = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 4)
+        sv.contentInset = UIEdgeInsets(top: 4, left: 8, bottom: 0, right: 8)
         return sv
     }()
     
@@ -88,7 +88,7 @@ extension SavedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

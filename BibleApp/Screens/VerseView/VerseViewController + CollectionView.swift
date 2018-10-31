@@ -32,7 +32,7 @@ extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSou
             height += 44
         }
         print(height)
-        return CGSize(width: verseCollectionView.frame.width, height: height)
+        return CGSize(width: verseCollectionView.frame.width - 16, height: height)
     }
     
     private func estimatedFrameForText(text: String) -> CGRect {

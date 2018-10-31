@@ -494,6 +494,7 @@
 				A43E1D0E21190ABA008235D6 /* BookTableViewCell.swift */,
 				8C05BD66217BDEE300AE964B /* SavedVerseTableViewCell.swift */,
 				8C05BD6A217BF93300AE964B /* SavedVerseHeaderTableViewCell.swift */,
+				8C05BD6E217D30B100AE964B /* VersesWithoutSectionTableViewCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -503,7 +504,6 @@
 			children = (
 				8C070B17215DC10500833BE5 /* ChapterCollectionViewCell.swift */,
 				8C79AC34212E083E00FCD313 /* VerseCollectionViewCell.swift */,
-				8C05BD6E217D30B100AE964B /* VersesWithoutSectionTableViewCell.swift */,
 				8C05BD68217BF3D600AE964B /* SavedVerseUICCollectionViewCell.swift */,
 			);
 			path = CollectionViewCells;

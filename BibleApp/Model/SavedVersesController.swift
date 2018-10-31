@@ -26,7 +26,7 @@ final class SavedVersesController {
         headerLabels = Array(Set(headerLabels)).sorted()
         headerLabels.forEach { (header) in
             dataManager.loadNotes(for: header) { (fetchedNotes) in
-                notesLabels[header] = Array(Set(fetchedNotes)).sorted()
+                notesLabels[header] = Array(Set(fetchedNotes)).sorted(by: >)
             }
         }
     }

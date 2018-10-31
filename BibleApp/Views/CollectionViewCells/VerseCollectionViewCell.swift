@@ -57,14 +57,14 @@ final class VerseCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubviewsUsingAutoLayout(containerView)
         containerView.addSubviewsUsingAutoLayout(bibleVerseLabel, bibleVerseText, deleteImage)
-        layer.cornerRadius = 16
-        layer.masksToBounds = true
+//        layer.cornerRadius = 16
+//        layer.masksToBounds = true
         layoutViews()
     }
     
     func layoutViews() {
-        containerView.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8))
-        containerView.layer.cornerRadius = 8
+        containerView.fillContainer(for: self)
+        containerView.layer.cornerRadius = 16
         containerView.layer.masksToBounds = true
         
         bibleVerseLabel.topAnchor.constrain(to: containerView.topAnchor, with: 8)

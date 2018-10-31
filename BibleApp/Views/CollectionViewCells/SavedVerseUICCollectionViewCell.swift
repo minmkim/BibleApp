@@ -44,8 +44,8 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
     }
     
     func layoutViews() {
-        containerView.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: -8))
-        containerView.layer.cornerRadius = 8
+        containerView.fillContainer(for: self)
+        containerView.layer.cornerRadius = 16
         containerView.layer.masksToBounds = true
         gradientLayer.frame = self.bounds
         gradientLayer.colors = [UIColor.red.cgColor, UIColor.orange.cgColor]
@@ -61,7 +61,7 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
         noteLabel.widthAnchor.constraint(equalToConstant: frame.width - 16)
         
         deleteImage.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-        deleteImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 4).isActive = true
+        deleteImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -2).isActive = true
         deleteImage.widthAnchor.constraint(equalToConstant: 25).isActive = true
         deleteImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
     }

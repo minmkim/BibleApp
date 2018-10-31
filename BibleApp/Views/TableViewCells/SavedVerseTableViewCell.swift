@@ -21,7 +21,6 @@ class SavedVerseTableViewCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let sv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        sv.translatesAutoresizingMaskIntoConstraints = false
         sv.register(SavedVerseUICCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         sv.register(VerseCollectionViewCell.self, forCellWithReuseIdentifier: "verse")
         sv.backgroundColor = .white
@@ -44,19 +43,23 @@ class SavedVerseTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        addSubview(savedVerseCollectionView)
-        savedVerseCollectionView.delegate = self
-        savedVerseCollectionView.dataSource = self
-        savedVerseCollectionView.dropDelegate = self
+        setupViews()
+        setupDelegates()
         layoutViews()
     }
     
+    func setupViews() {
+        addSubviewsUsingAutoLayout(savedVerseCollectionView)
+    }
+    
+    func setupDelegates() {
+        savedVerseCollectionView.delegate = self
+        savedVerseCollectionView.dataSource = self
+        savedVerseCollectionView.dropDelegate = self
+    }
+    
     func layoutViews() {
-        savedVerseCollectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        savedVerseCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        savedVerseCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        savedVerseCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        savedVerseCollectionView.fillContainer(for: self)
     }
     
     required init?(coder aDecoder: NSCoder) {

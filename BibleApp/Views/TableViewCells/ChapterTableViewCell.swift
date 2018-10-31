@@ -13,13 +13,14 @@ class ChapterTableViewCell: UITableViewCell {
     weak var didSelectChapterCVDelegate: DidSelectChapterCVDelegate?
     
     var numberOfChapters: Int?
+    let cellWidth: CGFloat = 30
+    let cellSpacing: CGFloat = 2
     
     lazy var chapterCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = cellSpacing
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
         cv.register(ChapterCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         cv.backgroundColor = .white
@@ -27,10 +28,14 @@ class ChapterTableViewCell: UITableViewCell {
     }()
     
     override func layoutSubviews() {
-        addSubview(chapterCollectionView)
+        addSubviewsUsingAutoLayout(chapterCollectionView)
+        setupDelegates()
+        layoutViews()
+    }
+    
+    func setupDelegates() {
         chapterCollectionView.delegate = self
         chapterCollectionView.dataSource = self
-        layoutViews()
     }
     
     func layoutViews() {
@@ -47,9 +52,6 @@ class ChapterTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    let cellWidth: CGFloat = 30
-    let cellSpacing: CGFloat = 2
 
 }
 
@@ -85,7 +87,6 @@ extension ChapterTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
         let chapter = indexPath.item + 1
         didSelectChapterCVDelegate?.didSelectChapter(for: chapter)
     }
-    
     
 }
 

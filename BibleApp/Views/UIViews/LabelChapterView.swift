@@ -27,7 +27,6 @@ class LabelChapterView: UIView {
         layout.minimumLineSpacing = cellSpacing
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
         cv.register(ChapterCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         cv.backgroundColor = .white
@@ -36,7 +35,7 @@ class LabelChapterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(chapterCollectionView)
+        addSubviewsUsingAutoLayout(chapterCollectionView)
         chapterCollectionView.delegate = self
         chapterCollectionView.dataSource = self
     }

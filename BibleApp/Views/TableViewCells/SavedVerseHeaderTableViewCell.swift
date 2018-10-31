@@ -15,7 +15,6 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     
     let headerLabel: UILabel = {
         let hl = UILabel()
-        hl.translatesAutoresizingMaskIntoConstraints = false
         let customFont = UIFont.systemFont(ofSize: 22, weight: .bold)
         hl.font = UIFontMetrics.default.scaledFont(for: customFont)
         return hl
@@ -23,9 +22,8 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     
     let addButton: UIButton = {
         let ab = UIButton(type: .contactAdd)
-        //        ab.setImage(UIImage(named: "add"), for: .normal)
         ab.tintColor = MainColor.redOrange
-        ab.translatesAutoresizingMaskIntoConstraints = false
+        ab.addTarget(self, action: #selector(didPressAdd), for: .touchUpInside)
         return ab
     }()
     
@@ -37,17 +35,19 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubview(headerLabel)
-        addSubview(addButton)
-        headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
-        headerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
-        headerLabel.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 4/5).isActive = true
-        headerLabel.heightAnchor.constraint(equalToConstant: 28)
-        addButton.addTarget(self, action: #selector(didPressAdd), for: .touchUpInside)
-        addButton.centerYAnchor.constraint(equalTo: headerLabel.centerYAnchor).isActive = true
-        addButton.leadingAnchor.constraint(equalTo: headerLabel.trailingAnchor, constant: 4).isActive = true
-        addButton.widthAnchor.constraint(equalToConstant: 28).isActive = true
-        addButton.heightAnchor.constraint(equalTo: addButton.widthAnchor).isActive = true
+        addSubviewsUsingAutoLayout(headerLabel, addButton)
+        layoutViews()
+    }
+    
+    func layoutViews() {
+        headerLabel.leadingAnchor.constrain(to: leadingAnchor, with: 16)
+        headerLabel.bottomAnchor.constrain(to: bottomAnchor, with: -8)
+        headerLabel.widthAnchor.constrain(.lessThanOrEqual, to: widthAnchor, multiplyBy: 4/5)
+        headerLabel.heightAnchor.constrain(to: 28)
+        addButton.centerYAnchor.constrain(to: headerLabel.centerYAnchor)
+        addButton.leadingAnchor.constrain(to: headerLabel.trailingAnchor, with: 4)
+        addButton.widthAnchor.constrain(to: 28)
+        addButton.heightAnchor.constrain(to: addButton.widthAnchor)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,15 +61,14 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     
     func addCancelButton() {
         let cancelButton = UIButton()
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.setTitleColor(.black, for: .normal)
         cancelButton.addTarget(self, action: #selector(didPressCancel), for: .touchUpInside)
-        addSubview(cancelButton)
-        cancelButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        cancelButton.centerYAnchor.constraint(equalTo: headerLabel.centerYAnchor).isActive = true
-        cancelButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        cancelButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        addSubviewsUsingAutoLayout(cancelButton)
+        cancelButton.trailingAnchor.constrain(to: trailingAnchor)
+        cancelButton.centerYAnchor.constrain(to: headerLabel.centerYAnchor)
+        cancelButton.widthAnchor.constrain(to: 75)
+        cancelButton.heightAnchor.constrain(to: 30)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

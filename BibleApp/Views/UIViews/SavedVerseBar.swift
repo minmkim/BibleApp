@@ -15,7 +15,6 @@ class SavedVerseBar: UIView {
     
     let trashButton: UIButton = {
         let tb = UIButton(type: .custom)
-        tb.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
         tb.setImage(image, for: .normal)
         tb.tintColor = MainColor.redOrange
@@ -25,7 +24,6 @@ class SavedVerseBar: UIView {
     
     let addButton: UIButton = {
         let ab = UIButton(type: .custom)
-        ab.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "add")?.withRenderingMode(.alwaysTemplate)
         ab.setImage(image, for: .normal)
         ab.tintColor = MainColor.redOrange
@@ -43,22 +41,21 @@ class SavedVerseBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(trashButton)
-        addSubview(addButton)
+        addSubviewsUsingAutoLayout(trashButton, addButton)
         backgroundColor = .white
         layoutViews()
     }
     
     func layoutViews() {
-        trashButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        trashButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12).isActive = true
-        trashButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
-        trashButton.widthAnchor.constraint(equalTo: trashButton.heightAnchor).isActive = true
+        trashButton.centerYAnchor.constrain(to: centerYAnchor)
+        trashButton.leadingAnchor.constrain(to: leadingAnchor, with: 12)
+        trashButton.heightAnchor.constrain(to: heightAnchor, multiplyBy: 2/3)
+        trashButton.widthAnchor.constrain(to: trashButton.heightAnchor)
         
-        addButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
-        addButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
-        addButton.widthAnchor.constraint(equalTo: addButton.heightAnchor).isActive = true
+        addButton.centerYAnchor.constrain(to: centerYAnchor)
+        addButton.trailingAnchor.constrain(to: trailingAnchor, with: -12)
+        addButton.heightAnchor.constrain(to: heightAnchor, multiplyBy: 2/3)
+        addButton.widthAnchor.constrain(to: addButton.heightAnchor)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -16,19 +16,26 @@ class SearchHeader: UIView {
         hl.font = .preferredFont(forTextStyle: .headline)
         hl.adjustsFontForContentSizeCategory = true
         hl.textColor = .black
-        hl.translatesAutoresizingMaskIntoConstraints = false
         return hl
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupView()
+        layoutViews()
+    }
+    
+    func setupView() {
         isOpaque = false
         backgroundColor = .white
         alpha = 1
-        addSubview(headerLabel)
-        headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
-        headerLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        headerLabel.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        addSubviewsUsingAutoLayout(headerLabel)
+    }
+    
+    func layoutViews() {
+        headerLabel.leadingAnchor.constrain(to: leadingAnchor, with: 16)
+        headerLabel.centerYAnchor.constrain(to: centerYAnchor)
+        headerLabel.heightAnchor.constrain(to: heightAnchor)
     }
     
     required init?(coder aDecoder: NSCoder) {

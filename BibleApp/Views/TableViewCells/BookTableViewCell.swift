@@ -26,7 +26,6 @@ final class BookTableViewCell: UITableViewCell {
         tv.textColor = .black
         tv.isScrollEnabled = false
         tv.isEditable = false
-        tv.isUserInteractionEnabled = false
         return tv
     }()
     
@@ -56,7 +55,6 @@ final class BookTableViewCell: UITableViewCell {
             numberLabel.topAnchor.constrain(to: verseText.topAnchor)
             numberLabel.leadingAnchor.constrain(to: leadingAnchor, with: 24)
             numberLabel.heightAnchor.constrain(to: 8)
-            
         } else {
             verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 18))
             numberLabel.topAnchor.constrain(to: verseText.topAnchor)

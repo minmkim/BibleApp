@@ -13,13 +13,11 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
     let gradientLayer = CAGradientLayer()
     let containerView: UIView = {
         let cv = UIView()
-        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
     let noteLabel: UILabel = {
         let nl = UILabel()
-        nl.translatesAutoresizingMaskIntoConstraints = false
         nl.font = .preferredFont(forTextStyle: .headline)
         nl.adjustsFontForContentSizeCategory = true
         nl.textColor = .white
@@ -28,16 +26,14 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
     
     let deleteImage: UIImageView = {
         let di = UIImageView(image: UIImage(named: "delete"))
-        di.translatesAutoresizingMaskIntoConstraints = false
         di.isHidden = true
         return di
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(containerView)
-        addSubview(deleteImage)
-        containerView.addSubview(noteLabel)
+        addSubviewsUsingAutoLayout(containerView, deleteImage)
+        containerView.addSubviewsUsingAutoLayout(noteLabel)
         
         layoutViews()
         containerView.bringSubview(toFront: noteLabel)
@@ -45,7 +41,7 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
     
     func layoutViews() {
         containerView.fillContainer(for: self)
-        containerView.layer.cornerRadius = 16
+        containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true
         gradientLayer.frame = self.bounds
         gradientLayer.colors = [UIColor.red.cgColor, UIColor.orange.cgColor]
@@ -55,15 +51,15 @@ class SavedVerseUICCollectionViewCell: UICollectionViewCell {
         containerView.clipsToBounds = true
         containerView.layer.insertSublayer(gradientLayer, at: 0)
         
-        noteLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        noteLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        noteLabel.heightAnchor.constraint(equalToConstant: 26).isActive = true
-        noteLabel.widthAnchor.constraint(equalToConstant: frame.width - 16)
+        noteLabel.centerXAnchor.constrain(to: centerXAnchor)
+        noteLabel.centerYAnchor.constrain(to: centerYAnchor)
+        noteLabel.heightAnchor.constrain(to: 26)
+        noteLabel.widthAnchor.constrain(to: frame.width - 16)
         
-        deleteImage.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-        deleteImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -2).isActive = true
-        deleteImage.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        deleteImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        deleteImage.topAnchor.constrain(to: topAnchor, with: 2)
+        deleteImage.trailingAnchor.constrain(to: trailingAnchor, with: -2)
+        deleteImage.widthAnchor.constrain(to: 25)
+        deleteImage.heightAnchor.constrain(to: 25)
     }
     
     required init?(coder aDecoder: NSCoder) {

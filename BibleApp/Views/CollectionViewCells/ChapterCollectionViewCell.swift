@@ -18,7 +18,6 @@ class ChapterCollectionViewCell: UICollectionViewCell {
     
     let chapterLabel: UILabel = {
        let cl = UILabel()
-        cl.translatesAutoresizingMaskIntoConstraints = false
         cl.textColor = MainColor.redOrange
         cl.font = .boldSystemFont(ofSize: 14)
         return cl
@@ -26,15 +25,15 @@ class ChapterCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(chapterLabel)
+        addSubviewsUsingAutoLayout(chapterLabel)
         layoutViews()
     }
     
     func layoutViews() {
-        chapterLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 24)
-        chapterLabel.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        chapterLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        chapterLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        chapterLabel.widthAnchor.constrain(.greaterThanOrEqual, to: 24)
+        chapterLabel.heightAnchor.constrain(to: 18)
+        chapterLabel.centerXAnchor.constrain(to: centerXAnchor)
+        chapterLabel.centerYAnchor.constrain(to: centerYAnchor)
     }
     
     required init?(coder aDecoder: NSCoder) {

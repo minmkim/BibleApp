@@ -21,7 +21,6 @@ class SearchWordTableViewCell: UITableViewCell {
     
     let bibleVerseLabel: UILabel = {
         let bv = UILabel()
-        bv.translatesAutoresizingMaskIntoConstraints = false
         bv.font = .preferredFont(forTextStyle: .headline)
         bv.adjustsFontForContentSizeCategory = true
         return bv
@@ -30,7 +29,6 @@ class SearchWordTableViewCell: UITableViewCell {
     let bibleText: UILabel = {
        let bt = UILabel()
         bt.isUserInteractionEnabled = false
-        bt.translatesAutoresizingMaskIntoConstraints = false
         bt.font = .preferredFont(forTextStyle: .subheadline)
         bt.adjustsFontForContentSizeCategory = true
         bt.numberOfLines = 0
@@ -38,16 +36,18 @@ class SearchWordTableViewCell: UITableViewCell {
     }()
     
     override func layoutSubviews() {
-        addSubview(bibleVerseLabel)
-        addSubview(bibleText)
+        addSubviewsUsingAutoLayout(bibleVerseLabel, bibleText)
+        layoutViews()
+    }
+    
+    func layoutViews() {
+        bibleVerseLabel.topAnchor.constrain(to: topAnchor, with: 8)
+        bibleVerseLabel.leadingAnchor.constrain(to: leadingAnchor, with: 8)
         
-        bibleVerseLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        bibleVerseLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
-        
-        bibleText.topAnchor.constraint(equalTo: bibleVerseLabel.bottomAnchor, constant: 8).isActive = true
-        bibleText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
-        bibleText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
-        bibleText.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
+        bibleText.topAnchor.constrain(to: bibleVerseLabel.bottomAnchor, with: 8)
+        bibleText.leadingAnchor.constrain(to: leadingAnchor, with: 8)
+        bibleText.trailingAnchor.constrain(to: trailingAnchor, with: -8)
+        bibleText.bottomAnchor.constrain(to: bottomAnchor, with: -8)
     }
 
     override func awakeFromNib() {

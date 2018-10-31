@@ -12,14 +12,6 @@ import CoreData
 
 final class VersesDataManager {
     
-    init() {
-        print("data")
-    }
-    
-    deinit {
-        print("no data")
-    }
-    
     func loadVerses(completion: ([SavedVerse]) -> Void) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
@@ -294,7 +286,6 @@ final class VersesDataManager {
             let fetchedVerses = try managedContext.fetch(fetchRequest)
             fetchedVerses.forEach { (verse) in
                 let newVerse = SavedVerse(fetchedVerse: verse)
-                print(newVerse)
                 savedVerses.append(newVerse)
             }
             completion(savedVerses)

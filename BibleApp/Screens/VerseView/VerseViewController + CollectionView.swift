@@ -31,7 +31,6 @@ extension VerseViewController: UICollectionViewDelegate, UICollectionViewDataSou
         } else {
             height += 44
         }
-        print(height)
         return CGSize(width: verseCollectionView.frame.width - 16, height: height)
     }
     

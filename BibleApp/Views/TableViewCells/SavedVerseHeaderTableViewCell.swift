@@ -11,7 +11,7 @@ import UIKit
 class SavedVerseHeaderTableViewCell: UITableViewCell {
     
     var row: Int?
-    var didPressAddNoteDelegate: DidPressAddNoteDelegate?
+    var savedVerseHeaderDelegate: SavedVerseHeaderDelegate?
     
     let headerLabel: UILabel = {
         let hl = UILabel()
@@ -31,7 +31,7 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     
     @objc func didPressAdd(_ sender: UIButton) {
         if let row = row {
-            didPressAddNoteDelegate?.didPressAddNote(at: row)
+            savedVerseHeaderDelegate?.didPressAddNote(at: row)
         }
     }
     
@@ -79,12 +79,12 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     }
     
     @objc func didPressCancel() {
-        //        dismiss(animated: true, completion: nil)
-        print("did press cancel")
+        savedVerseHeaderDelegate?.didPressCancel()
     }
     
 }
 
-protocol DidPressAddNoteDelegate: class {
+protocol SavedVerseHeaderDelegate: class {
     func didPressAddNote(at row: Int)
+    func didPressCancel()
 }

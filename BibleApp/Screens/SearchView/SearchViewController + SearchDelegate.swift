@@ -50,7 +50,6 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
 
 extension SearchViewController: SearchWordDelegate {
     func didFinishLoadingMoreVerses(for indexPaths: [IndexPath]) {
-        print(tableView.numberOfRows(inSection: 0))
         DispatchQueue.main.async {
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: indexPaths, with: .automatic)

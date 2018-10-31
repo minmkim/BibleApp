@@ -51,7 +51,6 @@ class VerseViewController: UIViewController {
         super.viewWillAppear(animated)
         guard let note = navigationItem.title else {return}
         savedVerses = savedVersesModel?.loadVerses(for: note, section: section) ?? []
-        print(savedVerses.count)
         verseCollectionView.reloadData()
     }
     

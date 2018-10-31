@@ -55,7 +55,6 @@ class BookTableController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? "Left"
-        print(dominantHand)
         setupViews()
         setupDelegates()
     }
@@ -214,7 +213,7 @@ extension BookTableController: CreateNewNoteDelegate {
         let verse = indexPath.row + 1
         let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: verse, text: verseText)
         guard let savedVerses = SavedVerse(bibleVerses: [bibleVerse], noteName: text, sectionName: section) else {return}
-        //        var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
+        versesDataManager.saveNewNote(for: text, section: section)
         versesDataManager.saveToCoreData(bibleVerse: savedVerses)
     }
     

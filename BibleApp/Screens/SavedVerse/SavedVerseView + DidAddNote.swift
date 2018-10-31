@@ -8,7 +8,11 @@
 
 import Foundation
 
-extension SavedVerseViewController: DidPressAddNoteDelegate {
+extension SavedVerseViewController: SavedVerseHeaderDelegate {
+    func didPressCancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func didPressAddNote(at row: Int) {
         addNewNote(for: row+1)
     }

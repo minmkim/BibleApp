@@ -11,13 +11,9 @@ import MobileCoreServices
 
 class VersesWithoutSectionTableViewCell: SavedVerseTableViewCell {
     
-    var savedVerses = [SavedVerse]() {
-        didSet {
-            print(savedVerses.count)
-        }
-    }
-    
+    var savedVerses = [SavedVerse]()
     var draggedIndexPath: IndexPath?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -48,7 +44,6 @@ extension VersesWithoutSectionTableViewCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("load collection cell")
         let cell = savedVerseCollectionView.dequeueReusableCell(withReuseIdentifier: "verse", for: indexPath) as! VerseCollectionViewCell
         cell.verse = savedVerses[indexPath.item]
         return cell

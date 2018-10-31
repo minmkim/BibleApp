@@ -101,7 +101,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func handleShortcutItem(withShortcutItem item: UIApplicationShortcutItem) -> Bool {
         guard let shortcutType = item.type.components(separatedBy: ".").last else { return false }
-        print(shortcutType)
         guard let mainView = self.window?.rootViewController as? MainViewController else {return false}
         switch shortcutType {
         case "Bible":

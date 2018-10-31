@@ -92,7 +92,6 @@ extension SavedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
         if let row = row {
             didPressNoteDelegate?.didPressNote(at: indexPath, row: row, note: notes[indexPath.item])
         }

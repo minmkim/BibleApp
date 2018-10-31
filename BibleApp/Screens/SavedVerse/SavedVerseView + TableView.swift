@@ -24,6 +24,7 @@ extension SavedVerseViewController: UITableViewDelegate, UITableViewDataSource {
         case indexPath.row == 0:
             let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "header", for: indexPath) as! SavedVerseHeaderTableViewCell
             cell.headerLabel.text = "Saved Verses"
+            cell.savedVerseHeaderDelegate = self
             let customFont = UIFont.systemFont(ofSize: 34, weight: .bold)
             cell.headerLabel.font = UIFontMetrics.default.scaledFont(for: customFont)
             if controllerState == .search {
@@ -54,7 +55,7 @@ extension SavedVerseViewController: UITableViewDelegate, UITableViewDataSource {
             let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: savedVersesModel?.getSection(for: index) ?? "")
             cell.headerLabel.attributedText = attributeString
             cell.row = indexPath.row
-            cell.didPressAddNoteDelegate = self
+            cell.savedVerseHeaderDelegate = self
             cell.selectionStyle = .none
             return cell
         default:

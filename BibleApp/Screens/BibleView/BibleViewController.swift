@@ -14,10 +14,6 @@ class BibleViewController: UIViewController {
     var selectedBookIndexPath: IndexPath? {
         didSet {
             bibleTableView.beginUpdates()
-            if let index = selectedBookIndexPath {
-                guard let cell = bibleTableView.cellForRow(at: index) as? ChapterTableViewCell else {return}
-                cell.layoutIfNeeded()
-            }
             bibleTableView.endUpdates()
         }
     }

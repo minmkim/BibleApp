@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         INPreferences.requestSiriAuthorization
             {
                 (authStatus: INSiriAuthorizationStatus) in
-                
         }
         
         window = UIWindow()
@@ -74,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let index = 0
             mainView.selectedIndex = index
             appCoordinator.didSelectTab(at: index)
-        case "Favorites":
+        case "SavedVerses":
             let index = 1
             mainView.selectedIndex = index
             appCoordinator.didSelectTab(at: index)

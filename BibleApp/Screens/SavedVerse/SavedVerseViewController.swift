@@ -17,6 +17,7 @@ class SavedVerseViewController: UIViewController {
     var controllerState = ControllerState.note
     weak var createNewNoteDelegate: CreateNewNoteDelegate?
     weak var didSelectNoteDelegate: DidSelectNoteDelegate?
+    weak var openNoteDelegate: OpenNoteDelegate?
     var heightOfRows = [IndexPath:CGFloat]()
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, state: ControllerState, savedVersesModel: SavedVersesController) {
@@ -192,8 +193,11 @@ class SavedVerseViewController: UIViewController {
     
 }
 
+protocol OpenNoteDelegate: class {
+    func didPressNote(forNote note: String, index: Int)
+}
 
-
-
-
+protocol OpenVerseDelegate: class {
+    func didPressVerse()
+}
 

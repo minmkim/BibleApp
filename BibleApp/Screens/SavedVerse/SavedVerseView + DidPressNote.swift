@@ -24,14 +24,7 @@ extension SavedVerseViewController: DidPressNoteDelegate {
                 }
                 itemsToDelete.append(ItemToDelete(section: savedVersesModel.getSection(for: index), note: insideCell?.noteLabel.text))
             } else {
-                let controller = VerseViewController()
-                controller.navigationItem.title = note
-                controller.savedVersesModel = savedVersesModel
-                let section = controller.savedVersesModel?.getSection(for: index) ?? ""
-                controller.savedVerses = savedVersesModel?.loadVerses(for: note, section: section) ?? []
-                controller.section = section
-                #warning("need to refactor this to give this controller this manager")
-                navigationController?.pushViewController(controller, animated: true)
+                openNoteDelegate?.didPressNote(forNote: note, index: index)
             }
             
         case .search:

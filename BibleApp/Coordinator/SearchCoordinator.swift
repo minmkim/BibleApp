@@ -52,7 +52,6 @@ extension SearchCoordinator: ChangeSearchControllerDelegate {
         }
     }
     
-    
 }
 
 extension SearchCoordinator: SearchVerseDelegate {

@@ -103,15 +103,14 @@ extension AppCoordinator: TabSelectedDelegate {
             if coordinatorDict[coordinatorType.savedVerses] == nil {
                 if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
                     if coordinator.currentBookController != nil {
-                        let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController)
+                        let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController, savedVersesModel: savedVersesController)
                         //                        verseCoordinator.bibleVerseDelegate = self
                         coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
                         return
                     }
                 }
                 coordinatorDict = [:]
-                let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController)
-                //                verseCoordinator.bibleVerseDelegate = self
+                let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController, savedVersesModel: savedVersesController)
                 coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
             }
         case 2:

@@ -13,14 +13,17 @@ final class VerseCoordinator: Coordinator {
     
     weak var bibleVerseDelegate: BibleVerseDelegate?
     let savedVerseController: SavedVerseViewController
+    var savedVersesModel: SavedVersesController
     
     
     deinit {
         print("deinit verse")
     }
     
-    init(savedVerseController: SavedVerseViewController) {
+    init(savedVerseController: SavedVerseViewController, savedVersesModel: SavedVersesController) {
         self.savedVerseController = savedVerseController
+        self.savedVersesModel = savedVersesModel
+        savedVerseController.openNoteDelegate = self
     }
     
 }
@@ -33,6 +36,17 @@ extension VerseCoordinator: SavedVerseDelegate {
     }
     
     
+}
+
+extension VerseCoordinator: OpenNoteDelegate {
+    func didPressNote(forNote note: String, index: Int) {
+        let controller = VerseViewController()
+        controller.savedVersesModel = savedVersesModel
+        controller.navigationItem.title = note
+        let section = savedVersesModel.getSection(for: index)
+        controller.section = section
+        savedVerseController.navigationController?.pushViewController(controller, animated: true)
+    }    
 }
 
 protocol BibleVerseDelegate: class {

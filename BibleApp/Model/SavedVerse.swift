@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import MobileCoreServices
 
-final class SavedVerse: NSObject, NSItemProviderWriting, Codable {
+final class SavedVerse: NSObject {
     
     var book: String
     var chapter: Int
@@ -75,10 +75,6 @@ final class SavedVerse: NSObject, NSItemProviderWriting, Codable {
         self.sectionName = fetchedVerse.value(forKey: CoreDataVerse.sectionName) as? String
     }
     
-    func isPartOfNote() -> Bool {
-        return (noteName != nil)
-    }
-    
     func formattedVerse() -> String {
         return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(book) \(chapter):\(verse)"
     }
@@ -87,26 +83,16 @@ final class SavedVerse: NSObject, NSItemProviderWriting, Codable {
         return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(text)\n\(book) \(chapter):\(verse)"
     }
     
-    static var readableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
     
-    static var writableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
-    
-    func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
-        let progress = Progress(totalUnitCount: 100)
-        do {
-            //Here the object is encoded to a JSON data object and sent to the completion handler
-            let data = try JSONEncoder().encode(self)
-            progress.completedUnitCount = 100
-            completionHandler(data, nil)
-        } catch {
-            completionHandler(nil, error)
-        }
-        return progress
-    }
     
 }
 
-extension SavedVerse: NSItemProviderReading {
+//allow SavedVerse to be object in drag and drop
+extension SavedVerse: NSItemProviderReading, NSItemProviderWriting, Codable {
+    
+    static var readableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
+    static var writableTypeIdentifiersForItemProvider: [String] {return [(kUTTypeData as String)]}
+    
     static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> SavedVerse {
         let decoder = JSONDecoder()
         do {
@@ -115,6 +101,18 @@ extension SavedVerse: NSItemProviderReading {
         } catch {
             fatalError("error decoding")
         }
+    }
+    
+    func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
+        let progress = Progress(totalUnitCount: 100)
+        do {
+            let data = try JSONEncoder().encode(self)
+            progress.completedUnitCount = 100
+            completionHandler(data, nil)
+        } catch {
+            completionHandler(nil, error)
+        }
+        return progress
     }
     
 }

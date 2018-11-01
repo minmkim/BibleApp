@@ -55,11 +55,11 @@
 			<key>UIApplicationShortcutItemIconFile</key>
 			<string>for_you</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>See your favorite verses</string>
+			<string>See your saved verses</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>Favorites</string>
+			<string>Saved Verses</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>com.minkim.BibleApp.Favorites</string>
+			<string>com.minkim.BibleApp.SavedVerses</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconFile</key>

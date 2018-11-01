@@ -25,7 +25,6 @@ extension SavedVerseViewController: SaveVerseBarDelegate {
             }
         }
         setupEditView()
-//        savedVerseTableView.reloadData()
     }
     
     func didPressAdd() {

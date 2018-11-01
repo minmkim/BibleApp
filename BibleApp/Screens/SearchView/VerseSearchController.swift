@@ -107,6 +107,7 @@ final class VerseSearchController: SearchController {
             searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1)
             verseContainer.resetContainer()
             updateSearchBarDelegate?.updateSearchBar("")
+            searchState = .empty
         }
     }
     
@@ -125,8 +126,9 @@ final class VerseSearchController: SearchController {
         case .searchingVerse:
             if let book = verseContainer.searchedBook {
                 searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1)
-                updateSearchBarDelegate?.updateSearchBar("")
                 verseContainer.resetContainer()
+                updateSearchBarDelegate?.updateSearchBar("")
+                searchState = .empty
             }
         }
     }

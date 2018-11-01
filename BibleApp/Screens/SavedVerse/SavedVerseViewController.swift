@@ -125,7 +125,7 @@ class SavedVerseViewController: UIViewController {
     
     func addNewNote(for row: Int) {
         let alertController = UIAlertController(title: "New Note", message: nil, preferredStyle: .alert)
-        alertController.addTextField { (textField: UITextField!) -> Void in
+        alertController.addTextField { [unowned self] (textField: UITextField!) -> Void in
             textField.font = UIFont.preferredFont(forTextStyle: .subheadline)
             textField.adjustsFontForContentSizeCategory = true
             textField.autocapitalizationType = .words

@@ -14,7 +14,7 @@ extension SavedVerseViewController: DidDragVerseDelegate {
         let index = getSectionNumberOfCollectionViewRow(from: row)
         guard let section = savedVersesModel?.getSection(for: index) else {return}
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
             let cell = self.savedVerseTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! VersesWithoutSectionTableViewCell
             if let indexPath = cell.draggedIndexPath {
                 cell.savedVerses.remove(at: indexPath.item)

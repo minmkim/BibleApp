@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A4FD28F72118922F008E0A69"
+               BlueprintIdentifier = "8CD04B90218A5D0200AB121A"
                BuildableName = "BibleAppTests.xctest"
                BlueprintName = "BibleAppTests"
                ReferencedContainer = "container:BibleApp.xcodeproj">

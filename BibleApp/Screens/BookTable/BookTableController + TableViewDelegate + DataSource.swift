@@ -33,14 +33,14 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        let save = UITableViewRowAction(style: .default, title: "Save") { [weak self] (action, indexPath) in
+        let save = UITableViewRowAction(style: .default, title: "Save") { [unowned self] (action, indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            guard let book = self?.navigationItem.title else {return}
-            guard let chapter = self?.currentChapter else {return}
+            guard let book = self.navigationItem.title else {return}
+            let chapter = self.currentChapter
             let verse = indexPath.row + 1
             guard let text = cell.verseText.text else {return}
             let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text)
-            self?.savedVersesController.saveVerse(for: bibleVerse)
+            self.savedVersesController.saveVerse(for: bibleVerse)
         }
         
         let saveTo = UITableViewRowAction(style: .default, title: "Save To:") { [weak self] (action, indexPath) in
@@ -48,7 +48,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             self?.indexPathToSave = indexPath
         }
         
-        let copy = UITableViewRowAction(style: .default, title: "Copy") { (action, indexPath) in
+        let copy = UITableViewRowAction(style: .default, title: "Copy") { [unowned self] (action, indexPath) in
             let verseText = self.formattedVerse(for: indexPath)
             UIPasteboard.general.string = verseText
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
@@ -56,7 +56,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        let share = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
+        let share = UITableViewRowAction(style: .default, title: "Share") { [unowned self] (action, indexPath) in
             let verseText = self.formattedVerse(for: indexPath)
             let activityVC = UIActivityViewController(activityItems: [verseText], applicationActivities: nil)
             self.present(activityVC, animated: true, completion: nil)

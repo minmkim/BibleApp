@@ -49,7 +49,7 @@ class SearchViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
             self.searchController.isActive = true
             self.searchController.searchBar.becomeFirstResponder()
         }
@@ -90,11 +90,12 @@ class SearchViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        searchControllers?.didSelectItem(at: indexPath.row)
+        tableView.reloadData()
         let firstIndexPath = IndexPath(row: 0, section: 0)
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) { [unowned self] in
             self.tableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
         }
-        searchControllers?.didSelectItem(at: indexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

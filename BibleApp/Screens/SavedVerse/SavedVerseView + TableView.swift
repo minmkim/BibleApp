@@ -35,6 +35,7 @@ extension SavedVerseViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         case indexPath.row == 1:
             let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "noSectionVerse", for: indexPath) as! VersesWithoutSectionTableViewCell
+            cell.didSelectSavedVersesDelegate = self
             cell.selectionStyle = .none
             savedVersesModel?.loadVersesWithoutSection(completion: { (fetchedVerses) in
                 cell.savedVerses = fetchedVerses
@@ -51,9 +52,7 @@ extension SavedVerseViewController: UITableViewDelegate, UITableViewDataSource {
         case indexPath.row % 2 == 0:
             let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "header", for: indexPath) as! SavedVerseHeaderTableViewCell
             let index = (indexPath.row - 2)/2
-            
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: savedVersesModel?.getSection(for: index) ?? "")
-            cell.headerLabel.attributedText = attributeString
+            cell.headerLabel.attributedText = setAttributedText(for: indexPath, text: savedVersesModel?.getSection(for: index) ?? "")
             cell.row = indexPath.row
             cell.savedVerseHeaderDelegate = self
             cell.selectionStyle = .none
@@ -77,15 +76,19 @@ extension SavedVerseViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         
-        if (indexPath.row - 2) % 2 == 0 {
+        if (indexPath.row - 2) % 2 == 0 && isEditingSections {
             guard let cell = savedVerseTableView.cellForRow(at: indexPath) as? SavedVerseHeaderTableViewCell else {return}
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: cell.headerLabel.text!)
-            attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-            cell.headerLabel.attributedText = attributeString
-            
+            guard let text = cell.headerLabel.text else {return}
             let index = (indexPath.row - 2)/2
             let section = savedVersesModel?.getSection(for: index) ?? ""
-            itemsToDelete.append(ItemToDelete(section: section, note: nil))
+            if itemsToDeleteIndexPaths.contains(indexPath) {
+                itemsToDeleteIndexPaths = itemsToDeleteIndexPaths.filter({$0 != indexPath})
+                itemsToDelete = itemsToDelete.filter({$0 != ItemToDelete(section: section, note: nil)})
+            } else {
+                itemsToDeleteIndexPaths.append(indexPath)
+                itemsToDelete.append(ItemToDelete(section: section, note: nil))
+            }
+            cell.headerLabel.attributedText = setAttributedText(for: indexPath, text: text)
         }
     }
     

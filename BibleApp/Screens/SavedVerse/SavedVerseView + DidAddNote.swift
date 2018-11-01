@@ -14,6 +14,8 @@ extension SavedVerseViewController: SavedVerseHeaderDelegate {
     }
     
     func didPressAddNote(at row: Int) {
-        addNewNote(for: row+1)
+        if !isEditingSections {
+            addNewNote(for: row+1)
+        }
     }
 }

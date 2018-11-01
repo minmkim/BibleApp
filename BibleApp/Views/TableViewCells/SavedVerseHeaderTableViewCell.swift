@@ -11,7 +11,7 @@ import UIKit
 class SavedVerseHeaderTableViewCell: UITableViewCell {
     
     var row: Int?
-    var savedVerseHeaderDelegate: SavedVerseHeaderDelegate?
+    weak var savedVerseHeaderDelegate: SavedVerseHeaderDelegate?
     
     let headerLabel: UILabel = {
         let hl = UILabel()
@@ -23,7 +23,6 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     let addButton: UIButton = {
         let ab = UIButton(type: .contactAdd)
         ab.tintColor = MainColor.redOrange
-        ab.addTarget(self, action: #selector(didPressAdd), for: .touchUpInside)
         return ab
     }()
     
@@ -35,6 +34,7 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addButton.addTarget(self, action: #selector(didPressAdd), for: .touchUpInside)
         addSubviewsUsingAutoLayout(headerLabel, addButton)
         layoutViews()
     }

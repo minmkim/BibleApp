@@ -18,8 +18,14 @@ extension SavedVerseViewController: SaveVerseBarDelegate {
                 savedVersesModel.removeSection(for: item.section)
             }
         }
+        if !versesToDelete.isEmpty {
+            versesToDelete.forEach({savedVersesModel.deleteVerse($0)})
+            if let cell = savedVerseTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? VersesWithoutSectionTableViewCell {
+                cell.removeVerses()
+            }
+        }
         setupEditView()
-        savedVerseTableView.reloadData()
+//        savedVerseTableView.reloadData()
     }
     
     func didPressAdd() {

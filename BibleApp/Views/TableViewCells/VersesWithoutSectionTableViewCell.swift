@@ -12,7 +12,9 @@ import MobileCoreServices
 class VersesWithoutSectionTableViewCell: SavedVerseTableViewCell {
     
     var savedVerses = [SavedVerse]()
+    var indexPathsToDelete = [IndexPath]()
     var draggedIndexPath: IndexPath?
+    weak var didSelectSavedVersesDelegate: DidSelectSavedVersesDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,6 +37,22 @@ class VersesWithoutSectionTableViewCell: SavedVerseTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func removeVerses() {
+        indexPathsToDelete.sort(by: {$0.row > $1.row})
+        for index in self.indexPathsToDelete {
+            self.savedVerses.remove(at: index.item)
+        }
+        DispatchQueue.main.async {
+            self.savedVerseCollectionView.deleteItems(at: self.indexPathsToDelete)
+            self.indexPathsToDelete.removeAll()
+        }
+        savedVerseCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    func setDeleteImage(forIndexPath: IndexPath) -> Bool {
+        return indexPathsToDelete.contains(forIndexPath) ? false : true
+    }
+    
 }
 
 extension VersesWithoutSectionTableViewCell {
@@ -46,6 +64,7 @@ extension VersesWithoutSectionTableViewCell {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = savedVerseCollectionView.dequeueReusableCell(withReuseIdentifier: "verse", for: indexPath) as! VerseCollectionViewCell
         cell.verse = savedVerses[indexPath.item]
+        cell.deleteImage.isHidden = setDeleteImage(forIndexPath: indexPath)
         return cell
     }
     
@@ -69,6 +88,19 @@ extension VersesWithoutSectionTableViewCell {
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline)], context: nil)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = savedVerseCollectionView.cellForItem(at: indexPath) as? VerseCollectionViewCell else {return}
+        guard let verse = cell.verse else {return}
+        if cell.deleteImage.isHidden {
+            cell.deleteImage.isHidden = false
+            indexPathsToDelete.append(indexPath)
+        } else {
+            cell.deleteImage.isHidden = true
+            indexPathsToDelete = indexPathsToDelete.filter({$0 != indexPath})
+        }
+        didSelectSavedVersesDelegate?.didPress(forVerse: verse)
+    }
+    
 }
 
 extension VersesWithoutSectionTableViewCell: UICollectionViewDragDelegate {
@@ -86,4 +118,8 @@ extension VersesWithoutSectionTableViewCell: UICollectionViewDragDelegate {
     
     
     
+}
+
+protocol DidSelectSavedVersesDelegate: class {
+    func didPress(forVerse savedVerse: SavedVerse)
 }

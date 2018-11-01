@@ -9,11 +9,7 @@
 import XCTest
 @testable import BibleApp
 
-class VerseSearchControllerTest: XCTestCase, SearchVerseDelegate {
-    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int) {
-        testCase = "\(book) \(chapter):\(verse)"
-    }
-    
+class VerseSearchControllerTest: XCTestCase {
     
     var controller: VerseSearchController!
     var testCase: String?
@@ -63,4 +59,11 @@ class VerseSearchControllerTest: XCTestCase, SearchVerseDelegate {
         XCTAssertEqual("Revelation 6", "\(book) \(chapter)")
     }
     
+}
+
+extension VerseSearchControllerTest: SearchVerseDelegate {
+    
+    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int) {
+        testCase = "\(book) \(chapter):\(verse)"
+    }
 }

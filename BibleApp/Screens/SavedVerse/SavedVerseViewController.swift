@@ -11,6 +11,8 @@ import UIKit
 class SavedVerseViewController: UIViewController {
     
     var itemsToDelete = [ItemToDelete]()
+    var itemsToDeleteIndexPaths = [IndexPath]()
+    var versesToDelete = [SavedVerse]()
     var savedVersesModel: SavedVersesController!
     var controllerState = ControllerState.note
     weak var createNewNoteDelegate: CreateNewNoteDelegate?
@@ -82,6 +84,8 @@ class SavedVerseViewController: UIViewController {
             isEditingSections = !isEditingSections
             navigationItem.rightBarButtonItem?.title = "Edit"
             itemsToDelete.removeAll()
+            itemsToDeleteIndexPaths.removeAll()
+            versesToDelete.removeAll()
             savedVerseTableView.reloadData()
             UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
                 self.actionBarTopAnchor = self.actionBar.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: (self.tabBarController?.tabBar.frame.size.height ?? 50))
@@ -168,7 +172,15 @@ class SavedVerseViewController: UIViewController {
         return (index - 3) / 2
     }
     
-    struct ItemToDelete {
+    func setAttributedText(for indexPath: IndexPath, text: String) -> NSMutableAttributedString {
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
+        if itemsToDeleteIndexPaths.contains(indexPath) {
+            attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+        }
+        return attributeString
+    }
+    
+    struct ItemToDelete: Equatable {
         let section: String
         let note: String?
     }

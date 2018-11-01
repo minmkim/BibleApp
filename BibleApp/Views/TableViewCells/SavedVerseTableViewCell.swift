@@ -62,6 +62,8 @@ class SavedVerseTableViewCell: UITableViewCell {
         savedVerseCollectionView.fillContainer(for: self)
     }
     
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -69,6 +71,7 @@ class SavedVerseTableViewCell: UITableViewCell {
 }
 
 extension SavedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

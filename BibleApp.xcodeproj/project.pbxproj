@@ -141,6 +141,7 @@
 		8CC80CFC2184C787009C1606 /* Anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CFB2184C787009C1606 /* Anchors.swift */; };
 		8CD04B94218A5D0200AB121A /* BibleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD04B93218A5D0200AB121A /* BibleAppTests.swift */; };
 		8CD04B9C218A692F00AB121A /* VerseSearchControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD04B9B218A692F00AB121A /* VerseSearchControllerTest.swift */; };
+		8CD04B9E218A7DF700AB121A /* SavedVerseView + DidSelectSavedVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD04B9D218A7DF700AB121A /* SavedVerseView + DidSelectSavedVerse.swift */; };
 		8CD0758F215B025800827675 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
 		8CD07592215B025800827675 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07591215B025800827675 /* IntentViewController.swift */; };
 		8CD07595215B025800827675 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CD07593215B025800827675 /* MainInterface.storyboard */; };
@@ -338,6 +339,7 @@
 		8CD04B93218A5D0200AB121A /* BibleAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleAppTests.swift; sourceTree = "<group>"; };
 		8CD04B95218A5D0200AB121A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CD04B9B218A692F00AB121A /* VerseSearchControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseSearchControllerTest.swift; sourceTree = "<group>"; };
+		8CD04B9D218A7DF700AB121A /* SavedVerseView + DidSelectSavedVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedVerseView + DidSelectSavedVerse.swift"; sourceTree = "<group>"; };
 		8CD07585215B025700827675 /* SearchBible.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SearchBible.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD07587215B025700827675 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		8CD07589215B025700827675 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				A400F03F2118EBFE00F9F9C5 /* UIViews */,
+				8CD04B9F218A859100AB121A /* CollectionViewLayout */,
 				8C05BD79217D574A00AE964B /* TableViews */,
 				8C05BD70217D558E00AE964B /* TableViewCells */,
 				8C05BD71217D55B700AE964B /* CollectionViewCells */,
@@ -618,6 +621,7 @@
 				8C86D3B621893B8400C5C53F /* SavedVerseView + DidDragVerse.swift */,
 				8C86D3B421893B5F00C5C53F /* SavedVerseView + SavedVerseBar.swift */,
 				8C86D3B221893B4100C5C53F /* SavedVerseView + DidPressNote.swift */,
+				8CD04B9D218A7DF700AB121A /* SavedVerseView + DidSelectSavedVerse.swift */,
 			);
 			path = SavedVerse;
 			sourceTree = "<group>";
@@ -630,6 +634,13 @@
 				8CD04B95218A5D0200AB121A /* Info.plist */,
 			);
 			path = BibleAppTests;
+			sourceTree = "<group>";
+		};
+		8CD04B9F218A859100AB121A /* CollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CollectionViewLayout;
 			sourceTree = "<group>";
 		};
 		8CD07586215B025700827675 /* SearchBible */ = {
@@ -1292,6 +1303,7 @@
 				8C146168215B31B100FDF339 /* joel.swift in Sources */,
 				8C146153215B31A800FDF339 /* secondTimothy.swift in Sources */,
 				A43E1D0D21190903008235D6 /* BookTableController.swift in Sources */,
+				8CD04B9E218A7DF700AB121A /* SavedVerseView + DidSelectSavedVerse.swift in Sources */,
 				8C266067214E05C600EFAE42 /* SearchCoordinator.swift in Sources */,
 				8C14616F215B31B100FDF339 /* micah.swift in Sources */,
 				8C146151215B31A800FDF339 /* secondPeter.swift in Sources */,

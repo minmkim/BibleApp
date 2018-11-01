@@ -117,14 +117,4 @@ extension SavedVerseTableViewCell: UICollectionViewDropDelegate {
             })
         }
     }
-    
-    
-}
-
-protocol DidPressNoteDelegate: class {
-    func didPressNote(at indexPath: IndexPath, row: Int, note: String)
-}
-
-protocol DidDragVerseDelegate: class {
-    func didDragVerse(for verse: SavedVerse, note: String, row: Int)
 }

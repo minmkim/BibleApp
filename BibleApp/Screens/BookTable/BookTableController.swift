@@ -222,14 +222,3 @@ extension BookTableController: CreateNewNoteDelegate {
     
 }
 
-protocol ChangeChapterDelegate: class {
-    func previousChapter()
-    func nextChapter()
-    func goToChapter(_ chapter: Int)
-    func closeController()
-}
-
-protocol SaveVerseDelegate: class {
-    func presentSaveVerses()
-}
-

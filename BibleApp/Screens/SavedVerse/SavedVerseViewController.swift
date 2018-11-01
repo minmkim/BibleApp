@@ -192,11 +192,3 @@ class SavedVerseViewController: UIViewController {
     
 }
 
-protocol OpenNoteDelegate: class {
-    func didPressNote(forNote note: String, index: Int)
-}
-
-protocol OpenVerseDelegate: class {
-    func didPressVerse()
-}
-

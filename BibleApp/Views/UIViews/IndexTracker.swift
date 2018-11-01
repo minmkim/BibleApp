@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-protocol IndexListDelegate: class {
-    func pressedIndex(at index: Int)
-}
-
 final class IndexTracker: UIView {
     
     enum IndexState {

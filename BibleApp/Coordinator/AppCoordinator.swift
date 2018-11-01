@@ -10,9 +10,6 @@ import Foundation
 import UIKit
 import CoreData
 
-protocol Coordinator {
-}
-
 final class AppCoordinator: Coordinator {
     
     enum coordinatorType {

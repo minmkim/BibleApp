@@ -65,8 +65,3 @@ class SavedVerseBar: UIView {
     
     
 }
-
-protocol SaveVerseBarDelegate: class {
-    func didPressTrash()
-    func didPressAdd()
-}

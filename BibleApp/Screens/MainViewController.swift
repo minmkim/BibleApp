@@ -32,6 +32,3 @@ extension MainViewController: UITabBarControllerDelegate {
     }
 }
 
-protocol TabSelectedDelegate: class {
-    func didSelectTab(at index: Int)
-}

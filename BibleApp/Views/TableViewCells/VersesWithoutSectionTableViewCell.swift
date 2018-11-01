@@ -119,11 +119,5 @@ extension VersesWithoutSectionTableViewCell: UICollectionViewDragDelegate {
         return [dragItem]
     }
     
-    
-    
-    
 }
 
-protocol DidSelectSavedVersesDelegate: class {
-    func didPress(forVerse savedVerse: SavedVerse, forIndexPath: IndexPath)
-}

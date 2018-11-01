@@ -109,6 +109,7 @@
 		8C66D910212F489100EE6503 /* CoreDataEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C66D90F212F489100EE6503 /* CoreDataEnum.swift */; };
 		8C66D92121305ECA00EE6503 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
 		8C66D93821306DDA00EE6503 /* VersesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C66D93721306DDA00EE6503 /* VersesDataManager.swift */; };
+		8C76F923218BB659002FED90 /* ChapterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C76F922218BB659002FED90 /* ChapterButton.swift */; };
 		8C79AC31212DA5E300FCD313 /* BibleVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C79AC30212DA5E300FCD313 /* BibleVerse.swift */; };
 		8C79AC33212DA6B500FCD313 /* VerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C79AC32212DA6B500FCD313 /* VerseViewController.swift */; };
 		8C79AC35212E083E00FCD313 /* VerseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C79AC34212E083E00FCD313 /* VerseCollectionViewCell.swift */; };
@@ -304,6 +305,7 @@
 		8C66D92021305ECA00EE6503 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		8C66D93721306DDA00EE6503 /* VersesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesDataManager.swift; sourceTree = "<group>"; };
 		8C71E572216BE72900C91507 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Intents.strings; sourceTree = "<group>"; };
+		8C76F922218BB659002FED90 /* ChapterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterButton.swift; sourceTree = "<group>"; };
 		8C79AC30212DA5E300FCD313 /* BibleVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerse.swift; sourceTree = "<group>"; };
 		8C79AC32212DA6B500FCD313 /* VerseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseViewController.swift; sourceTree = "<group>"; };
 		8C79AC34212E083E00FCD313 /* VerseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -509,6 +511,7 @@
 				A400F03F2118EBFE00F9F9C5 /* UIViews */,
 				8C05BD79217D574A00AE964B /* TableViews */,
 				8C05BD70217D558E00AE964B /* TableViewCells */,
+				8C76F924218BB665002FED90 /* UIButton */,
 				8C05BD71217D55B700AE964B /* CollectionViewCells */,
 			);
 			path = Views;
@@ -594,6 +597,14 @@
 				8C66D93721306DDA00EE6503 /* VersesDataManager.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		8C76F924218BB665002FED90 /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				8C76F922218BB659002FED90 /* ChapterButton.swift */,
+			);
+			path = UIButton;
 			sourceTree = "<group>";
 		};
 		8C79DBED212E4E7200A428C8 /* Frameworks */ = {
@@ -1315,6 +1326,7 @@
 				8C635A89217D5CF80086499C /* VerseViewController + CollectionView.swift in Sources */,
 				8C146141215B31A800FDF339 /* firstThessalonians.swift in Sources */,
 				8C146166215B31B100FDF339 /* jeremiah.swift in Sources */,
+				8C76F923218BB659002FED90 /* ChapterButton.swift in Sources */,
 				8C86D3B521893B5F00C5C53F /* SavedVerseView + SavedVerseBar.swift in Sources */,
 				8C146160215B31B100FDF339 /* firstSamuel.swift in Sources */,
 				8C146143215B31A800FDF339 /* galatians.swift in Sources */,

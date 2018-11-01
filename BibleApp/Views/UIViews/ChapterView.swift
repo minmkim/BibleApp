@@ -178,17 +178,3 @@ extension ChapterView: DidSelectChapterLabelViewDelegate {
         chapterPressDelegate?.didPressChapterLabel(for: chapter)
     }
 }
-
-protocol ChapterPressDelegate: class {
-    func didPressPreviousChapter()
-    func didPressNextChapter()
-    func didPressChapterLabel(for chapter: Int)
-}
-
-class chapterButton: UIButton {
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        let padding = CGFloat(20)
-        let extendedBounds = bounds.insetBy(dx: -padding, dy: -padding)
-        return extendedBounds.contains(point)
-    }
-}

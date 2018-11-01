@@ -90,7 +90,3 @@ extension ChapterTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
 }
-
-protocol DidSelectChapterCVDelegate: class {
-    func didSelectChapter(for chapter: Int)
-}

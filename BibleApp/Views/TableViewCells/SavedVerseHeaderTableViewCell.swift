@@ -83,7 +83,4 @@ class SavedVerseHeaderTableViewCell: UITableViewCell {
     
 }
 
-protocol SavedVerseHeaderDelegate: class {
-    func didPressAddNote(at row: Int)
-    func didPressCancel()
-}
+

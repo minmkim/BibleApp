@@ -135,6 +135,3 @@ extension SearchViewController: UpdateSearchBarDelegate {
     
 }
 
-protocol ChangeSearchControllerDelegate: class {
-    func didChangeSearch(for index: Int)
-}

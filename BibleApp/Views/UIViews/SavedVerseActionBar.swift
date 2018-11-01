@@ -69,7 +69,4 @@ class SavedVerseActionBar: UIView {
     
 }
 
-protocol SavedVerseActionBarDelegate: class {
-    func didPressTrash()
-    func didPressShare()
-}
+

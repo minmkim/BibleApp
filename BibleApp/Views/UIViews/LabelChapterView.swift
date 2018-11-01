@@ -91,7 +91,3 @@ extension LabelChapterView: UICollectionViewDelegateFlowLayout, UICollectionView
         return CGSize(width: cellWidth, height: 30)
     }
 }
-
-protocol DidSelectChapterLabelViewDelegate: class {
-    func didSelectChapter(at chapter: Int)
-}

@@ -138,8 +138,4 @@ extension BibleViewController: DidSelectChapterCVDelegate {
     
 }
 
-protocol BibleCoordinatorDelegate: class {
-    func openBibleWebsite(for indexPath: IndexPath)
-    func openBibleChapter(book: String, chapter: Int)
-}
 

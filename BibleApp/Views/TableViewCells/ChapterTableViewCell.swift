@@ -22,6 +22,7 @@ class ChapterTableViewCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.showsHorizontalScrollIndicator = false
+        cv.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         cv.register(ChapterCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         cv.backgroundColor = .white
         return cv

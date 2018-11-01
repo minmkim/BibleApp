@@ -319,39 +319,4 @@ final class VersesDataManager {
         }
     }
     
-    func preloadDBData() {
-        let sqlitePath = Bundle.main.path(forResource: "MtZion", ofType: "sqlite")
-        let sqlitePath_shm = Bundle.main.path(forResource: "MtZion", ofType: "sqlite-shm")
-        let sqlitePath_wal = Bundle.main.path(forResource: "MtZion", ofType: "sqlite-wal")
-        
-        let URL1 = URL(fileURLWithPath: sqlitePath!)
-        let URL2 = URL(fileURLWithPath: sqlitePath_shm!)
-        let URL3 = URL(fileURLWithPath: sqlitePath_wal!)
-        let URL4 = URL(fileURLWithPath: NSPersistentContainer.defaultDirectoryURL().relativePath + "/MtZion.sqlite")
-        let URL5 = URL(fileURLWithPath: NSPersistentContainer.defaultDirectoryURL().relativePath + "/MtZion.sqlite-shm")
-        let URL6 = URL(fileURLWithPath: NSPersistentContainer.defaultDirectoryURL().relativePath + "/MtZion.sqlite-wal")
-        
-        if !FileManager.default.fileExists(atPath: NSPersistentContainer.defaultDirectoryURL().relativePath + "/MtZion.sqlite") {
-            // Copy 3 files
-            do {
-                try FileManager.default.copyItem(at: URL1, to: URL4)
-                try FileManager.default.copyItem(at: URL2, to: URL5)
-                try FileManager.default.copyItem(at: URL3, to: URL6)
-                
-                print("=======================")
-                print("FILES COPIED")
-                print("=======================")
-                
-            } catch {
-                print("=======================")
-                print("ERROR IN COPY OPERATION")
-                print("=======================")
-            }
-        } else {
-            print("=======================")
-            print("FILES EXIST")
-            print("=======================")
-        }
-    }
-    
 }

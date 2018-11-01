@@ -63,6 +63,7 @@ class SavedVerseViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
         savedVersesModel?.loadHeadersAndNotes()
         savedVerseTableView.reloadData()
         navigationItem.title = ""

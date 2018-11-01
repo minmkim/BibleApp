@@ -48,6 +48,8 @@ class VerseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.view.backgroundColor = .white
         guard let note = navigationItem.title else {return}
         savedVerses = savedVersesModel?.loadVerses(for: note, section: section) ?? []
         verseCollectionView.reloadData()

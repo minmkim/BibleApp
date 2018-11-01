@@ -148,7 +148,6 @@ extension AppCoordinator: TabSelectedDelegate {
 
 extension AppCoordinator: BibleVerseDelegate {
     func openBibleVerse(book: String, chapter: Int, verse: Int) {
-//        coordinatorDict = [:]
         let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible, savedVersesController: savedVersesController)
         coordinatorDict[coordinatorType.bible] = bibleCoordinator
         bibleViewController.navigationController?.popToRootViewController(animated: false)

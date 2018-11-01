@@ -28,7 +28,6 @@ final class Bible {
         self.verseDataManager = verseDataManager
         let didCreateCoreDataBible = UserDefaults.standard.bool(forKey: "didCreateCoreDataBible")
         if !didCreateCoreDataBible {
-            verseDataManager.preloadDBData()
             UserDefaults.standard.set(true, forKey: "didCreateCoreDataBible")
             loadBible()
         } else {

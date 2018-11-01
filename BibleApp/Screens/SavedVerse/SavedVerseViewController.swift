@@ -34,13 +34,11 @@ class SavedVerseViewController: UIViewController {
     let containerView: UIView = {
         let cv = UIView()
         cv.backgroundColor = .white
-        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
     let savedVerseTableView: UITableView = {
         let sv = UITableView(frame: .zero, style: .plain)
-        sv.translatesAutoresizingMaskIntoConstraints = false
         sv.register(SavedVerseTableViewCell.self, forCellReuseIdentifier: "cell")
         sv.register(SavedVerseHeaderTableViewCell.self, forCellReuseIdentifier: "header")
         sv.register(VersesWithoutSectionTableViewCell.self, forCellReuseIdentifier: "noSectionVerse")
@@ -53,7 +51,6 @@ class SavedVerseViewController: UIViewController {
     
     lazy var actionBar: SavedVerseBar = {
         let ab = SavedVerseBar()
-        ab.translatesAutoresizingMaskIntoConstraints = false
         ab.saveVerseBarDelegate = self
         return ab
     }()
@@ -68,12 +65,12 @@ class SavedVerseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         savedVersesModel?.loadHeadersAndNotes()
         savedVerseTableView.reloadData()
+        navigationItem.title = ""
     }
     
     func setupViews() {
-        view.addSubview(containerView)
-        view.addSubview(actionBar)
-        containerView.addSubview(savedVerseTableView)
+        view.addSubviewsUsingAutoLayout(containerView, actionBar)
+        containerView.addSubviewsUsingAutoLayout(savedVerseTableView)
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = false
         let rightButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(didPressEdit))

@@ -13,15 +13,12 @@ extension SavedVerseViewController {
     
     func layoutViews() {
         containerView.fillContainer(for: view)
-        savedVerseTableView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        savedVerseTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        savedVerseTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        savedVerseTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+        savedVerseTableView.fillContainer(for: containerView)
         
-        actionBar.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        actionBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        actionBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        actionBarTopAnchor = actionBar.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
+        actionBar.widthAnchor.constrain(to: view.widthAnchor)
+        actionBar.heightAnchor.constrain(to: 40)
+        actionBar.leadingAnchor.constrain(to: view.leadingAnchor)
+        actionBarTopAnchor = actionBar.topAnchor.constrain(to: view.bottomAnchor, with: -40)
         actionBarTopAnchor?.isActive = true
     }
     

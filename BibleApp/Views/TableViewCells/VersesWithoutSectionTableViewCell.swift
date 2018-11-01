@@ -49,8 +49,19 @@ class VersesWithoutSectionTableViewCell: SavedVerseTableViewCell {
         savedVerseCollectionView.collectionViewLayout.invalidateLayout()
     }
     
-    func setDeleteImage(forIndexPath: IndexPath) -> Bool {
+    func isDeleteImageHidden(forIndexPath: IndexPath) -> Bool {
         return indexPathsToDelete.contains(forIndexPath) ? false : true
+    }
+    
+    func setDeleteImage(for indexPath: IndexPath) {
+        guard let cell = savedVerseCollectionView.cellForItem(at: indexPath) as? VerseCollectionViewCell else {return}
+        if !indexPathsToDelete.contains(indexPath) {
+            indexPathsToDelete.append(indexPath)
+            cell.deleteImage.isHidden = false
+        } else {
+            indexPathsToDelete = indexPathsToDelete.filter({$0 != indexPath})
+            cell.deleteImage.isHidden = true
+        }
     }
     
 }
@@ -64,7 +75,7 @@ extension VersesWithoutSectionTableViewCell {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = savedVerseCollectionView.dequeueReusableCell(withReuseIdentifier: "verse", for: indexPath) as! VerseCollectionViewCell
         cell.verse = savedVerses[indexPath.item]
-        cell.deleteImage.isHidden = setDeleteImage(forIndexPath: indexPath)
+        cell.deleteImage.isHidden = isDeleteImageHidden(forIndexPath: indexPath)
         return cell
     }
     
@@ -91,14 +102,7 @@ extension VersesWithoutSectionTableViewCell {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = savedVerseCollectionView.cellForItem(at: indexPath) as? VerseCollectionViewCell else {return}
         guard let verse = cell.verse else {return}
-        if cell.deleteImage.isHidden {
-            cell.deleteImage.isHidden = false
-            indexPathsToDelete.append(indexPath)
-        } else {
-            cell.deleteImage.isHidden = true
-            indexPathsToDelete = indexPathsToDelete.filter({$0 != indexPath})
-        }
-        didSelectSavedVersesDelegate?.didPress(forVerse: verse)
+        didSelectSavedVersesDelegate?.didPress(forVerse: verse, forIndexPath: indexPath)
     }
     
 }
@@ -121,5 +125,5 @@ extension VersesWithoutSectionTableViewCell: UICollectionViewDragDelegate {
 }
 
 protocol DidSelectSavedVersesDelegate: class {
-    func didPress(forVerse savedVerse: SavedVerse)
+    func didPress(forVerse savedVerse: SavedVerse, forIndexPath: IndexPath)
 }

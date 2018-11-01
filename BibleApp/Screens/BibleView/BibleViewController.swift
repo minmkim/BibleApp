@@ -55,8 +55,8 @@ class BibleViewController: UIViewController {
     func setupDominantHand() {
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
         if dominantHand == nil {
-            UserDefaults.standard.set("Left", forKey: "DominantHand")
-            dominantHand = "Left"
+            UserDefaults.standard.set(DominantHand.left.rawValue, forKey: "DominantHand")
+            dominantHand = DominantHand.left.rawValue
         }
     }
     

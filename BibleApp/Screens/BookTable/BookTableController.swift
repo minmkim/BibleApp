@@ -22,7 +22,7 @@ class BookTableController: UIViewController {
     }
     var isSelecting = false
     var selectedVerses = [IndexPath]()
-    var dominantHand = "Left"
+    var dominantHand = DominantHand.left.rawValue
     var verseArray = [String]()
     var indexPathToSave: IndexPath?
     var numberOfChapters: Int? {
@@ -54,7 +54,7 @@ class BookTableController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? "Left"
+        dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? DominantHand.left.rawValue
         setupViews()
         setupDelegates()
     }
@@ -123,7 +123,7 @@ class BookTableController: UIViewController {
     var indexListTrailingAnchor: NSLayoutConstraint?
     
     func setDominantHandIndexLayout() {
-        if dominantHand == "Left" {
+        if dominantHand == DominantHand.left.rawValue {
             indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
             indexListLeadingAnchor?.isActive = true
         } else {

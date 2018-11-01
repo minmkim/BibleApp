@@ -18,6 +18,7 @@ class SavedVerseViewController: UIViewController {
     weak var createNewNoteDelegate: CreateNewNoteDelegate?
     weak var didSelectNoteDelegate: DidSelectNoteDelegate?
     weak var openNoteDelegate: OpenNoteDelegate?
+    weak var savedVerseDelegate: SavedVerseDelegate?
     var heightOfRows = [IndexPath:CGFloat]()
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, state: ControllerState, savedVersesModel: SavedVersesController) {

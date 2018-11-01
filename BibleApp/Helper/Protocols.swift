@@ -56,3 +56,7 @@ protocol CreateNewNoteDelegate: class {
 protocol DidSelectNoteDelegate: class {
     func selectedNoteSection(note: String, section: String)
 }
+
+protocol BibleVerseDelegate: class {
+    func openBibleVerse(book: String, chapter: Int, verse: Int)
+}

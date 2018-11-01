@@ -10,7 +10,7 @@ import UIKit
 
 final class BookTableViewCell: UITableViewCell {
     
-    var dominantHand = "Left"
+    var dominantHand = DominantHand.left.rawValue
     
     var bibleVerse: String? {
         didSet {
@@ -49,7 +49,7 @@ final class BookTableViewCell: UITableViewCell {
     }
     
     func layoutViews() {
-        if dominantHand == "Left" {
+        if dominantHand == DominantHand.left.rawValue {
             verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 12))
             
             numberLabel.topAnchor.constrain(to: verseText.topAnchor)

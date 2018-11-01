@@ -14,6 +14,7 @@ final class VerseCoordinator: Coordinator {
     weak var bibleVerseDelegate: BibleVerseDelegate?
     let savedVerseController: SavedVerseViewController
     var savedVersesModel: SavedVersesController
+    var currentVerseViewController: VerseViewController?
     
     
     deinit {
@@ -23,13 +24,12 @@ final class VerseCoordinator: Coordinator {
     init(savedVerseController: SavedVerseViewController, savedVersesModel: SavedVersesController) {
         self.savedVerseController = savedVerseController
         self.savedVersesModel = savedVersesModel
+        savedVerseController.savedVerseDelegate = self
         savedVerseController.openNoteDelegate = self
     }
     
 }
 
-
-//need to include this into new controller
 extension VerseCoordinator: SavedVerseDelegate {
     func requestToOpenVerse(for verse: SavedVerse) {
         bibleVerseDelegate?.openBibleVerse(book: verse.book, chapter: verse.chapter, verse: verse.verse)
@@ -41,14 +41,14 @@ extension VerseCoordinator: SavedVerseDelegate {
 extension VerseCoordinator: OpenNoteDelegate {
     func didPressNote(forNote note: String, index: Int) {
         let controller = VerseViewController()
+        currentVerseViewController = controller
         controller.savedVersesModel = savedVersesModel
         controller.navigationItem.title = note
+        controller.savedVerseDelegate = self
         let section = savedVersesModel.getSection(for: index)
         controller.section = section
         savedVerseController.navigationController?.pushViewController(controller, animated: true)
     }    
 }
 
-protocol BibleVerseDelegate: class {
-    func openBibleVerse(book: String, chapter: Int, verse: Int)
-}
+

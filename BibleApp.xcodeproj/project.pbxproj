@@ -142,6 +142,7 @@
 		8CD04B94218A5D0200AB121A /* BibleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD04B93218A5D0200AB121A /* BibleAppTests.swift */; };
 		8CD04B9C218A692F00AB121A /* VerseSearchControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD04B9B218A692F00AB121A /* VerseSearchControllerTest.swift */; };
 		8CD04B9E218A7DF700AB121A /* SavedVerseView + DidSelectSavedVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD04B9D218A7DF700AB121A /* SavedVerseView + DidSelectSavedVerse.swift */; };
+		8CD04BA5218AAD4000AB121A /* DominantHandEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD04BA4218AAD4000AB121A /* DominantHandEnum.swift */; };
 		8CD0758F215B025800827675 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C66D92021305ECA00EE6503 /* IntentsUI.framework */; };
 		8CD07592215B025800827675 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD07591215B025800827675 /* IntentViewController.swift */; };
 		8CD07595215B025800827675 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CD07593215B025800827675 /* MainInterface.storyboard */; };
@@ -340,6 +341,7 @@
 		8CD04B95218A5D0200AB121A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CD04B9B218A692F00AB121A /* VerseSearchControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseSearchControllerTest.swift; sourceTree = "<group>"; };
 		8CD04B9D218A7DF700AB121A /* SavedVerseView + DidSelectSavedVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedVerseView + DidSelectSavedVerse.swift"; sourceTree = "<group>"; };
+		8CD04BA4218AAD4000AB121A /* DominantHandEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DominantHandEnum.swift; sourceTree = "<group>"; };
 		8CD07585215B025700827675 /* SearchBible.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SearchBible.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD07587215B025700827675 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		8CD07589215B025700827675 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -505,7 +507,6 @@
 			isa = PBXGroup;
 			children = (
 				A400F03F2118EBFE00F9F9C5 /* UIViews */,
-				8CD04B9F218A859100AB121A /* CollectionViewLayout */,
 				8C05BD79217D574A00AE964B /* TableViews */,
 				8C05BD70217D558E00AE964B /* TableViewCells */,
 				8C05BD71217D55B700AE964B /* CollectionViewCells */,
@@ -636,13 +637,6 @@
 			path = BibleAppTests;
 			sourceTree = "<group>";
 		};
-		8CD04B9F218A859100AB121A /* CollectionViewLayout */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CollectionViewLayout;
-			sourceTree = "<group>";
-		};
 		8CD07586215B025700827675 /* SearchBible */ = {
 			isa = PBXGroup;
 			children = (
@@ -761,6 +755,7 @@
 			isa = PBXGroup;
 			children = (
 				8C66D90F212F489100EE6503 /* CoreDataEnum.swift */,
+				8CD04BA4218AAD4000AB121A /* DominantHandEnum.swift */,
 				8CC80CFB2184C787009C1606 /* Anchors.swift */,
 				8CC80CF72183E89D009C1606 /* String.swift */,
 				8C80FEDE2131B51B006BF071 /* Array.swift */,
@@ -1245,6 +1240,7 @@
 				8C146170215B31B100FDF339 /* nahum.swift in Sources */,
 				8CE3DBD4216025F20069692C /* SearchHeader.swift in Sources */,
 				8C635A81217D5C160086499C /* BookTableController + UI.swift in Sources */,
+				8CD04BA5218AAD4000AB121A /* DominantHandEnum.swift in Sources */,
 				8C146162215B31B100FDF339 /* habakkuk.swift in Sources */,
 				8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */,
 				8C146176215B31B100FDF339 /* ruth.swift in Sources */,

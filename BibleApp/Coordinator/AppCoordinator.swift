@@ -104,13 +104,14 @@ extension AppCoordinator: TabSelectedDelegate {
                 if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
                     if coordinator.currentBookController != nil {
                         let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController, savedVersesModel: savedVersesController)
-                        //                        verseCoordinator.bibleVerseDelegate = self
+                        verseCoordinator.bibleVerseDelegate = self
                         coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
                         return
                     }
                 }
                 coordinatorDict = [:]
                 let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController, savedVersesModel: savedVersesController)
+                verseCoordinator.bibleVerseDelegate = self
                 coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
             }
         case 2:
@@ -147,7 +148,7 @@ extension AppCoordinator: TabSelectedDelegate {
 
 extension AppCoordinator: BibleVerseDelegate {
     func openBibleVerse(book: String, chapter: Int, verse: Int) {
-        coordinatorDict = [:]
+//        coordinatorDict = [:]
         let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible, savedVersesController: savedVersesController)
         coordinatorDict[coordinatorType.bible] = bibleCoordinator
         bibleViewController.navigationController?.popToRootViewController(animated: false)

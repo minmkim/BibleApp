@@ -24,8 +24,8 @@ class SettingsTableViewController: UITableViewController {
     func setupDominantHand() {
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand")
         if dominantHand == nil {
-            UserDefaults.standard.set("Left", forKey: "DominantHand")
-            dominantHand = "Left"
+            UserDefaults.standard.set(DominantHand.left.rawValue, forKey: "DominantHand")
+            dominantHand = DominantHand.left.rawValue
             tableView.reloadData()
         }
     }
@@ -95,7 +95,7 @@ class SettingsTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.tintColor = MainColor.redOrange
             cell.textLabel?.text = "Left Hand"
-            if dominantHand == "Left" {
+            if dominantHand == DominantHand.left.rawValue {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -105,7 +105,7 @@ class SettingsTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.tintColor = MainColor.redOrange
             cell.textLabel?.text = "Right Hand"
-            if dominantHand == "Right" {
+            if dominantHand == DominantHand.right.rawValue {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -151,22 +151,22 @@ class SettingsTableViewController: UITableViewController {
 //            cell.containerView.isHidden = false
         case (0,0):
             let cell = tableView.cellForRow(at: indexPath)
-            if dominantHand == "Right" {
+            if dominantHand == DominantHand.right.rawValue {
                 cell?.accessoryType = .checkmark
                 let defaults = UserDefaults.standard
-                defaults.set("Left", forKey: "DominantHand")
-                dominantHand = "Left"
+                defaults.set(DominantHand.left.rawValue, forKey: "DominantHand")
+                dominantHand = DominantHand.left.rawValue
                 let otherIndex = IndexPath(row: 1, section: 0)
                 let otherCell = tableView.cellForRow(at: otherIndex)
                 otherCell?.accessoryType = .none
             }
         case (0,1):
             let cell = tableView.cellForRow(at: indexPath)
-            if dominantHand == "Left" {
+            if dominantHand == DominantHand.left.rawValue {
                 cell?.accessoryType = .checkmark
                 let defaults = UserDefaults.standard
-                defaults.set("Right", forKey: "DominantHand")
-                dominantHand = "Right"
+                defaults.set(DominantHand.right.rawValue, forKey: "DominantHand")
+                dominantHand = DominantHand.right.rawValue
                 let otherIndex = IndexPath(row: 0, section: 0)
                 let otherCell = tableView.cellForRow(at: otherIndex)
                 otherCell?.accessoryType = .none

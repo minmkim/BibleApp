@@ -23,7 +23,7 @@ extension BibleViewController {
     }
     
     func setLayoutForDominantHand() {
-        if dominantHand == "Left" {
+        if dominantHand == DominantHand.left.rawValue {
             indexListLeadingAnchor = indexList.leadingAnchor.constrain(to: containerView.leadingAnchor)
             indexListLeadingAnchor?.isActive = true
             indexListTrailingAnchor = indexList.trailingAnchor.constrain(to: bibleTableView.leadingAnchor)

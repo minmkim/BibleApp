@@ -116,9 +116,9 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
 extension BibleCoordinator: SaveVerseDelegate {
     func presentSaveVerses() {
         let controller = SavedVerseViewController(state: .search, savedVersesModel: savedVersesController)
-        currentBookController?.present(controller, animated: true, completion: nil)
         controller.didSelectNoteDelegate = currentBookController
         controller.createNewNoteDelegate = currentBookController
+        currentBookController?.present(controller, animated: true, completion: nil)
     }
     
     

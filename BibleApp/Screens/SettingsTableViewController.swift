@@ -10,7 +10,7 @@ import UIKit
 import Intents
 import IntentsUI
 
-class SettingsTableViewController: UITableViewController {
+final class SettingsTableViewController: UITableViewController {
     
     var dominantHand: String?
 

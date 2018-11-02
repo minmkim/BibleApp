@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SavedVerseViewController: UIViewController {
+final class SavedVerseViewController: UIViewController {
     
     var itemsToDelete = [ItemToDelete]()
     var itemsToDeleteIndexPaths = [IndexPath]()

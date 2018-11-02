@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class VerseViewController: UIViewController {
+final class VerseViewController: UIViewController {
     
     weak var savedVerseDelegate: SavedVerseDelegate?
     var savedVerses = [SavedVerse]()

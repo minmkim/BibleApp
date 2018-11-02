@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CloudKit
 
-class BookTableController: UIViewController {
+final class BookTableController: UIViewController {
     
     var savedVersesController: SavedVersesController!
     weak var changeChapterDelegate: ChangeChapterDelegate?

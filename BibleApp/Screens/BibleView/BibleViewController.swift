@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BibleViewController: UIViewController {
+final class BibleViewController: UIViewController {
     
     var bible: Bible!
     var selectedBookIndexPath: IndexPath? {

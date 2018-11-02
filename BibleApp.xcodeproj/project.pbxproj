@@ -588,15 +588,16 @@
 			path = VerseView;
 			sourceTree = "<group>";
 		};
-		8C66D93621306DD100EE6503 /* Data */ = {
+		8C66D93621306DD100EE6503 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				8C66D908212F442B00EE6503 /* MtZion.xcdatamodeld */,
 				8C8D58FF215C831600316CFE /* MtZion.sqlite */,
 				8C8D58FE215C831600316CFE /* MtZion.sqlite-shm */,
 				8C8D5900215C831600316CFE /* MtZion.sqlite-wal */,
 				8C66D93721306DDA00EE6503 /* VersesDataManager.swift */,
 			);
-			path = Data;
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 		8C76F924218BB665002FED90 /* UIButton */ = {
@@ -823,10 +824,9 @@
 				A4FD29722118CDB7008E0A69 /* Model */,
 				A4FD29732118CDC3008E0A69 /* Screens */,
 				8C1A1E49214DA169007DE952 /* Coordinator */,
-				8C66D93621306DD100EE6503 /* Data */,
+				8C66D93621306DD100EE6503 /* Core Data */,
 				8CF05637214E10F700CD7AE5 /* Helper */,
 				8C79DBF0212E4E9300A428C8 /* Network */,
-				8C66D908212F442B00EE6503 /* MtZion.xcdatamodeld */,
 				A4FD28F32118922F008E0A69 /* Info.plist */,
 				8C266068214E0FDB00EFAE42 /* Resources */,
 				8C79DBEC212E4E7000A428C8 /* BibleApp.entitlements */,

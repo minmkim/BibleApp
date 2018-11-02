@@ -42,7 +42,7 @@ class VersesWithoutSectionTableViewCell: SavedVerseTableViewCell {
         for index in self.indexPathsToDelete {
             self.savedVerses.remove(at: index.item)
         }
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
             self.savedVerseCollectionView.deleteItems(at: self.indexPathsToDelete)
             self.indexPathsToDelete.removeAll()
         }

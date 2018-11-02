@@ -172,7 +172,7 @@ extension ChapterView: DidSelectChapterLabelViewDelegate {
         labelChapterViewTopAnchor?.isActive = false
         labelChapterViewTopAnchor = labelChapterView.topAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         labelChapterViewTopAnchor?.isActive = true
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: { [unowned self] in
             self.layoutIfNeeded()
         }, completion: nil)
         chapterPressDelegate?.didPressChapterLabel(for: chapter)

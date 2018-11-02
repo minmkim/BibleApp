@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: UITableViewController {
+final class SearchViewController: UITableViewController {
     
     weak var changeSearchControllerDelegate: ChangeSearchControllerDelegate?
     let searchController = UISearchController(searchResultsController: nil)

@@ -84,8 +84,8 @@ final class SavedVersesController {
     }
     
     func updateVerseToNote(verse: SavedVerse, note: String, section: String) {
-        DispatchQueue.main.async {
-            self.dataManager.updateVerseAfterDrag(verse: verse, newSection: section, newNote: note)
+        DispatchQueue.main.async { [weak self] in
+            self?.dataManager.updateVerseAfterDrag(verse: verse, newSection: section, newNote: note)
         }
         
     }

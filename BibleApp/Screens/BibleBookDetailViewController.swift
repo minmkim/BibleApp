@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
+final class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     
     var book: String! {
         didSet {
@@ -90,8 +90,7 @@ class BibleBookDetailViewController: UIViewController, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         spinner.stopAnimating()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) { [unowned self] in
             self.webKitView.isHidden = false
         }
     }

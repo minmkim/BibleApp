@@ -34,7 +34,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSSiriUsageDescription</key>
-	<string>Search verses using Siri</string>
+	<string>Mt. Zion would like to access Siri in order to have custom siri shortcut support. To then activate this feature, please go to the shortcuts app.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>SearchBibleIntentIntent</string>

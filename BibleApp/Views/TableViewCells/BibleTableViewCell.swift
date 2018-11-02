@@ -28,11 +28,6 @@ class BibleTableViewCell: UITableViewCell {
         return bl
     }()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -56,7 +51,6 @@ class BibleTableViewCell: UITableViewCell {
             labelLeadingAnchor = bookLabel.leadingAnchor.constrain(to: leadingAnchor, with: 20)
             labelLeadingAnchor?.isActive = true
         }
-        
         bookLabel.heightAnchor.constrain(to: 20)
         bookLabel.widthAnchor.constrain(.lessThanOrEqual, to: widthAnchor, multiplyBy: 3/4)
     }

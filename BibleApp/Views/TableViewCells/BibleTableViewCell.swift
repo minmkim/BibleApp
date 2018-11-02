@@ -10,6 +10,7 @@ import UIKit
 
 class BibleTableViewCell: UITableViewCell {
     
+    var labelLeadingAnchor: NSLayoutConstraint?
     var bibleBook: String? {
         didSet {
             if let book = bibleBook {
@@ -17,6 +18,8 @@ class BibleTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    var dominantHand = DominantHand.left.rawValue
     
     let bookLabel: UILabel = {
        let bl = UILabel()
@@ -44,8 +47,16 @@ class BibleTableViewCell: UITableViewCell {
     }
     
     func layoutViews() {
+        labelLeadingAnchor?.isActive = false
         bookLabel.centerYAnchor.constrain(to: centerYAnchor)
-        bookLabel.leadingAnchor.constrain(to: leadingAnchor, with: 12)
+        if dominantHand == DominantHand.left.rawValue {
+            labelLeadingAnchor = bookLabel.leadingAnchor.constrain(to: leadingAnchor, with: 12)
+            labelLeadingAnchor?.isActive = true
+        } else {
+            labelLeadingAnchor = bookLabel.leadingAnchor.constrain(to: leadingAnchor, with: 20)
+            labelLeadingAnchor?.isActive = true
+        }
+        
         bookLabel.heightAnchor.constrain(to: 20)
         bookLabel.widthAnchor.constrain(.lessThanOrEqual, to: widthAnchor, multiplyBy: 3/4)
     }

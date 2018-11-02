@@ -93,6 +93,7 @@ final class BibleViewController: UIViewController {
             guard let indexListLeadingAnchor = indexListLeadingAnchor, let indexListTrailingAnchor = indexListTrailingAnchor, let containerViewLeadingAnchor = bibleTableViewLeadingAnchor, let containerViewTrailingAnchor = bibleTableViewTrailingAnchor else {return}
             NSLayoutConstraint.deactivate([indexListLeadingAnchor, indexListTrailingAnchor, containerViewLeadingAnchor, containerViewTrailingAnchor])
             setLayoutForDominantHand()
+            bibleTableView.reloadData()
         }
     }
     

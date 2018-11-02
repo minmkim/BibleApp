@@ -22,6 +22,7 @@ extension BibleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BibleTableViewCell
+            cell.dominantHand = dominantHand ?? DominantHand.left.rawValue
             cell.bibleBook = bible.returnBook(for: indexPath.section)
             return cell
         } else {

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SearchHeader: UIView {
+final class SearchHeader: UIView {
     
     let headerLabel: UILabel = {
         let hl = UILabel()

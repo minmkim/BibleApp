@@ -132,6 +132,5 @@ extension SearchViewController: UpdateSearchBarDelegate {
         searchController.searchBar.text = text
     }
     
-    
 }
 

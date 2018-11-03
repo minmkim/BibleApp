@@ -20,6 +20,8 @@ final class SavedVerseViewController: UIViewController {
     weak var openNoteDelegate: OpenNoteDelegate?
     weak var savedVerseDelegate: SavedVerseDelegate?
     var heightOfRows = [IndexPath:CGFloat]()
+    var isEditingSections = false
+    var actionBarTopAnchor: NSLayoutConstraint?
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, state: ControllerState, savedVersesModel: SavedVersesController) {
         controllerState = state
@@ -64,7 +66,7 @@ final class SavedVerseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
-        savedVersesModel?.loadHeadersAndNotes()
+        savedVersesModel?.loadSectionsAndNotes()
         savedVerseTableView.reloadData()
         navigationItem.title = ""
     }
@@ -112,10 +114,6 @@ final class SavedVerseViewController: UIViewController {
         savedVerseTableView.delegate = self
         savedVerseTableView.dataSource = self
     }
-    
-    var isEditingSections = false
-    var actionBarTopAnchor: NSLayoutConstraint?
-    
     
     @objc func textDidChange(_ sender: UITextField) {
         let alertController: UIAlertController = self.presentedViewController as! UIAlertController

@@ -22,6 +22,17 @@ final class IndexTracker: UIView {
     var frameHeight: CGFloat?
     var skipCounter = 1
     var countOfList = 0 // used for original count of list
+    var currentIndex = 0
+    var heightOfMarker:CGFloat = 0 {
+        didSet {
+            if heightOfMarker != 0 {
+                didCalculateHeightOfMarker = true
+            }
+        }
+    }
+    var didCalculateHeightOfMarker = false
+    var bookMarkerTopAnchor: NSLayoutConstraint?
+    var bookMarkerBottomAnchor: NSLayoutConstraint?
     
     var containerStack: UIStackView = {
         let cv = UIStackView()
@@ -111,15 +122,11 @@ final class IndexTracker: UIView {
             containerStack.addArrangedSubview(label)
         }
     }
-
-    var bookMarkerTopAnchor: NSLayoutConstraint?
-    var bookMarkerBottomAnchor: NSLayoutConstraint?
     
     func layoutViews() {
         containerStack.leadingAnchor.constrain(to: leadingAnchor)
         containerStack.trailingAnchor.constrain(to: trailingAnchor)
         containerStack.centerYAnchor.constrain(to: centerYAnchor)
-        
         bookMarker.heightAnchor.constrain(to: 2)
         bookMarker.widthAnchor.constrain(to: containerStack.widthAnchor, multiplyBy: 1/4)
         bookMarker.leadingAnchor.constrain(to: containerStack.leadingAnchor)
@@ -128,11 +135,9 @@ final class IndexTracker: UIView {
     }
     
     func updatePositionOfBookMarker(index: Int) {
-        if currentIndex == index {
-            return
-        } else {
-            currentIndex = index
-        }
+        guard currentIndex != index else { return }
+        
+        currentIndex = index
         if !didCalculateHeightOfMarker {
             calculateHeightOfMarker()
         }
@@ -178,14 +183,6 @@ final class IndexTracker: UIView {
         }, completion: nil)
         
     }
-    var heightOfMarker:CGFloat = 0 {
-        didSet {
-            if heightOfMarker != 0 {
-                didCalculateHeightOfMarker = true
-            }
-        }
-    }
-    var didCalculateHeightOfMarker = false
     
     func calculateHeightOfMarker() {
         let height = self.containerStack.bounds.maxY - self.containerStack.bounds.minY
@@ -207,8 +204,6 @@ final class IndexTracker: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    var currentIndex = 0
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         indexState = .scrollingIndex

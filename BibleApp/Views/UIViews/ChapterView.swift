@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ChapterView: UIView {
+final class ChapterView: UIView {
     
     var numberOfChapters: Int?
     weak var chapterPressDelegate: ChapterPressDelegate?

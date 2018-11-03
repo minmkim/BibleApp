@@ -25,8 +25,6 @@ final class AppCoordinator: Coordinator {
     
     lazy var rootViewController: MainViewController = {
         let controller = MainViewController()
-        controller.tabBarController?.tabBar.barTintColor = .white
-        controller.tabBarController?.tabBar.isTranslucent = false
         controller.tabSelectedDelegate = self
         return controller
     }()
@@ -80,7 +78,63 @@ final class AppCoordinator: Coordinator {
         coordinatorDict[coordinatorType.bible] = bibleCoordinator
     }
     
+    func setupBibleCoordinator() {
+        if coordinatorDict[coordinatorType.bible] == nil {
+            coordinatorDict = [:]
+            let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible, savedVersesController: savedVersesController)
+            coordinatorDict[coordinatorType.bible] = bibleCoordinator
+        } else {
+            coordinatorDict[coordinatorType.savedVerses] = nil
+            coordinatorDict[coordinatorType.search] = nil
+        }
+    }
     
+    func setupVerseCoordinator() {
+        if coordinatorDict[coordinatorType.savedVerses] == nil {
+            if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
+                if coordinator.currentBookController != nil {
+                    let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController, savedVersesModel: savedVersesController)
+                    verseCoordinator.bibleVerseDelegate = self
+                    coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
+                    return
+                }
+            }
+            coordinatorDict = [:]
+            let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController, savedVersesModel: savedVersesController)
+            verseCoordinator.bibleVerseDelegate = self
+            coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
+        }
+    }
+    
+    func setupSearchCoordinator() {
+        if coordinatorDict[coordinatorType.search] == nil {
+            if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
+                if coordinator.currentBookController != nil {
+                    let searchCoordinator = SearchCoordinator(searchViewController: searchViewController, bible: bible)
+                    searchCoordinator.bibleVerseDelegate = self
+                    coordinatorDict[coordinatorType.search] = searchCoordinator
+                    return
+                }
+            }
+            
+            coordinatorDict = [:]
+            let searchCoordinator = SearchCoordinator(searchViewController: searchViewController, bible: bible)
+            searchCoordinator.bibleVerseDelegate = self
+            coordinatorDict[coordinatorType.search] = searchCoordinator
+        }
+    }
+    
+    func setupForSettings() {
+        if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
+            if coordinator.currentBookController != nil {
+                coordinatorDict[coordinatorType.savedVerses] = nil
+                coordinatorDict[coordinatorType.search] = nil
+                return
+            }
+        } else {
+            coordinatorDict = [:]
+        }
+    }
     
 }
 
@@ -88,55 +142,13 @@ extension AppCoordinator: TabSelectedDelegate {
     func didSelectTab(at index: Int) {
         switch index {
         case 0:
-            if coordinatorDict[coordinatorType.bible] == nil {
-                coordinatorDict = [:]
-                let bibleCoordinator = BibleCoordinator(bibleViewController: bibleViewController, bible: bible, savedVersesController: savedVersesController)
-                coordinatorDict[coordinatorType.bible] = bibleCoordinator
-            } else {
-                coordinatorDict[coordinatorType.savedVerses] = nil
-                coordinatorDict[coordinatorType.search] = nil
-            }
+            setupBibleCoordinator()
         case 1:
-            if coordinatorDict[coordinatorType.savedVerses] == nil {
-                if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
-                    if coordinator.currentBookController != nil {
-                        let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController, savedVersesModel: savedVersesController)
-                        verseCoordinator.bibleVerseDelegate = self
-                        coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
-                        return
-                    }
-                }
-                coordinatorDict = [:]
-                let verseCoordinator = VerseCoordinator(savedVerseController: savedVerseViewController, savedVersesModel: savedVersesController)
-                verseCoordinator.bibleVerseDelegate = self
-                coordinatorDict[coordinatorType.savedVerses] = verseCoordinator
-            }
+            setupVerseCoordinator()
         case 2:
-            if coordinatorDict[coordinatorType.search] == nil {
-                if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
-                    if coordinator.currentBookController != nil {
-                        let searchCoordinator = SearchCoordinator(searchViewController: searchViewController, bible: bible)
-                        searchCoordinator.bibleVerseDelegate = self
-                        coordinatorDict[coordinatorType.search] = searchCoordinator
-                        return
-                    }
-                }
-                
-                coordinatorDict = [:]
-                let searchCoordinator = SearchCoordinator(searchViewController: searchViewController, bible: bible)
-                searchCoordinator.bibleVerseDelegate = self
-                coordinatorDict[coordinatorType.search] = searchCoordinator
-            }
+            setupSearchCoordinator()
         case 3:
-            if let coordinator = coordinatorDict[coordinatorType.bible] as? BibleCoordinator {
-                if coordinator.currentBookController != nil {
-                    coordinatorDict[coordinatorType.savedVerses] = nil
-                    coordinatorDict[coordinatorType.search] = nil
-                    return
-                }
-            } else {
-                coordinatorDict = [:]
-            }
+            setupForSettings()
         default:
             print("default")
         }

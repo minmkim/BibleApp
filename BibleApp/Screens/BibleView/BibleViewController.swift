@@ -11,13 +11,18 @@ import UIKit
 final class BibleViewController: UIViewController {
     
     var bible: Bible!
+    weak var bibleCoordinatorDelegate: BibleCoordinatorDelegate?
+    var indexListLeadingAnchor: NSLayoutConstraint?
+    var indexListTrailingAnchor: NSLayoutConstraint?
+    var bibleTableViewLeadingAnchor: NSLayoutConstraint?
+    var bibleTableViewTrailingAnchor: NSLayoutConstraint?
+    var dominantHand: String?
     var selectedBookIndexPath: IndexPath? {
         didSet {
             bibleTableView.beginUpdates()
             bibleTableView.endUpdates()
         }
     }
-    weak var bibleCoordinatorDelegate: BibleCoordinatorDelegate?
     
     let containerView: UIView = {
         let cv = UIView()
@@ -42,8 +47,6 @@ final class BibleViewController: UIViewController {
         il.translatesAutoresizingMaskIntoConstraints = false
         return il
     }()
-    
-    var dominantHand: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,11 +99,6 @@ final class BibleViewController: UIViewController {
             bibleTableView.reloadData()
         }
     }
-    
-    var indexListLeadingAnchor: NSLayoutConstraint?
-    var indexListTrailingAnchor: NSLayoutConstraint?
-    var bibleTableViewLeadingAnchor: NSLayoutConstraint?
-    var bibleTableViewTrailingAnchor: NSLayoutConstraint?
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

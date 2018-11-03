@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SavedVerseBar: UIView {
+final class SavedVerseBar: UIView {
     
     weak var saveVerseBarDelegate: SaveVerseBarDelegate?
     

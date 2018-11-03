@@ -55,12 +55,8 @@ final class Bible {
     }
     
     func bibleDoesContainBook(for book: Book) -> Bool {
-        let isOldTestament = booksOfOldTestament.contains { (ot) -> Bool in
-            ot.lowercased() == book.lowercased()
-        }
-        let isNewTestament = booksOfNewTestament.contains { (nt) -> Bool in
-            nt.lowercased() == book.lowercased()
-        }
+        let isOldTestament = booksOfOldTestament.contains { $0.lowercased() == book.lowercased() }
+        let isNewTestament = booksOfNewTestament.contains { $0.lowercased() == book.lowercased() }
         
         return (isOldTestament || isNewTestament)
     }

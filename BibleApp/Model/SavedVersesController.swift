@@ -9,22 +9,24 @@
 import Foundation
 
 final class SavedVersesController {
+    typealias Section = String
+    typealias Note = String
     
-    private var headerLabels = [String]()
-    private var notesLabels = [String : [String]]()
+    private var sectionLabels = [Section]()
+    private var notesLabels = [Section : [Note]]()
     private var dataManager: VersesDataManager!
     
     init(dataManager: VersesDataManager) {
         self.dataManager = dataManager
-        loadHeadersAndNotes()
+        loadSectionsAndNotes()
     }
     
-    func loadHeadersAndNotes() {
+    func loadSectionsAndNotes() {
         dataManager.loadSections { (sections) in
-            headerLabels = sections
+            sectionLabels = sections
         }
-        headerLabels = Array(Set(headerLabels)).sorted()
-        headerLabels.forEach { (header) in
+        sectionLabels = Array(Set(sectionLabels)).sorted()
+        sectionLabels.forEach { (header) in
             dataManager.loadNotes(for: header) { (fetchedNotes) in
                 notesLabels[header] = Array(Set(fetchedNotes)).sorted(by: >)
             }
@@ -36,16 +38,16 @@ final class SavedVersesController {
     }
     
     func getNotes(for index: Int) -> [String] {
-        let section = headerLabels[index]
+        let section = sectionLabels[index]
         return notesLabels[section] ?? []
     }
     
     func getSection(for index: Int) -> String {
-        return headerLabels[index]
+        return sectionLabels[index]
     }
     
     func getNumberOfSections() -> Int {
-        return headerLabels.count
+        return sectionLabels.count
     }
     
     func loadVerses(for note: String, section: String) -> [SavedVerse] {
@@ -64,12 +66,12 @@ final class SavedVersesController {
     
     func saveNewSection(for section: String) {
         dataManager.saveNewSection(for: section)
-        headerLabels.append(section)
+        sectionLabels.append(section)
         notesLabels[section] = []
     }
     
     func saveNewNote(newNote: String, index: Int) {
-        let section = headerLabels[index]
+        let section = sectionLabels[index]
         var array = notesLabels[section] ?? []
         array.append(newNote)
         notesLabels[section] = array
@@ -97,22 +99,16 @@ final class SavedVersesController {
     func removeNote(note: String, section: String) {
         guard var notesInSection = notesLabels[section] else {return}
         notesInSection = notesInSection.filter({$0 != note})
-        if notesInSection.count == 0 {
-            notesLabels[section] = nil
-        } else {
-            notesLabels[section] = notesInSection
-        }
+        notesLabels[section] = (notesInSection.count == 0) ? nil : notesInSection
         dataManager.deleteNote(note: note, section: section)
     }
     
     func removeSection(for section: String) {
         if let notesInSection = notesLabels[section] {
-            for note in notesInSection {
-                dataManager.deleteNote(note: note, section: section)
-            }
+            notesInSection.forEach { dataManager.deleteNote(note: $0, section: section) }
             notesLabels[section] = nil
         }
-        headerLabels = headerLabels.filter({$0 != section})
+        sectionLabels = sectionLabels.filter({$0 != section})
         dataManager.deleteSection(section)
     }
     

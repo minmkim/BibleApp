@@ -30,6 +30,9 @@ final class BookTableController: UIViewController {
             bottomContainerView.numberOfChapters = numberOfChapters
         }
     }
+    var indexListLeadingAnchor: NSLayoutConstraint?
+    var indexListTrailingAnchor: NSLayoutConstraint?
+    
     let bookTableView: UITableView = {
        let bt = UITableView()
         bt.showsVerticalScrollIndicator = false
@@ -54,7 +57,6 @@ final class BookTableController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? DominantHand.left.rawValue
         setupViews()
         setupDelegates()
     }
@@ -65,6 +67,7 @@ final class BookTableController: UIViewController {
     }
     
     func setupViews() {
+        dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? DominantHand.left.rawValue
         bottomContainerView.updateProgressBar()
         view.addSubviewsUsingAutoLayout(bookTableView, indexList, bottomContainerView)
         view.backgroundColor = .white
@@ -101,6 +104,7 @@ final class BookTableController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         guard let newDominantHand = UserDefaults.standard.string(forKey: "DominantHand") else {return}
         if dominantHand != newDominantHand {
@@ -118,9 +122,6 @@ final class BookTableController: UIViewController {
         bookTableView.allowsMultipleSelection = true
         bookTableView.allowsMultipleSelectionDuringEditing = true
     }
-    
-    var indexListLeadingAnchor: NSLayoutConstraint?
-    var indexListTrailingAnchor: NSLayoutConstraint?
     
     func setDominantHandIndexLayout() {
         if dominantHand == DominantHand.left.rawValue {
@@ -154,9 +155,7 @@ final class BookTableController: UIViewController {
 
 extension BookTableController: IndexListDelegate {
     func pressedIndex(at index: Int) {
-        if index < 0 || index > (verseArray.count - 1) {
-            return
-        }
+        if index < 0 || index > (verseArray.count - 1) { return }
         var generator: UISelectionFeedbackGenerator? = UISelectionFeedbackGenerator()
         let indexPath = IndexPath(row: index, section: 0)
         UIView.animate(withDuration: 0.01) {

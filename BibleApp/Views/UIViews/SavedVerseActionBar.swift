@@ -9,13 +9,12 @@
 import Foundation
 import UIKit
 
-class SavedVerseActionBar: UIView {
+final class SavedVerseActionBar: UIView {
     
     weak var savedVerseActionBarDelegate: SavedVerseActionBarDelegate?
     
     let trashButton: UIButton = {
        let tb = UIButton(type: .custom)
-        tb.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
         tb.setImage(image, for: .normal)
         tb.tintColor = MainColor.redOrange
@@ -25,7 +24,6 @@ class SavedVerseActionBar: UIView {
     
     let shareButton: UIButton = {
         let sb = UIButton(type: .custom)
-        sb.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "share")?.withRenderingMode(.alwaysTemplate)
         sb.setImage(image, for: .normal)
         sb.tintColor = MainColor.redOrange
@@ -43,29 +41,26 @@ class SavedVerseActionBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(trashButton)
-        addSubview(shareButton)
+        addSubviewsUsingAutoLayout(trashButton, shareButton)
         backgroundColor = .white
         layoutViews()
     }
     
     func layoutViews() {
-        trashButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        trashButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12).isActive = true
-        trashButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
-        trashButton.widthAnchor.constraint(equalTo: trashButton.heightAnchor).isActive = true
+        trashButton.centerYAnchor.constrain(to: centerYAnchor)
+        trashButton.leadingAnchor.constrain(to: leadingAnchor, with: 12)
+        trashButton.heightAnchor.constrain(to: heightAnchor, multiplyBy: 2/3)
+        trashButton.widthAnchor.constrain(to: trashButton.heightAnchor)
         
-        shareButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        shareButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
-        shareButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3).isActive = true
-        shareButton.widthAnchor.constraint(equalTo: shareButton.heightAnchor).isActive = true
+        shareButton.centerYAnchor.constrain(to: centerYAnchor)
+        shareButton.trailingAnchor.constrain(to: trailingAnchor, with: -12)
+        shareButton.heightAnchor.constrain(to: heightAnchor, multiplyBy: 2/3)
+        shareButton.widthAnchor.constrain(to: trashButton.heightAnchor)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    
     
 }
 

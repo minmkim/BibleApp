@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class LabelChapterView: UIView {
+final class LabelChapterView: UIView {
     
     weak var didSelectChapterLabelViewDelegate: DidSelectChapterLabelViewDelegate?
     var currentChapter: Int?

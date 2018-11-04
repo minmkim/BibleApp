@@ -19,13 +19,12 @@ final class BookTableViewCell: UITableViewCell {
         }
     }
     
-    let verseText: UITextView = {
-        let tv = UITextView()
+    let verseText: UILabel = {
+        let tv = UILabel()
         tv.font = .preferredFont(forTextStyle: .callout)
         tv.adjustsFontForContentSizeCategory = true
         tv.textColor = .black
-        tv.isScrollEnabled = false
-        tv.isEditable = false
+        tv.numberOfLines = 0
         return tv
     }()
     
@@ -50,15 +49,15 @@ final class BookTableViewCell: UITableViewCell {
     
     func layoutViews() {
         if dominantHand == DominantHand.left.rawValue {
-            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 12))
+            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 8, left: 36, bottom: 8, right: 16))
             
-            numberLabel.topAnchor.constrain(to: verseText.topAnchor)
-            numberLabel.leadingAnchor.constrain(to: leadingAnchor, with: 24)
+            numberLabel.topAnchor.constrain(to: topAnchor)
+            numberLabel.leadingAnchor.constrain(to: leadingAnchor, with: 22)
             numberLabel.heightAnchor.constrain(to: 8)
         } else {
-            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 18))
-            numberLabel.topAnchor.constrain(to: verseText.topAnchor)
-            numberLabel.leadingAnchor.constrain(to: leadingAnchor, with: 8)
+            verseText.addAnchors(container: self, inset: UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 22))
+            numberLabel.topAnchor.constrain(to: topAnchor)
+            numberLabel.leadingAnchor.constrain(to: leadingAnchor, with: 6)
             numberLabel.heightAnchor.constrain(to: 8)
         }
     }

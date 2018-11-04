@@ -639,6 +639,24 @@
 			path = SavedVerse;
 			sourceTree = "<group>";
 		};
+		8CBE9832218DF5B900E0D2CE /* Saved Verse */ = {
+			isa = PBXGroup;
+			children = (
+				8C95869D21608E5200825D21 /* SavedVerse.swift */,
+				8C86D3AA2189311A00C5C53F /* SavedVersesController.swift */,
+			);
+			path = "Saved Verse";
+			sourceTree = "<group>";
+		};
+		8CBE9833218DF5BE00E0D2CE /* Bible */ = {
+			isa = PBXGroup;
+			children = (
+				A4FD29682118B284008E0A69 /* Bible.swift */,
+				8C79AC30212DA5E300FCD313 /* BibleVerse.swift */,
+			);
+			path = Bible;
+			sourceTree = "<group>";
+		};
 		8CD04B92218A5D0200AB121A /* BibleAppTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -837,10 +855,8 @@
 		A4FD29722118CDB7008E0A69 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A4FD29682118B284008E0A69 /* Bible.swift */,
-				8C79AC30212DA5E300FCD313 /* BibleVerse.swift */,
-				8C95869D21608E5200825D21 /* SavedVerse.swift */,
-				8C86D3AA2189311A00C5C53F /* SavedVersesController.swift */,
+				8CBE9833218DF5BE00E0D2CE /* Bible */,
+				8CBE9832218DF5B900E0D2CE /* Saved Verse */,
 			);
 			path = Model;
 			sourceTree = "<group>";

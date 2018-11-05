@@ -135,6 +135,7 @@
 		8C912A822169C98200BF9433 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C912A842169C98200BF9433 /* AppIntentVocabulary.plist */; };
 		8C95869C216055A800825D21 /* SearchWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */; };
 		8C95869E21608E5200825D21 /* SavedVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C95869D21608E5200825D21 /* SavedVerse.swift */; };
+		8CC6E07D218FF7420002595D /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC6E07C218FF7420002595D /* Delegates.swift */; };
 		8CC80CF42183E859009C1606 /* WordSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF32183E859009C1606 /* WordSearchController.swift */; };
 		8CC80CF62183E87F009C1606 /* VerseSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF52183E87F009C1606 /* VerseSearchController.swift */; };
 		8CC80CF82183E89D009C1606 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC80CF72183E89D009C1606 /* String.swift */; };
@@ -333,6 +334,7 @@
 		8C912A852169C98400BF9433 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		8C95869B216055A800825D21 /* SearchWordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordTableViewCell.swift; sourceTree = "<group>"; };
 		8C95869D21608E5200825D21 /* SavedVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerse.swift; sourceTree = "<group>"; };
+		8CC6E07C218FF7420002595D /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		8CC80CF32183E859009C1606 /* WordSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSearchController.swift; sourceTree = "<group>"; };
 		8CC80CF52183E87F009C1606 /* VerseSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseSearchController.swift; sourceTree = "<group>"; };
 		8CC80CF72183E89D009C1606 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -785,6 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				8C66D90F212F489100EE6503 /* CoreDataEnum.swift */,
+				8CC6E07C218FF7420002595D /* Delegates.swift */,
 				8CD04BA4218AAD4000AB121A /* DominantHandEnum.swift */,
 				8CC80CFB2184C787009C1606 /* Anchors.swift */,
 				8CC80CF72183E89D009C1606 /* String.swift */,
@@ -1228,6 +1231,7 @@
 				8CC80CFA21842653009C1606 /* Protocols.swift in Sources */,
 				A43E1D0F21190ABA008235D6 /* BookTableViewCell.swift in Sources */,
 				8C146163215B31B100FDF339 /* haggai.swift in Sources */,
+				8CC6E07D218FF7420002595D /* Delegates.swift in Sources */,
 				8C146164215B31B100FDF339 /* hosea.swift in Sources */,
 				8C14616A215B31B100FDF339 /* joshua.swift in Sources */,
 				8C146161215B31B100FDF339 /* genesis.swift in Sources */,

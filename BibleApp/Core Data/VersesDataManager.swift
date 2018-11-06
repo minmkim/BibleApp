@@ -49,6 +49,7 @@ final class VersesDataManager {
         newVerse.setValue(bibleVerse.upToVerse, forKey: CoreDataVerse.upToVerse)
         newVerse.setValue(bibleVerse.sectionName, forKey: CoreDataVerse.sectionName)
         newVerse.setValue(bibleVerse.noteName, forKey: CoreDataVerse.noteName)
+        newVerse.setValue(bibleVerse.version, forKey: CoreDataVerse.version)
         
         do {
             try managedContext.save()
@@ -99,12 +100,13 @@ final class VersesDataManager {
         let p1 = NSPredicate(format: "book = %@", bibleVerse.book)
         let p2 = NSPredicate(format: "chapter = %d", bibleVerse.chapter)
         let p3 = NSPredicate(format: "verse = %d", bibleVerse.verse)
+        let p4 = NSPredicate(format: "version = %d", bibleVerse.version)
         if let sectionName = bibleVerse.sectionName {
-            let p4 = NSPredicate(format: "sectionName = %@", sectionName)
-            let p5 = NSPredicate(format: "noteName = %@", bibleVerse.noteName!)
-            verseFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3, p4, p5])
+            let p5 = NSPredicate(format: "sectionName = %@", sectionName)
+            let p6 = NSPredicate(format: "noteName = %@", bibleVerse.noteName!)
+            verseFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3, p4, p5, p6])
         } else {
-            verseFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3])
+            verseFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3, p4])
         }
         let verses = try! managedContext.fetch(verseFetch)
         for verse in verses {
@@ -174,10 +176,12 @@ final class VersesDataManager {
         }
     }
     
-    func loadBible(completion: ([BibleVerse]) -> Void) {
+    func loadBible(version: String, completion: ([BibleVerse]) -> Void) {
         
         let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
+        let predicate = NSPredicate(format: "version = %@", version)
+        fetchRequest.predicate = predicate
         var savedVerses = [BibleVerse]()
         do {
             let fetchedVerses = try managedContext.fetch(fetchRequest)

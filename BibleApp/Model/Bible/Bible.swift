@@ -36,7 +36,7 @@ final class Bible {
     }
     
     private func loadBible() {
-        verseDataManager.loadBible { (bibleVerses) in
+        verseDataManager.loadBible(version: "KRV") { (bibleVerses) in
             bibleVerses.forEach { (bibleVerse) in
                 if var chapterVerseArray = bible[bibleVerse.book] {
                     if var verseArray = chapterVerseArray[bibleVerse.chapter] {

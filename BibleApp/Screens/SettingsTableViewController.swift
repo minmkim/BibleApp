@@ -13,10 +13,12 @@ import IntentsUI
 final class SettingsTableViewController: UITableViewController {
     
     var dominantHand: String?
+    var bibleVersion = "NIV1984"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDominantHand()
+        setupBibleVersion()
         setupTableView()
         setupViews()
     }
@@ -27,6 +29,14 @@ final class SettingsTableViewController: UITableViewController {
             UserDefaults.standard.set(DominantHand.left.rawValue, forKey: "DominantHand")
             dominantHand = DominantHand.left.rawValue
             tableView.reloadData()
+        }
+    }
+    
+    func setupBibleVersion() {
+        bibleVersion = UserDefaults.standard.string(forKey: "BibleVersion") ?? ""
+        if bibleVersion == "" {
+            UserDefaults.standard.set(BibleVersions.niv1984, forKey: "BibleVersion")
+            bibleVersion = BibleVersions.niv1984
         }
     }
     
@@ -48,11 +58,11 @@ final class SettingsTableViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 {
+        if section == 2 {
             return 1
         } else {
             return 2
@@ -64,8 +74,10 @@ final class SettingsTableViewController: UITableViewController {
         case 0:
             return "Dominant Hand"
         case 1:
-            return "Siri Custom Shortcuts"
+            return "Bible Translation Version"
         case 2:
+            return "Siri Custom Shortcuts"
+        case 3:
             return "Legal"
         default:
             return "Test"
@@ -113,13 +125,33 @@ final class SettingsTableViewController: UITableViewController {
             return cell
         case (1,0):
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.text = "Convert Clipboard to Search Bible Verse"
+            cell.tintColor = MainColor.redOrange
+            cell.textLabel?.text = "New International Version (NIV 1984)"
+            if bibleVersion == BibleVersions.niv1984 {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+            return cell
+        case (1,1):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.tintColor = MainColor.redOrange
+            cell.textLabel?.text = "Korean Revised Version (KRV)"
+            if bibleVersion == BibleVersions.KRV {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
             return cell
         case (2,0):
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = "Convert Clipboard to Search Bible Verse"
+            return cell
+        case (3,0):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = "Privacy Policy"
             return cell
-        case (2,1):
+        case (3,1):
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = "Unless otherwise indicated, all Scripture quotations are taken from THE HOLY BIBLE, NEW INTERNATIONAL VERSION®, NIV® Copyright © 1973, 1978, 1984, 2011 by Biblica, Inc.™ Used by permission. All rights reserved worldwide."
             cell.textLabel?.numberOfLines = 0
@@ -172,6 +204,28 @@ final class SettingsTableViewController: UITableViewController {
                 otherCell?.accessoryType = .none
             }
         case (1,0):
+            let cell = tableView.cellForRow(at: indexPath)
+            if bibleVersion == BibleVersions.KRV {
+                cell?.accessoryType = .checkmark
+                let defaults = UserDefaults.standard
+                defaults.set(BibleVersions.niv1984, forKey: "BibleVersion")
+                bibleVersion = BibleVersions.niv1984
+                let otherIndex = IndexPath(row: 1, section: 1)
+                let otherCell = tableView.cellForRow(at: otherIndex)
+                otherCell?.accessoryType = .none
+            }
+        case (1,1):
+            let cell = tableView.cellForRow(at: indexPath)
+            if bibleVersion == BibleVersions.niv1984 {
+                cell?.accessoryType = .checkmark
+                let defaults = UserDefaults.standard
+                defaults.set(BibleVersions.KRV, forKey: "BibleVersion")
+                bibleVersion = BibleVersions.KRV
+                let otherIndex = IndexPath(row: 1, section: 0)
+                let otherCell = tableView.cellForRow(at: otherIndex)
+                otherCell?.accessoryType = .none
+            }
+        case (2,0):
             if #available(iOS 12.0, *) {
                 let intent = SearchBibleIntentIntent()
                 guard let shortcut = INShortcut(intent: intent) else {return}

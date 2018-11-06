@@ -88,7 +88,7 @@ final class BookTableController: UIViewController {
                 var bibleVerses = [BibleVerse]()
                 guard let book = navigationItem.title else {return}
                 selectedVerses.forEach { (indexPath) in
-                    let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: indexPath.row + 1, text: verseArray[indexPath.row])
+                    let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: indexPath.row + 1, text: verseArray[indexPath.row], version: "NIV1984")
                     bibleVerses.append(bibleVerse)
                     bookTableView.deselectRow(at: indexPath, animated: true)
                 }
@@ -148,7 +148,7 @@ final class BookTableController: UIViewController {
         guard let indexPath = indexPathToSave else {return nil}
         let text = verseArray[indexPath.row]
         let verse = indexPath.row + 1
-        return BibleVerse(book: book, chapter: currentChapter, verse: verse, text: text)
+        return BibleVerse(book: book, chapter: currentChapter, verse: verse, text: text, version: "NIV1984")
     }
     
 }

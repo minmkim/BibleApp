@@ -39,7 +39,7 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             let chapter = self.currentChapter
             let verse = indexPath.row + 1
             guard let text = cell.verseText.text else {return}
-            let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text)
+            let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text, version: "NIV1984")
             self.savedVersesController.saveVerse(for: bibleVerse)
         }
         

@@ -10,31 +10,37 @@ import CoreData
 
 final class BibleVerse {
     
-    var book: String
-    var chapter: Int
-    var verse: Int
-    var text: String
+    let book: String
+    let chapter: Int
+    let verse: Int
+    let text: String
+    let version: String
+    var isHighlighted: Bool
     
-    init(book: String, chapter: Int, verse: Int, text: String) {
+    init(book: String, chapter: Int, verse: Int, text: String, version: String, isHighlighted: Bool = false) {
         self.book = book
         self.chapter = chapter
         self.verse = verse
         self.text = text
+        self.version = version
+        self.isHighlighted = isHighlighted
     }
     
     init(fetchedVerse: NSManagedObject) {
-        self.book = fetchedVerse.value(forKey: CoreDataVerse.book) as! String
-        self.chapter = fetchedVerse.value(forKey: CoreDataVerse.chapter) as! Int
-        self.verse = fetchedVerse.value(forKey: CoreDataVerse.verse) as! Int
-        self.text = fetchedVerse.value(forKey: CoreDataVerse.text) as! String
+        self.book = fetchedVerse.value(forKey: CoreDataBible.book) as! String
+        self.chapter = fetchedVerse.value(forKey: CoreDataBible.chapter) as! Int
+        self.verse = fetchedVerse.value(forKey: CoreDataBible.verse) as! Int
+        self.text = fetchedVerse.value(forKey: CoreDataBible.text) as! String
+        self.version = fetchedVerse.value(forKey: CoreDataBible.version) as! String
+        self.isHighlighted = fetchedVerse.value(forKey: CoreDataBible.isHighlighted) as! Bool
     }
     
     func formattedVerse() -> String {
-        return "\(book) \(chapter):\(verse)"
+        return "\(book) \(chapter):\(verse) (\(version)"
     }
     
     func formattedVerseAndText() -> String{
-        return "\(text)\n\(book) \(chapter):\(verse)"
+        return "\(text)\n\(book) \(chapter):\(verse) (\(version))"
     }
     
 }

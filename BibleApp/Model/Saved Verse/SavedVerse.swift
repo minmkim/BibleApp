@@ -20,8 +20,9 @@ final class SavedVerse: NSObject {
     var isMultipleVerses: Bool = false
     var noteName: String?
     var sectionName: String?
+    var version: String
     
-    init(book: String, chapter: Int, verse: Int, text: String, upToVerse: Int? = nil, isMultipleVerses: Bool = false, noteName: String? = nil, sectionName: String? = nil) {
+    init(book: String, chapter: Int, verse: Int, text: String, upToVerse: Int? = nil, isMultipleVerses: Bool = false, noteName: String? = nil, sectionName: String? = nil, version: String) {
         self.book = book
         self.chapter = chapter
         self.verse = verse
@@ -29,6 +30,7 @@ final class SavedVerse: NSObject {
         self.isMultipleVerses = isMultipleVerses
         self.noteName = noteName
         self.sectionName = sectionName
+        self.version = version
     }
     
     init?(bibleVerses: [BibleVerse], noteName: String? = nil, sectionName: String? = nil) {
@@ -43,11 +45,13 @@ final class SavedVerse: NSObject {
             self.verse = firstVerse.verse
             self.text = firstVerse.text
             self.isMultipleVerses = false
+            self.version = firstVerse.version
         case let x where x > 1:
             let firstVerse = sortedVerses.first!
             self.book = firstVerse.book
             self.chapter = firstVerse.chapter
             self.verse = firstVerse.verse
+            self.version = firstVerse.version
             isMultipleVerses = true
             let lastVerse = sortedVerses.last!
             self.upToVerse = lastVerse.verse
@@ -73,14 +77,15 @@ final class SavedVerse: NSObject {
         self.isMultipleVerses = (fetchedVerse.value(forKey: CoreDataVerse.isMultipleVerses) as? Bool) ?? false
         self.noteName = fetchedVerse.value(forKey: CoreDataVerse.noteName) as? String
         self.sectionName = fetchedVerse.value(forKey: CoreDataVerse.sectionName) as? String
+        self.version = fetchedVerse.value(forKey: CoreDataVerse.version) as! String
     }
     
     func formattedVerse() -> String {
-        return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(book) \(chapter):\(verse)"
+        return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (\(version))" : "\(book) \(chapter):\(verse) (\(version))"
     }
     
     func formattedVerseAndText() -> String {
-        return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(text)\n\(book) \(chapter):\(verse)"
+        return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (\(version))" : "\(text)\n\(book) \(chapter):\(verse) (\(version))"
     }
     
     

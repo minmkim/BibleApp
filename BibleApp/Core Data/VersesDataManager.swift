@@ -100,7 +100,7 @@ final class VersesDataManager {
         let p1 = NSPredicate(format: "book = %@", bibleVerse.book)
         let p2 = NSPredicate(format: "chapter = %d", bibleVerse.chapter)
         let p3 = NSPredicate(format: "verse = %d", bibleVerse.verse)
-        let p4 = NSPredicate(format: "version = %d", bibleVerse.version)
+        let p4 = NSPredicate(format: "version = %@", bibleVerse.version)
         if let sectionName = bibleVerse.sectionName {
             let p5 = NSPredicate(format: "sectionName = %@", sectionName)
             let p6 = NSPredicate(format: "noteName = %@", bibleVerse.noteName!)
@@ -189,6 +189,28 @@ final class VersesDataManager {
                 let newVerse = BibleVerse(fetchedVerse: verse)
                 savedVerses.append(newVerse)
             }
+            completion(savedVerses)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func loadBibleBook(_ book: String, forChapter chapter: Int, version: String, completion: ([BibleVerse]) -> Void) {
+        
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
+        let p1 = NSPredicate(format: "version = %@", version)
+        let p2 = NSPredicate(format: "book = %@", book)
+        let p3 = NSPredicate(format: "chapter = %d", chapter)
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3])
+        var savedVerses = [BibleVerse]()
+        do {
+            let fetchedVerses = try managedContext.fetch(fetchRequest)
+            fetchedVerses.forEach { (verse) in
+                let newVerse = BibleVerse(fetchedVerse: verse)
+                savedVerses.append(newVerse)
+            }
+            savedVerses.sort(by: {$0.verse < $1.verse})
             completion(savedVerses)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")

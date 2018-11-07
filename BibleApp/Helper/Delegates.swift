@@ -9,7 +9,7 @@
 import Foundation
 
 protocol SearchVerseDelegate: class {
-    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int)
+    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int, version: String)
 }
 
 protocol SearchWordDelegate: class {
@@ -38,7 +38,7 @@ protocol DidSelectNoteDelegate: class {
 }
 
 protocol BibleVerseDelegate: class {
-    func openBibleVerse(book: String, chapter: Int, verse: Int)
+    func openBibleVerse(book: String, chapter: Int, verse: Int, version: String)
 }
 
 protocol DidPressNoteDelegate: class {

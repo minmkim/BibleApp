@@ -26,31 +26,11 @@ final class Bible {
     
     init(verseDataManager: VersesDataManager) {
         self.verseDataManager = verseDataManager
-        let didCreateCoreDataBible = UserDefaults.standard.bool(forKey: "didCreateCoreDataBible")
-        if !didCreateCoreDataBible {
-            UserDefaults.standard.set(true, forKey: "didCreateCoreDataBible")
-            loadBible()
-        } else {
-            loadBible()
-        }
     }
     
-    private func loadBible() {
-        verseDataManager.loadBible(version: "KRV") { (bibleVerses) in
-            bibleVerses.forEach { (bibleVerse) in
-                if var chapterVerseArray = bible[bibleVerse.book] {
-                    if var verseArray = chapterVerseArray[bibleVerse.chapter] {
-                        verseArray.append(bibleVerse.text)
-                        chapterVerseArray[bibleVerse.chapter] = verseArray
-                        bible[bibleVerse.book] = chapterVerseArray
-                    } else {
-                        chapterVerseArray[bibleVerse.chapter] = [bibleVerse.text]
-                        bible[bibleVerse.book] = chapterVerseArray
-                    }
-                } else {
-                    bible[bibleVerse.book] = [bibleVerse.chapter:[bibleVerse.text]]
-                }
-            }
+    func getBibleBook(_ book: String, forChapter chapter: Int, version: String, completion: ([BibleVerse]) -> Void) {
+        verseDataManager.loadBibleBook(book, forChapter: chapter, version: version) { (fetchedVerses) in
+            completion(fetchedVerses)
         }
     }
     
@@ -62,7 +42,8 @@ final class Bible {
     }
     
     func numberOfChaptersInBook(for book: Book) -> Int? {
-        return bible[book]?.count
+        guard let index = Constants.bookStrings.firstIndex(of: book) else {return nil}
+        return index < 66 ? Constants.numberOfChaptersInBibleBooks[index] : nil
     }
     
     func numberOfVersesInBookChapterFor(book: Book, chapter: Chapter) -> Int? {

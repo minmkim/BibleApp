@@ -30,26 +30,29 @@ final class BibleCoordinator: Coordinator {
         currentBookController = nil
     }
     
-    func loadBookTableController(verses: [String], book: String, chapter: Int) -> BookTableController {
+    func loadBookTableController(book: String, chapter: Int, version: String) -> BookTableController {
         let controller = BookTableController()
         controller.savedVersesController = savedVersesController
         currentBookController = controller
         currentChapter = chapter
         currentBook = book
-        controller.verseArray = verses
+        guard let numberOfChapters = self.bible.numberOfChaptersInBook(for: book) else {return controller}
+        controller.setupController(numberOfChapters: numberOfChapters, currentChapter: chapter, book: book)
+        bible.getBibleBook(book, forChapter: chapter, version: version) { (fetchedVerses) in
+            DispatchQueue.main.async {
+                controller.verseArray = fetchedVerses
+                controller.bookTableView.reloadData()
+                controller.setupIndexList(for: fetchedVerses.count)
+            }
+        }
         controller.changeChapterDelegate = self
         controller.saveVerseDelegate = self
-        controller.currentChapter = chapter
         controller.navigationItem.title = book
-        guard let numberOfChapters = bible.numberOfChaptersInBook(for: book) else {return controller}
-        controller.numberOfChapters = numberOfChapters
         return controller
     }
     
-    func openBibleVerse(book: String, chapter: Int, verse: Int) {
-        guard let dict = bible.returnBookDict(for: book) else {return}
-        guard let verses = dict[chapter] else {return}
-        let controller = loadBookTableController(verses: verses, book: book, chapter: chapter)
+    func openBibleVerse(book: String, chapter: Int, verse: Int, version: String) {
+        let controller = loadBookTableController(book: book, chapter: chapter, version: version)
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
         let indexPath = IndexPath(item: verse - 1, section: 0)
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
@@ -97,18 +100,19 @@ extension BibleCoordinator: BibleCoordinatorDelegate {
     }
     
     func openBibleChapter(book: String, chapter: Int) {
-        guard let dict = bible.returnBookDict(for: book) else {return}
-        guard let verses = dict[chapter] else {return}
-        let controller = loadBookTableController(verses: verses, book: book, chapter: chapter)
+        let version = UserDefaults.standard.string(forKey: "BibleVersion") ?? "NIV1984"
+        let controller = loadBookTableController(book: book, chapter: chapter, version: version)
         bibleViewController.navigationController?.pushViewController(controller, animated: true)
     }
     
     func goToNewChapter() {
-        guard let bookDict = bible.returnBookDict(for: currentBook) else {return}
-        guard let verses = bookDict[currentChapter] else {return}
-        currentBookController?.verseArray = verses
-        currentBookController?.currentChapter = currentChapter
-        currentBookController?.newChapter()
+        let version = UserDefaults.standard.string(forKey: "BibleVersion") ?? "NIV1984"
+        bible.getBibleBook(currentBook, forChapter: currentChapter, version: version) { (fetchedVerses) in
+            currentBookController?.verseArray = fetchedVerses
+            currentBookController?.currentChapter = currentChapter
+            currentBookController?.newChapter()
+        }
+        
     }
     
 }

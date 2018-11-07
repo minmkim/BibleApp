@@ -36,11 +36,26 @@ final class BibleVerse {
     }
     
     func formattedVerse() -> String {
-        return "\(book) \(chapter):\(verse) (\(version)"
+        switch version {
+        case BibleVersions.niv1984:
+            return "\(book) \(chapter):\(verse) (NIV)"
+        case BibleVersions.KRV:
+            return "\(book) \(chapter):\(verse) (KRV)"
+        default:
+            return "\(book) \(chapter):\(verse)"
+        }
+        
     }
     
-    func formattedVerseAndText() -> String{
-        return "\(text)\n\(book) \(chapter):\(verse) (\(version))"
+    func formattedVerseAndText() -> String {
+        switch version {
+        case BibleVersions.niv1984:
+            return "\(text)\n\(book) \(chapter):\(verse) (NIV)"
+        case BibleVersions.KRV:
+            return "\(text)\n\(book) \(chapter):\(verse) (KRV)"
+        default:
+            return "\(text)\n\(book) \(chapter):\(verse)"
+        }
     }
     
 }

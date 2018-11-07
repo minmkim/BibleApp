@@ -6,48 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleApp/Screens/BookTable/BookTableController + TableViewDelegate + DataSource.swift"
-            timestampString = "563134804.9504"
+            filePath = "BibleApp/Views/UIViews/ChapterView.swift"
+            timestampString = "563323597.076341"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "tableView(_:didDeselectRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleApp/Screens/BookTable/BookTableController + TableViewDelegate + DataSource.swift"
-            timestampString = "563134804.950467"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleApp/Screens/BookTable/BookTableController + TableViewDelegate + DataSource.swift"
-            timestampString = "563134804.950543"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "tableView(_:didDeselectRowAt:)"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "updateProgressBar()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,46 +25,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleApp/Core Data/VersesDataManager.swift"
-            timestampString = "563137955.053326"
+            filePath = "BibleApp/Coordinator/BibleCoordinator.swift"
+            timestampString = "563323597.076611"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
-            landmarkName = "loadBible(version:completion:)"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "loadBookTableController(book:chapter:version:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BibleApp.VersesDataManager.loadBible(version: Swift.String, completion: (Swift.Array&lt;BibleApp.BibleVerse&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "BibleApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/minmkim/Library/Mobile%20Documents/com~apple~CloudDocs/Swift/BibleApp/BibleApp/Core%20Data/VersesDataManager.swift"
-                  timestampString = "563137869.932068"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "186"
-                  endingLineNumber = "186"
-                  offsetFromSymbolStart = "963">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.NSManagedObject) -&gt; () in BibleApp.VersesDataManager.loadBible(version: Swift.String, completion: (Swift.Array&lt;BibleApp.BibleVerse&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "BibleApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/minmkim/Library/Mobile%20Documents/com~apple~CloudDocs/Swift/BibleApp/BibleApp/Core%20Data/VersesDataManager.swift"
-                  timestampString = "563137869.933973"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "38">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -105,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleApp/Core Data/VersesDataManager.swift"
-            timestampString = "563137955.054145"
+            filePath = "BibleApp/Coordinator/BibleCoordinator.swift"
+            timestampString = "563323597.076795"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
-            landmarkName = "loadBible(version:completion:)"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "loadBookTableController(book:chapter:version:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

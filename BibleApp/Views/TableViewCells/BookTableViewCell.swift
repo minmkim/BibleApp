@@ -12,9 +12,9 @@ final class BookTableViewCell: UITableViewCell {
     
     var dominantHand = DominantHand.left.rawValue
     
-    var bibleVerse: String? {
+    var bibleVerse: BibleVerse? {
         didSet {
-            verseText.text = bibleVerse
+            verseText.text = bibleVerse?.text
             layoutIfNeeded()
         }
     }

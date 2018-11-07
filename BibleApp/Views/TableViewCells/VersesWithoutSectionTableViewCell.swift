@@ -44,9 +44,10 @@ class VersesWithoutSectionTableViewCell: SavedVerseTableViewCell {
         }
         DispatchQueue.main.async { [unowned self] in
             self.savedVerseCollectionView.deleteItems(at: self.indexPathsToDelete)
+            self.savedVerseCollectionView.collectionViewLayout.invalidateLayout()
             self.indexPathsToDelete.removeAll()
         }
-        savedVerseCollectionView.collectionViewLayout.invalidateLayout()
+        
     }
     
     func isDeleteImageHidden(forIndexPath: IndexPath) -> Bool {
@@ -84,6 +85,7 @@ extension VersesWithoutSectionTableViewCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard indexPath.item < savedVerses.count else {return CGSize(width: 0, height: 0)}
         var height: CGFloat = 80 //Arbitrary number
         let verse = savedVerses[indexPath.item]
         height = estimatedFrameForText(text: verse.text).height + 38

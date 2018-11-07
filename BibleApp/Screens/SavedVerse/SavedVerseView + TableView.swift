@@ -37,6 +37,7 @@ extension SavedVerseViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = savedVerseTableView.dequeueReusableCell(withIdentifier: "noSectionVerse", for: indexPath) as! VersesWithoutSectionTableViewCell
             cell.didSelectSavedVersesDelegate = self
             cell.selectionStyle = .none
+            cell.savedVerseCollectionView.collectionViewLayout.invalidateLayout()
             savedVersesModel?.loadVersesWithoutSection(completion: { (fetchedVerses) in
                 cell.savedVerses = fetchedVerses
                 DispatchQueue.main.async {

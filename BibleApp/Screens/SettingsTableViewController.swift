@@ -221,7 +221,7 @@ final class SettingsTableViewController: UITableViewController {
                 let defaults = UserDefaults.standard
                 defaults.set(BibleVersions.KRV, forKey: "BibleVersion")
                 bibleVersion = BibleVersions.KRV
-                let otherIndex = IndexPath(row: 1, section: 0)
+                let otherIndex = IndexPath(row: 0, section: 1)
                 let otherCell = tableView.cellForRow(at: otherIndex)
                 otherCell?.accessoryType = .none
             }

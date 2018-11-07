@@ -104,7 +104,8 @@ final class VerseSearchController: SearchController {
         
     func didPressSearch(for searchText: String) {
         if let book = verseContainer.searchedBook {
-            searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1)
+            let version = UserDefaults.standard.string(forKey: "BibleVersion") ?? "NIV1984"
+            searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1, version: version)
             verseContainer.resetContainer()
             updateSearchBarDelegate?.updateSearchBar("")
             searchState = .empty
@@ -125,7 +126,8 @@ final class VerseSearchController: SearchController {
             
         case .searchingVerse:
             if let book = verseContainer.searchedBook {
-                searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1)
+                let version = UserDefaults.standard.string(forKey: "BibleVersion") ?? "NIV1984"
+                searchVerseDelegate?.requestToOpenBibleVerse(book: book, chapter: verseContainer.searchedChapter ?? 1, verse: verseContainer.searchedVerse ?? 1, version: version)
                 verseContainer.resetContainer()
                 updateSearchBarDelegate?.updateSearchBar("")
                 searchState = .empty

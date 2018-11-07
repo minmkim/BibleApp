@@ -81,13 +81,27 @@ final class SavedVerse: NSObject {
     }
     
     func formattedVerse() -> String {
-        return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (\(version))" : "\(book) \(chapter):\(verse) (\(version))"
+        switch version {
+        case BibleVersions.niv1984:
+            return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (NIV)" : "\(book) \(chapter):\(verse) (NIV)"
+        case BibleVersions.KRV:
+            return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (KRV)" : "\(book) \(chapter):\(verse) (KRV)"
+        default:
+            return isMultipleVerses ? "\(book) \(chapter):\(verse)-\(upToVerse ?? 0)" : "\(book) \(chapter):\(verse)"
+        }
+        
     }
     
     func formattedVerseAndText() -> String {
-        return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (\(version))" : "\(text)\n\(book) \(chapter):\(verse) (\(version))"
+        switch version {
+        case BibleVersions.niv1984:
+            return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (\(version))" : "\(text)\n\(book) \(chapter):\(verse) (NIV)"
+        case BibleVersions.KRV:
+            return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (\(version))" : "\(text)\n\(book) \(chapter):\(verse) (KRV)"
+        default:
+            return isMultipleVerses ? "\(text)\n\(book) \(chapter):\(verse)-\(upToVerse ?? 0) (\(version))" : "\(text)\n\(book) \(chapter):\(verse)"
+        }
     }
-    
     
     
 }

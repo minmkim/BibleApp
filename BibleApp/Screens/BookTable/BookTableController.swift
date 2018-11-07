@@ -23,7 +23,7 @@ final class BookTableController: UIViewController {
     var isSelecting = false
     var selectedVerses = [IndexPath]()
     var dominantHand = DominantHand.left.rawValue
-    var verseArray = [String]()
+    var verseArray = [BibleVerse]()
     var indexPathToSave: IndexPath?
     var numberOfChapters: Int? {
         didSet {
@@ -39,10 +39,7 @@ final class BookTableController: UIViewController {
         return bt
     }()
     
-    lazy var indexList: IndexTracker = {
-        let il = IndexTracker(frame: .zero, indexList: Array(1...verseArray.count).map({String($0)}), height: view.frame.height - 250)
-        return il
-    }()
+    var indexList: IndexTracker?
     
     lazy var bottomContainerView: ChapterView = {
        let bc = ChapterView()
@@ -62,14 +59,30 @@ final class BookTableController: UIViewController {
     }
     
     func setupDelegates() {
-        indexList.delegate = self
         bottomContainerView.chapterPressDelegate = self
+    }
+    
+    func setupController(numberOfChapters: Int, currentChapter: Int, book: String) {
+        self.currentChapter = currentChapter
+        self.numberOfChapters = numberOfChapters
+        navigationItem.title = book
+    }
+    
+    func setupIndexList(for row: Int) {
+        indexList = IndexTracker(frame: .zero, indexList: Array(1...(row)).map({String($0)}), height: view.frame.height - 250)
+        indexList?.delegate = self
+        view.addSubviewsUsingAutoLayout(indexList!)
+        indexList?.topAnchor.constrain(to: view.safeAreaLayoutGuide.topAnchor, with: 12)
+        indexList?.bottomAnchor.constrain(to: bottomContainerView.topAnchor, with: -12)
+        indexList?.widthAnchor.constrain(to: 25)
+        setDominantHandIndexLayout()
+        
     }
     
     func setupViews() {
         dominantHand = UserDefaults.standard.string(forKey: "DominantHand") ?? DominantHand.left.rawValue
         bottomContainerView.updateProgressBar()
-        view.addSubviewsUsingAutoLayout(bookTableView, indexList, bottomContainerView)
+        view.addSubviewsUsingAutoLayout(bookTableView, bottomContainerView)
         view.backgroundColor = .white
         let rightButton = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didPressSelect))
         navigationItem.rightBarButtonItem = rightButton
@@ -86,10 +99,8 @@ final class BookTableController: UIViewController {
             isSelecting = false
             if !selectedVerses.isEmpty {
                 var bibleVerses = [BibleVerse]()
-                guard let book = navigationItem.title else {return}
                 selectedVerses.forEach { (indexPath) in
-                    let bibleVerse = BibleVerse(book: book, chapter: currentChapter, verse: indexPath.row + 1, text: verseArray[indexPath.row], version: "NIV1984")
-                    bibleVerses.append(bibleVerse)
+                    bibleVerses.append(verseArray[indexPath.row])
                     bookTableView.deselectRow(at: indexPath, animated: true)
                 }
                 guard let savedVerse = SavedVerse(bibleVerses: bibleVerses) else {return}
@@ -110,6 +121,10 @@ final class BookTableController: UIViewController {
         if dominantHand != newDominantHand {
             changeChapterDelegate?.closeController()
         }
+        guard let firstVerse = verseArray.first else {return}
+        if firstVerse.version != (UserDefaults.standard.string(forKey: "BibleVersion") ?? "NIV1984") {
+            changeChapterDelegate?.closeController()
+        }
     }
     
     func setupTableView() {
@@ -125,30 +140,25 @@ final class BookTableController: UIViewController {
     
     func setDominantHandIndexLayout() {
         if dominantHand == DominantHand.left.rawValue {
-            indexListLeadingAnchor = indexList.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
+            indexListLeadingAnchor = indexList?.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
             indexListLeadingAnchor?.isActive = true
         } else {
-            indexListTrailingAnchor = indexList.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+            indexListTrailingAnchor = indexList?.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
             indexListTrailingAnchor?.isActive = true
         }
     }
     
     func formattedVerse(for indexPath: IndexPath) -> String {
-        let cell = bookTableView.cellForRow(at: indexPath) as! BookTableViewCell
-        guard var word = cell.bibleVerse else {return ""}
-        guard let book = self.navigationItem.title else {return ""}
-        let chapter = self.currentChapter
-        let verse = indexPath.row + 1
-        word += "\n\(book) \(chapter):\(verse)"
-        return word
+        guard let cell = bookTableView.cellForRow(at: indexPath) as? BookTableViewCell else {return ""}
+        guard let verse = cell.bibleVerse else {return ""}
+        return verse.formattedVerseAndText()
     }
     
     func getVerse() -> BibleVerse? {
-        guard let book = navigationItem.title else {return nil}
         guard let indexPath = indexPathToSave else {return nil}
-        let text = verseArray[indexPath.row]
-        let verse = indexPath.row + 1
-        return BibleVerse(book: book, chapter: currentChapter, verse: verse, text: text, version: "NIV1984")
+        guard let cell = bookTableView.cellForRow(at: indexPath) as? BookTableViewCell else {return nil}
+        guard let verse = cell.bibleVerse else {return nil}
+        return verse
     }
     
 }

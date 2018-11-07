@@ -68,7 +68,7 @@ final class SavedVerseViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         savedVersesModel?.loadSectionsAndNotes()
         savedVerseTableView.reloadData()
-        navigationItem.title = ""
+        
     }
     
     func setupViews() {
@@ -85,14 +85,22 @@ final class SavedVerseViewController: UIViewController {
         if isEditingSections { //finished editing
             isEditingSections = !isEditingSections
             navigationItem.rightBarButtonItem?.title = "Edit"
+            if !versesToDelete.isEmpty {
+                let numberOfSection = (savedVersesModel?.getNumberOfSections() ?? 0)
+                let index = (numberOfSection*2 + 1)
+                savedVerseTableView.reloadRows(at: Array(0...index).map{IndexPath(item: $0, section: 0)}, with: .none)
+            } else {
+                savedVerseTableView.reloadData()
+            }
             itemsToDelete.removeAll()
             itemsToDeleteIndexPaths.removeAll()
             versesToDelete.removeAll()
-            savedVerseTableView.reloadData()
+            
             UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
                 self.actionBarTopAnchor = self.actionBar.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: (self.tabBarController?.tabBar.frame.size.height ?? 50))
                 self.actionBarTopAnchor?.isActive = true
-                self.view.layoutIfNeeded()
+                self.savedVerseTableView.beginUpdates()
+                self.savedVerseTableView.endUpdates()
             }, completion: nil)
         } else { //editing
             isEditingSections = !isEditingSections

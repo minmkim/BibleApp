@@ -70,6 +70,6 @@ final class WordSearchController: SearchController {
     
     func didSelectItem(at index: Int) {
         let verse = searchedVerses[index]
-        searchVerseDelegate?.requestToOpenBibleVerse(book: verse.book, chapter: verse.chapter, verse: verse.verse)
+        searchVerseDelegate?.requestToOpenBibleVerse(book: verse.book, chapter: verse.chapter, verse: verse.verse, version: verse.version)
     }
 }

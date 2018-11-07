@@ -55,8 +55,8 @@ extension SearchCoordinator: ChangeSearchControllerDelegate {
 }
 
 extension SearchCoordinator: SearchVerseDelegate {
-    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int) {
-        bibleVerseDelegate?.openBibleVerse(book: book, chapter: chapter, verse: verse)
+    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int, version: String) {
+        bibleVerseDelegate?.openBibleVerse(book: book, chapter: chapter, verse: verse, version: version)
     }
     
 }

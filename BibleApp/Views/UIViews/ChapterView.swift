@@ -146,7 +146,6 @@ final class ChapterView: UIView {
     }
     
     override func layoutSubviews() {
-        
         updateProgressBar()
     }
     

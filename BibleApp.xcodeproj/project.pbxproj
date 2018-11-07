@@ -103,6 +103,7 @@
 		8C46EF3B212F245300390BB0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */; };
 		8C5D869821323B42000F994E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869721323B42000F994E /* Colors.swift */; };
 		8C5D869A21323D36000F994E /* SettingsColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */; };
+		8C5F540E2192387D00B9E658 /* SavedVerseFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5F540D2192387D00B9E658 /* SavedVerseFlowLayout.swift */; };
 		8C635A81217D5C160086499C /* BookTableController + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A80217D5C160086499C /* BookTableController + UI.swift */; };
 		8C635A83217D5C450086499C /* BookTableController + TableViewDelegate + DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A82217D5C450086499C /* BookTableController + TableViewDelegate + DataSource.swift */; };
 		8C635A86217D5CB90086499C /* SearchViewController + SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C635A85217D5CB90086499C /* SearchViewController + SearchDelegate.swift */; };
@@ -296,6 +297,7 @@
 		8C46EF3A212F245300390BB0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8C5D869721323B42000F994E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8C5D869921323D36000F994E /* SettingsColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsColorTableViewCell.swift; sourceTree = "<group>"; };
+		8C5F540D2192387D00B9E658 /* SavedVerseFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVerseFlowLayout.swift; sourceTree = "<group>"; };
 		8C635A80217D5C160086499C /* BookTableController + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookTableController + UI.swift"; sourceTree = "<group>"; };
 		8C635A82217D5C450086499C /* BookTableController + TableViewDelegate + DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookTableController + TableViewDelegate + DataSource.swift"; sourceTree = "<group>"; };
 		8C635A85217D5CB90086499C /* SearchViewController + SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController + SearchDelegate.swift"; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				8C05BD70217D558E00AE964B /* TableViewCells */,
 				8C76F924218BB665002FED90 /* UIButton */,
 				8C05BD71217D55B700AE964B /* CollectionViewCells */,
+				8C5F540D2192387D00B9E658 /* SavedVerseFlowLayout.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1251,6 +1254,7 @@
 				8C79AC33212DA6B500FCD313 /* VerseViewController.swift in Sources */,
 				8C05BD6F217D30B100AE964B /* VersesWithoutSectionTableViewCell.swift in Sources */,
 				8C070B1A215DDB6000833BE5 /* ChapterView.swift in Sources */,
+				8C5F540E2192387D00B9E658 /* SavedVerseFlowLayout.swift in Sources */,
 				8C05BD82217D58F500AE964B /* BibleViewController.swift in Sources */,
 				8C0328C02188F47B00483B17 /* VerseViewController + UI.swift in Sources */,
 				8C79AC31212DA5E300FCD313 /* BibleVerse.swift in Sources */,

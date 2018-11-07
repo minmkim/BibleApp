@@ -39,7 +39,8 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
             let chapter = self.currentChapter
             let verse = indexPath.row + 1
             guard let text = cell.verseText.text else {return}
-            let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text, version: "NIV1984")
+            let version = UserDefaults.standard.string(forKey: "BibleVersion") ?? "NIV1984"
+            let bibleVerse = SavedVerse(book: book, chapter: chapter, verse: verse, text: text, version: version)
             self.savedVersesController.saveVerse(for: bibleVerse)
         }
         
@@ -90,16 +91,16 @@ extension BookTableController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if indexList.indexState == .scrollingTable {
+        if indexList?.indexState == .scrollingTable {
             guard let firstCell = bookTableView.visibleCells.first else {return}
             guard let index = bookTableView.indexPath(for: firstCell) else {return}
-            indexList.updatePositionOfBookMarker(index: index.row)
+            indexList?.updatePositionOfBookMarker(index: index.row)
         }
     }
     
     func newChapter() {
         bookTableView.reloadData()
-        indexList.newChapter(for: Array(1...verseArray.count).map({String($0)}))
+        indexList?.newChapter(for: Array(1...verseArray.count).map({String($0)}))
         self.view.layoutIfNeeded()
     }
     

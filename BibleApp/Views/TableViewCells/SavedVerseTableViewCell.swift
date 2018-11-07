@@ -18,9 +18,7 @@ class SavedVerseTableViewCell: UITableViewCell {
     }
     
     let savedVerseCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let sv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let sv = UICollectionView(frame: .zero, collectionViewLayout: SavedVerseFlowLayout())
         sv.register(SavedVerseUICCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         sv.register(VerseCollectionViewCell.self, forCellWithReuseIdentifier: "verse")
         sv.backgroundColor = .white

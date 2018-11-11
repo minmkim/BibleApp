@@ -100,7 +100,8 @@ final class Bible {
     }
     
     func searchBibleForWords(_ searchWord: String, withOffset: Int, completion: ([BibleVerse]) -> Void) {
-        verseDataManager.searchForWord(searchWord: searchWord, fetchOffset: withOffset, completion: {completion($0)})
+        let version = UserDefaults.standard.string(forKey: "BibleVersion") ?? "NIV1984"
+        verseDataManager.searchForWord(searchWord: searchWord, version: version, fetchOffset: withOffset, completion: {completion($0)})
     }
     
 }

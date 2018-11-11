@@ -324,13 +324,16 @@ final class VersesDataManager {
         }
     }
     
-    func searchForWord(searchWord: String, fetchOffset: Int, completion: ([BibleVerse]) -> Void) {
+    func searchForWord(searchWord: String, version: String, fetchOffset: Int, completion: ([BibleVerse]) -> Void) {
         
         let context = persistentContainer.viewContext
         var savedVerses = [BibleVerse]()
         do {
             let managedContext = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
-            managedContext.predicate = NSPredicate(format: "text CONTAINS[cd] %@", searchWord.lowercased())
+            let p1 = NSPredicate(format: "version = %@", version)
+            let p2 = NSPredicate(format: "text CONTAINS[cd] %@", searchWord.lowercased())
+            let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2])
+            managedContext.predicate = predicate
             managedContext.fetchLimit = 50
             managedContext.fetchOffset = fetchOffset
             let fetchedVerses = try context.fetch(managedContext)

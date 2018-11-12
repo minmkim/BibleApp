@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension SavedVerseViewController: SaveVerseBarDelegate {
+    
     func didPressTrash() {
         for item in itemsToDelete {
             if let note = item.note {

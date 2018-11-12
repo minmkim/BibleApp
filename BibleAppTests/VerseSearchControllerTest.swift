@@ -62,8 +62,7 @@ class VerseSearchControllerTest: XCTestCase {
 }
 
 extension VerseSearchControllerTest: SearchVerseDelegate {
-    
-    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int) {
+    func requestToOpenBibleVerse(book: String, chapter: Int, verse: Int, version: String) {
         testCase = "\(book) \(chapter):\(verse)"
     }
 }

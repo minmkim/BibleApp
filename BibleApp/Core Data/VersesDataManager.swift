@@ -217,6 +217,22 @@ final class VersesDataManager {
         }
     }
     
+    func getVerseCountFor(book: String, chapter: Int, version: String, completion: (Int) -> Void) {
+        
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataBible.entity)
+        let p1 = NSPredicate(format: "version = %@", version)
+        let p2 = NSPredicate(format: "book = %@", book)
+        let p3 = NSPredicate(format: "chapter = %d", chapter)
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2, p3])
+        do {
+            let countOfVerses = try managedContext.count(for: fetchRequest)
+            completion(countOfVerses)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
     func loadSections(completion: ([String]) -> Void) {
         let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataSection.entity)

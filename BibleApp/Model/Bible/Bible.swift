@@ -19,7 +19,6 @@ final class Bible {
     
     private let booksOfNewTestament = ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]
     
-    private var bible = [Book: [Chapter:[VerseText]]](minimumCapacity: 66)
     private let verseDataManager: VersesDataManager!
     private let countOfOldTestament = 39
     private let countOfNewTestament = 27
@@ -46,8 +45,10 @@ final class Bible {
         return index < 66 ? Constants.numberOfChaptersInBibleBooks[index] : nil
     }
     
-    func numberOfVersesInBookChapterFor(book: Book, chapter: Chapter) -> Int? {
-        return bible[book]?[chapter]?.count
+    func numberOfVersesInBookChapterFor(book: Book, chapter: Chapter, version: String, completion: (Int) -> Void) {
+        verseDataManager.getVerseCountFor(book: book, chapter: chapter, version: version) { (countOfVerses) in
+            completion(countOfVerses)
+        }
     }
     
     func returnBook(for index: Int) -> String {
@@ -59,10 +60,6 @@ final class Bible {
         default:
             fatalError("tried to return book outside of range of bible")
         }
-    }
-    
-    func returnBookDict(for book: Book) -> [Chapter: [VerseText]]? {
-        return bible[book]
     }
     
     func bookIndex(for book: Book) -> Int? {

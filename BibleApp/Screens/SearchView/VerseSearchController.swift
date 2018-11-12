@@ -86,7 +86,10 @@ final class VerseSearchController: SearchController {
                 guard let book = verseContainer.searchedBook else {return}
                 let chapterNumber = Int(tokenizedSearch[1])!
                 verseContainer.searchedChapter = chapterNumber
-                verseContainer.filteredVerses = Array(1...(bible.numberOfVersesInBookChapterFor(book: book, chapter: chapterNumber)!))
+                let version = UserDefaults.standard.string(forKey: "BibleVersion") ?? "NIV1984"
+                bible.numberOfVersesInBookChapterFor(book: book, chapter: chapterNumber, version: version) { (verses) in
+                    verseContainer.filteredVerses = Array(1...verses)
+                }
             } else {
                 searchState = .searchingChapter
                 verseContainer.setFilteredChapters(for: tokenizedSearch[1])
